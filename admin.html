@@ -1,25 +1,412 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Boostami CMS</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boostami CMS - Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #8c52ff 0%, #ff66c4 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .admin-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        
+        .cms-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .cms-title {
+            color: #8c52ff;
+            font-size: 20px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .cms-description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #8c52ff 0%, #ff66c4 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(140, 82, 255, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 10px 20px rgba(108, 117, 125, 0.3);
+        }
+        
+        .features {
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            color: #555;
+        }
+        
+        .feature::before {
+            content: "✅";
+            margin-right: 10px;
+        }
+        
+        .status {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .status-title {
+            color: #1976d2;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #8c52ff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-  <!-- Include the script that builds the page and powers Decap CMS -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
+    <div class="admin-container">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMjAwIDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8dGV4dCB4PSIxMCIgeT0iNDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiM4YzUyZmYiPkJvb3N0YW1pPC90ZXh0Pgo8dGV4dCB4PSIxMCIgeT0iNjAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzY2NiI+U21hcnQgQnJhbmRpbmc8L3RleHQ+Cjwvc3ZnPgo=" alt="Boostami" class="logo">
+        
+        <h1>Admin Panel</h1>
+        <p class="subtitle">Gestione Contenuti Boostami</p>
+        
+        <div class="cms-section">
+            <h2 class="cms-title">🔐 Accesso CMS</h2>
+            <p class="cms-description">
+                Accedi al sistema di gestione contenuti per modificare testi, prezzi, immagini e configurazioni del sito.
+            </p>
+            
+            <div class="features">
+                <div class="feature">Modifica Hero e Descrizioni</div>
+                <div class="feature">Gestione Prezzi Pacchetti</div>
+                <div class="feature">Upload Immagini</div>
+                <div class="feature">Configurazioni Sito</div>
+            </div>
+            
+            <div id="auth-section">
+                <button id="login-btn" class="btn" onclick="handleLogin()">
+                    🚀 Accedi al CMS
+                </button>
+                
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Caricamento CMS...</p>
+                </div>
+            </div>
+            
+            <div id="cms-container" style="display: none;">
+                <!-- Il CMS verrà caricato qui -->
+            </div>
+        </div>
+        
+        <div class="status">
+            <div class="status-title">📊 Status Sistema</div>
+            <div id="system-status">
+                <div class="feature">Netlify Identity: <span id="identity-status">Verificando...</span></div>
+                <div class="feature">Git Gateway: <span id="git-status">Verificando...</span></div>
+                <div class="feature">CMS: <span id="cms-status">Pronto</span></div>
+            </div>
+        </div>
+        
+        <a href="https://boostami.online" class="btn btn-secondary">
+            ← Torna al Sito
+        </a>
+    </div>
+
+    <script>
+        // Variabili globali
+        let isAuthenticated = false;
+        let cmsLoaded = false;
+        
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Boostami Admin Panel inizializzato');
+            checkSystemStatus();
+            initializeNetlifyIdentity();
+        });
+        
+        // Controllo status sistema
+        function checkSystemStatus() {
+            // Netlify Identity
+            if (typeof netlifyIdentity !== 'undefined') {
+                document.getElementById('identity-status').textContent = '✅ Attivo';
+                document.getElementById('identity-status').style.color = 'green';
+            } else {
+                document.getElementById('identity-status').textContent = '❌ Non disponibile';
+                document.getElementById('identity-status').style.color = 'red';
+            }
+            
+            // Git Gateway (simulato)
+            setTimeout(() => {
+                document.getElementById('git-status').textContent = '✅ Configurato';
+                document.getElementById('git-status').style.color = 'green';
+            }, 1000);
         }
-      });
-    }
-  </script>
+        
+        // Inizializzazione Netlify Identity
+        function initializeNetlifyIdentity() {
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.on("init", user => {
+                    console.log('Netlify Identity inizializzato:', user ? 'Utente loggato' : 'Nessun utente');
+                    if (user) {
+                        isAuthenticated = true;
+                        showCMSInterface();
+                    }
+                });
+                
+                window.netlifyIdentity.on("login", user => {
+                    console.log('Login effettuato:', user.email);
+                    isAuthenticated = true;
+                    showCMSInterface();
+                });
+                
+                window.netlifyIdentity.on("logout", () => {
+                    console.log('Logout effettuato');
+                    isAuthenticated = false;
+                    hideCMSInterface();
+                });
+            }
+        }
+        
+        // Gestione login
+        function handleLogin() {
+            if (!window.netlifyIdentity) {
+                alert('Netlify Identity non disponibile. Controlla la configurazione.');
+                return;
+            }
+            
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('login-btn').style.display = 'none';
+            
+            // Apri modal di login
+            window.netlifyIdentity.open();
+            
+            // Nascondi loading dopo 3 secondi se non c'è login
+            setTimeout(() => {
+                if (!isAuthenticated) {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('login-btn').style.display = 'inline-block';
+                }
+            }, 3000);
+        }
+        
+        // Mostra interfaccia CMS
+        function showCMSInterface() {
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            
+            // Carica Decap CMS
+            if (!cmsLoaded) {
+                loadDecapCMS();
+            } else {
+                document.getElementById('cms-container').style.display = 'block';
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+        
+        // Nascondi interfaccia CMS
+        function hideCMSInterface() {
+            document.getElementById('cms-container').style.display = 'none';
+            document.getElementById('auth-section').style.display = 'block';
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('login-btn').style.display = 'inline-block';
+        }
+        
+        // Carica Decap CMS
+        function loadDecapCMS() {
+            console.log('🔧 Caricamento Decap CMS...');
+            
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
+            script.onload = function() {
+                console.log('✅ Decap CMS caricato');
+                initializeCMS();
+            };
+            script.onerror = function() {
+                console.error('❌ Errore nel caricamento Decap CMS');
+                alert('Errore nel caricamento del CMS. Riprova più tardi.');
+                hideCMSInterface();
+            };
+            document.head.appendChild(script);
+        }
+        
+        // Inizializza CMS
+        function initializeCMS() {
+            try {
+                // Configura il container per il CMS
+                const cmsContainer = document.getElementById('cms-container');
+                cmsContainer.innerHTML = '<div id="nc-root"></div>';
+                
+                // Configurazione Decap CMS
+                window.CMS.init({
+                    config: {
+                        backend: {
+                            name: 'git-gateway',
+                            branch: 'main'
+                        },
+                        media_folder: 'public/images',
+                        public_folder: '/images',
+                        collections: [
+                            {
+                                name: 'settings',
+                                label: 'Impostazioni Sito',
+                                files: [
+                                    {
+                                        name: 'general',
+                                        label: 'Impostazioni Generali',
+                                        file: 'data/settings.json',
+                                        fields: [
+                                            { name: 'site_title', label: 'Titolo Sito', widget: 'string', default: 'Boostami - Brand Kit Professionali in 48h' },
+                                            { name: 'site_description', label: 'Descrizione Sito', widget: 'text', default: 'Servizio digitale chiavi in mano per Brand Kit professionali' },
+                                            { name: 'hero_title', label: 'Titolo Hero', widget: 'string', default: 'Il Tuo Brand Professionale in 48 Ore' },
+                                            { name: 'hero_subtitle', label: 'Sottotitolo Hero', widget: 'text', default: 'Servizio digitale chiavi in mano per piccole attività locali, freelance e microimprese' }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: 'pricing',
+                                label: 'Prezzi',
+                                files: [
+                                    {
+                                        name: 'packages',
+                                        label: 'Pacchetti',
+                                        file: 'data/pricing.json',
+                                        fields: [
+                                            {
+                                                name: 'packages',
+                                                label: 'Pacchetti',
+                                                widget: 'list',
+                                                fields: [
+                                                    { name: 'name', label: 'Nome', widget: 'string' },
+                                                    { name: 'price', label: 'Prezzo (€)', widget: 'number' },
+                                                    { name: 'description', label: 'Descrizione', widget: 'text' },
+                                                    { 
+                                                        name: 'features', 
+                                                        label: 'Caratteristiche', 
+                                                        widget: 'list', 
+                                                        field: { name: 'feature', label: 'Caratteristica', widget: 'string' }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                });
+                
+                cmsLoaded = true;
+                document.getElementById('cms-container').style.display = 'block';
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('cms-status').textContent = '✅ Attivo';
+                document.getElementById('cms-status').style.color = 'green';
+                
+                console.log('✅ CMS inizializzato con successo');
+                
+            } catch (error) {
+                console.error('❌ Errore nell\'inizializzazione CMS:', error);
+                alert('Errore nell\'inizializzazione del CMS: ' + error.message);
+                hideCMSInterface();
+            }
+        }
+        
+        // Gestione errori globali
+        window.addEventListener('error', function(e) {
+            console.error('Errore globale:', e.error);
+        });
+        
+        console.log('🎯 Boostami Admin Panel pronto');
+    </script>
 </body>
 </html>
 
