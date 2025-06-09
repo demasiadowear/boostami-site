@@ -1,114 +1,131 @@
-<!--trigger deploy test-->
 <!doctype html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Boostami - Brand Kit Professionali in 48h</title>
-    <meta name="description" content="Servizio digitale chiavi in mano per Brand Kit professionali. Logo, palette colori, template social e mini-sito in 48 ore per piccole attività locali." />
-    <script type="module" crossorigin src="/assets/index-DRlHP_ze.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CWaQEOrA.css">
-    
-    <!-- Netlify Identity Widget -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    
-    <!-- CMS Integration Script -->
-    <script>
-        // Check if admin mode is requested
-        const urlParams = new URLSearchParams(window.location.search);
-        const isAdmin = urlParams.get('admin') === 'true';
-        
-        if (isAdmin) {
-            // Load Decap CMS
-            document.addEventListener('DOMContentLoaded', function() {
-                // Hide main content
-                const root = document.getElementById('root');
-                if (root) root.style.display = 'none';
-                
-                // Create CMS container
-                const cmsContainer = document.createElement('div');
-                cmsContainer.id = 'cms-container';
-                document.body.appendChild(cmsContainer);
-                
-                // Load CMS script
-                const script = document.createElement('script');
-                script.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
-                script.onload = function() {
-                    // Initialize CMS
-                    window.CMS.init({
-                        config: {
-                            backend: {
-                                name: 'git-gateway',
-                                branch: 'main'
-                            },
-                            media_folder: 'assets/images',
-                            public_folder: '/assets/images',
-                            collections: [
-                                {
-                                    name: 'pages',
-                                    label: 'Pagine',
-                                    files: [
-                                        {
-                                            name: 'home',
-                                            label: 'Homepage',
-                                            file: 'content/home.md',
-                                            fields: [
-                                                {name: 'title', label: 'Titolo Principale', widget: 'string'},
-                                                {name: 'subtitle', label: 'Sottotitolo', widget: 'string'},
-                                                {name: 'description', label: 'Descrizione', widget: 'text'},
-                                                {name: 'cta_text', label: 'Testo Pulsante', widget: 'string'},
-                                                {name: 'hero_image', label: 'Immagine Hero', widget: 'image'}
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    name: 'pricing',
-                                    label: 'Prezzi',
-                                    files: [
-                                        {
-                                            name: 'packages',
-                                            label: 'Pacchetti',
-                                            file: 'content/pricing.md',
-                                            fields: [
-                                                {
-                                                    name: 'packages',
-                                                    label: 'Pacchetti',
-                                                    widget: 'list',
-                                                    fields: [
-                                                        {name: 'name', label: 'Nome', widget: 'string'},
-                                                        {name: 'price', label: 'Prezzo', widget: 'number'},
-                                                        {name: 'description', label: 'Descrizione', widget: 'text'},
-                                                        {name: 'features', label: 'Caratteristiche', widget: 'list', field: {name: 'feature', label: 'Caratteristica', widget: 'string'}}
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    });
-                };
-                document.head.appendChild(script);
-            });
-        }
-        
-        // Netlify Identity integration
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => {
-                        document.location.href = "/?admin=true";
-                    });
-                }
-            });
-        }
-    </script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boostami - Brand Kit Professionali in 48h</title>
+  <meta name="description" content="Servizio digitale chiavi in mano per Brand Kit professionali. Logo, palette colori, template social e mini-sito in 48 ore per piccole attività locali." />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Boostami - Brand Kit Professionali in 48h" />
+  <meta property="og:description" content="Servizio digitale chiavi in mano per Brand Kit professionali. Logo, palette colori, template social e mini-sito in 48 ore per piccole attività locali." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://boostami.online" />
+  
+  <!-- Netlify Identity Widget -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  
+  <script type="module" crossorigin src="/assets/index-BkUE2Kp2.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CWaQEOrA.css">
 </head>
 <body>
-    <div id="root"></div>
+  <div id="root"></div>
+  
+  <!-- CMS Integration Script -->
+  <script>
+    // Controllo se siamo in modalità admin
+    const urlParams = new URLSearchParams(window.location.search);
+    const isAdmin = urlParams.get('admin') === 'true';
+    
+    if (isAdmin) {
+      console.log('🔧 Modalità Admin attivata');
+      
+      // Nascondi il contenuto principale
+      const root = document.getElementById('root');
+      if (root) {
+        root.style.display = 'none';
+      }
+      
+      // Crea container per CMS
+      const cmsContainer = document.createElement('div');
+      cmsContainer.id = 'cms-container';
+      cmsContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        z-index: 9999;
+      `;
+      document.body.appendChild(cmsContainer);
+      
+      // Carica Decap CMS
+      const cmsScript = document.createElement('script');
+      cmsScript.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
+      cmsScript.onload = function() {
+        console.log('✅ Decap CMS caricato');
+        
+        // Configurazione CMS
+        window.CMS.init({
+          config: {
+            backend: {
+              name: 'git-gateway',
+              branch: 'main'
+            },
+            media_folder: 'public/images',
+            public_folder: '/images',
+            collections: [
+              {
+                name: 'settings',
+                label: 'Impostazioni Sito',
+                files: [
+                  {
+                    name: 'general',
+                    label: 'Impostazioni Generali',
+                    file: 'data/settings.json',
+                    fields: [
+                      { name: 'site_title', label: 'Titolo Sito', widget: 'string' },
+                      { name: 'site_description', label: 'Descrizione Sito', widget: 'text' },
+                      { name: 'hero_title', label: 'Titolo Hero', widget: 'string' },
+                      { name: 'hero_subtitle', label: 'Sottotitolo Hero', widget: 'text' }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: 'pricing',
+                label: 'Prezzi',
+                files: [
+                  {
+                    name: 'packages',
+                    label: 'Pacchetti',
+                    file: 'data/pricing.json',
+                    fields: [
+                      {
+                        name: 'packages',
+                        label: 'Pacchetti',
+                        widget: 'list',
+                        fields: [
+                          { name: 'name', label: 'Nome', widget: 'string' },
+                          { name: 'price', label: 'Prezzo', widget: 'number' },
+                          { name: 'description', label: 'Descrizione', widget: 'text' },
+                          { name: 'features', label: 'Caratteristiche', widget: 'list', field: { name: 'feature', label: 'Caratteristica', widget: 'string' } }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        });
+      };
+      document.head.appendChild(cmsScript);
+    }
+    
+    // Netlify Identity
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user && isAdmin) {
+          window.netlifyIdentity.on("login", () => {
+            window.location.reload();
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>
 
