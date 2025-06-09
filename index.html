@@ -1,7 +1,7 @@
 <!--trigger deploy test-->
 <!doctype html>
 <html lang="it">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,9 +9,106 @@
     <meta name="description" content="Servizio digitale chiavi in mano per Brand Kit professionali. Logo, palette colori, template social e mini-sito in 48 ore per piccole attività locali." />
     <script type="module" crossorigin src="/assets/index-DRlHP_ze.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-CWaQEOrA.css">
-  </head>
-  <body>
+    
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
+    <!-- CMS Integration Script -->
+    <script>
+        // Check if admin mode is requested
+        const urlParams = new URLSearchParams(window.location.search);
+        const isAdmin = urlParams.get('admin') === 'true';
+        
+        if (isAdmin) {
+            // Load Decap CMS
+            document.addEventListener('DOMContentLoaded', function() {
+                // Hide main content
+                const root = document.getElementById('root');
+                if (root) root.style.display = 'none';
+                
+                // Create CMS container
+                const cmsContainer = document.createElement('div');
+                cmsContainer.id = 'cms-container';
+                document.body.appendChild(cmsContainer);
+                
+                // Load CMS script
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
+                script.onload = function() {
+                    // Initialize CMS
+                    window.CMS.init({
+                        config: {
+                            backend: {
+                                name: 'git-gateway',
+                                branch: 'main'
+                            },
+                            media_folder: 'assets/images',
+                            public_folder: '/assets/images',
+                            collections: [
+                                {
+                                    name: 'pages',
+                                    label: 'Pagine',
+                                    files: [
+                                        {
+                                            name: 'home',
+                                            label: 'Homepage',
+                                            file: 'content/home.md',
+                                            fields: [
+                                                {name: 'title', label: 'Titolo Principale', widget: 'string'},
+                                                {name: 'subtitle', label: 'Sottotitolo', widget: 'string'},
+                                                {name: 'description', label: 'Descrizione', widget: 'text'},
+                                                {name: 'cta_text', label: 'Testo Pulsante', widget: 'string'},
+                                                {name: 'hero_image', label: 'Immagine Hero', widget: 'image'}
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    name: 'pricing',
+                                    label: 'Prezzi',
+                                    files: [
+                                        {
+                                            name: 'packages',
+                                            label: 'Pacchetti',
+                                            file: 'content/pricing.md',
+                                            fields: [
+                                                {
+                                                    name: 'packages',
+                                                    label: 'Pacchetti',
+                                                    widget: 'list',
+                                                    fields: [
+                                                        {name: 'name', label: 'Nome', widget: 'string'},
+                                                        {name: 'price', label: 'Prezzo', widget: 'number'},
+                                                        {name: 'description', label: 'Descrizione', widget: 'text'},
+                                                        {name: 'features', label: 'Caratteristiche', widget: 'list', field: {name: 'feature', label: 'Caratteristica', widget: 'string'}}
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    });
+                };
+                document.head.appendChild(script);
+            });
+        }
+        
+        // Netlify Identity integration
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/?admin=true";
+                    });
+                }
+            });
+        }
+    </script>
+</head>
+<body>
     <div id="root"></div>
-  </body>
+</body>
 </html>
 
