@@ -1,0 +1,17 @@
+{
+  "name": "boostami-app",
+  "version": "1.0.0",
+  "builds": [
+    {
+      "src": "dist/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/dist/$1"
+    }
+  ]
+}
+
