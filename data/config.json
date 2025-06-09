@@ -1,0 +1,106 @@
+{
+  "hero": {
+    "title": "Il Tuo Brand Professionale in 48 Ore",
+    "subtitle": "Servizio digitale chiavi in mano per piccole attività locali, freelance e microimprese. Logo, palette, template social e mini-sito pronti all'uso.",
+    "cta": "Crea il Tuo Brand Kit"
+  },
+  "pricing": {
+    "base": {
+      "name": "Base",
+      "price": 99,
+      "description": "Logo professionale, palette colori, template social base",
+      "features": [
+        "Logo PNG e SVG",
+        "Palette 3 colori",
+        "2 template social",
+        "Consegna in 48h"
+      ]
+    },
+    "standard": {
+      "name": "Standard",
+      "price": 199,
+      "description": "Brand Kit completo con mini-sito e template avanzati",
+      "features": [
+        "Tutto del Base",
+        "Mini-sito Canva",
+        "5 template social",
+        "Biglietti da visita"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "price": 399,
+      "description": "Soluzione completa con branding avanzato e consulenza",
+      "features": [
+        "Tutto dello Standard",
+        "Consulenza 1h",
+        "10 template social",
+        "Materiale stampa"
+      ]
+    }
+  },
+  "settings": {
+    "title": "Boostami - Brand Kit Professionali in 48h",
+    "description": "Servizio digitale chiavi in mano per Brand Kit professionali. Logo, palette colori, template social e mini-sito in 48 ore per piccole attività locali.",
+    "email": "info@boostami.online",
+    "whatsapp": "+39 XXX XXX XXXX"
+  },
+  "features": [
+    {
+      "icon": "🎨",
+      "title": "Logo Professionale",
+      "description": "PNG, SVG, versione trasparente"
+    },
+    {
+      "icon": "🎨",
+      "title": "Palette Colori",
+      "description": "Schema professionale coordinato"
+    },
+    {
+      "icon": "🔤",
+      "title": "Font Personalizzato",
+      "description": "Tipografia coerente con il brand"
+    },
+    {
+      "icon": "📱",
+      "title": "Template Social",
+      "description": "2+ template per post social"
+    },
+    {
+      "icon": "🌐",
+      "title": "Mini-Sito",
+      "description": "Landing page o sito vetrina"
+    },
+    {
+      "icon": "📄",
+      "title": "PDF Completo",
+      "description": "Tutti gli asset organizzati"
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "Marco Rossi",
+      "business": "Pizzeria Da Marco",
+      "text": "In 48 ore ho avuto tutto quello che mi serviva per il mio brand. Incredibile!",
+      "rating": 5
+    },
+    {
+      "name": "Laura Bianchi",
+      "business": "Studio Legale Bianchi",
+      "text": "Professionalità e velocità. Il Brand Kit ha superato le mie aspettative.",
+      "rating": 5
+    },
+    {
+      "name": "Giuseppe Verde",
+      "business": "Verde Giardinaggio",
+      "text": "Finalmente un servizio che mantiene le promesse. Consigliato!",
+      "rating": 5
+    }
+  ],
+  "meta": {
+    "version": "2.0",
+    "lastUpdated": "2025-06-09T14:35:00.000Z",
+    "cmsIntegrated": true
+  }
+}
+
