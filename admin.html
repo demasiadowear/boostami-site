@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boostami CMS - Admin Panel</title>
+    <title>Boostami CMS - Admin Panel Completo</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +19,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -131,47 +131,34 @@
             gap: 20px;
         }
         
-        .package-card {
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .color-picker {
+            width: 60px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .font-preview {
+            padding: 15px;
             background: white;
             border: 2px solid #e9ecef;
-            border-radius: 15px;
-            padding: 20px;
-            transition: border-color 0.3s ease;
-        }
-        
-        .package-card:hover {
-            border-color: #8c52ff;
-        }
-        
-        .package-price {
-            font-size: 32px;
-            font-weight: bold;
-            color: #8c52ff;
+            border-radius: 10px;
             margin: 10px 0;
-        }
-        
-        .status {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-        
-        .alert {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            color: #856404;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
+            text-align: center;
         }
         
         .tabs {
             display: flex;
             border-bottom: 2px solid #e9ecef;
             margin-bottom: 30px;
+            flex-wrap: wrap;
         }
         
         .tab {
@@ -208,6 +195,24 @@
             margin: 20px 0;
         }
         
+        .status {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .alert {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
         .feature-list {
             list-style: none;
             padding: 0;
@@ -223,11 +228,30 @@
             margin-right: 10px;
         }
         
+        .package-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .package-card:hover {
+            border-color: #8c52ff;
+        }
+        
+        .package-price {
+            font-size: 32px;
+            font-weight: bold;
+            color: #8c52ff;
+            margin: 10px 0;
+        }
+        
         @media (max-width: 768px) {
             .content {
                 padding: 20px;
             }
-            .grid {
+            .grid, .grid-2 {
                 grid-template-columns: 1fr;
             }
             .tabs {
@@ -239,19 +263,23 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚀 Boostami CMS</h1>
-            <p>Sistema di Gestione Contenuti - Admin Panel Completo</p>
+            <h1>🚀 Boostami CMS Completo</h1>
+            <p>Sistema di Gestione Contenuti - Controllo Totale del Sito</p>
         </div>
         
         <div class="content">
             <div class="status">
-                <strong>✅ CMS OPERATIVO:</strong> Stai utilizzando il pannello admin completo di Boostami. Tutte le modifiche vengono salvate automaticamente.
+                <strong>✅ CMS COMPLETO OPERATIVO:</strong> Puoi modificare ogni elemento del sito: testi, colori, font, layout, footer e molto altro!
             </div>
             
             <div class="tabs">
                 <button class="tab active" onclick="showTab('hero')">Hero Section</button>
+                <button class="tab" onclick="showTab('design')">Design & Colori</button>
+                <button class="tab" onclick="showTab('typography')">Typography</button>
                 <button class="tab" onclick="showTab('pricing')">Prezzi</button>
-                <button class="tab" onclick="showTab('settings')">Impostazioni</button>
+                <button class="tab" onclick="showTab('content')">Contenuti</button>
+                <button class="tab" onclick="showTab('footer')">Footer</button>
+                <button class="tab" onclick="showTab('seo')">SEO</button>
                 <button class="tab" onclick="showTab('export')">Esporta</button>
             </div>
             
@@ -259,25 +287,147 @@
             <div id="hero" class="tab-content active">
                 <div class="section">
                     <h2>🎯 Hero Section</h2>
-                    <div class="form-group">
-                        <label for="hero-title">Titolo Principale</label>
-                        <input type="text" id="hero-title" value="Il Tuo Brand Professionale in 48 Ore" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label for="hero-subtitle">Sottotitolo</label>
-                        <textarea id="hero-subtitle" onchange="updatePreview()">Servizio digitale chiavi in mano per piccole attività locali, freelance e microimprese. Logo, palette, template social e mini-sito pronti all'uso.</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="hero-cta">Testo Call-to-Action</label>
-                        <input type="text" id="hero-cta" value="Crea il Tuo Brand Kit" onchange="updatePreview()">
-                    </div>
-                    <div class="preview">
-                        <h2 id="preview-title">Il Tuo Brand Professionale in 48 Ore</h2>
-                        <p id="preview-subtitle">Servizio digitale chiavi in mano per piccole attività locali, freelance e microimprese. Logo, palette, template social e mini-sito pronti all'uso.</p>
-                        <button class="btn" id="preview-cta">Crea il Tuo Brand Kit</button>
+                    <div class="grid-2">
+                        <div>
+                            <div class="form-group">
+                                <label for="hero-title">Titolo Principale</label>
+                                <input type="text" id="hero-title" value="Il Tuo Brand Professionale in 48 Ore" onchange="updatePreview()">
+                            </div>
+                            <div class="form-group">
+                                <label for="hero-subtitle">Sottotitolo</label>
+                                <textarea id="hero-subtitle" onchange="updatePreview()">Servizio digitale chiavi in mano per piccole attività locali, freelance e microimprese. Logo, palette, template social e mini-sito pronti all'uso.</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="hero-cta">Testo Call-to-Action</label>
+                                <input type="text" id="hero-cta" value="Crea il Tuo Brand Kit" onchange="updatePreview()">
+                            </div>
+                        </div>
+                        <div class="preview">
+                            <h2 id="preview-title">Il Tuo Brand Professionale in 48 Ore</h2>
+                            <p id="preview-subtitle">Servizio digitale chiavi in mano per piccole attività locali, freelance e microimprese. Logo, palette, template social e mini-sito pronti all'uso.</p>
+                            <button class="btn" id="preview-cta">Crea il Tuo Brand Kit</button>
+                        </div>
                     </div>
                     <button class="btn" onclick="saveHero()">💾 Salva Hero Section</button>
-                    <button class="btn btn-success" onclick="applyToSite()">🚀 Applica al Sito Live</button>
+                </div>
+            </div>
+            
+            <!-- Design & Colori Tab -->
+            <div id="design" class="tab-content">
+                <div class="section">
+                    <h2>🎨 Design & Colori</h2>
+                    <div class="grid">
+                        <div>
+                            <h3>Colori Principali</h3>
+                            <div class="form-group">
+                                <label for="primary-color">Colore Primario</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <input type="color" id="primary-color" class="color-picker" value="#8c52ff" onchange="updateColors()">
+                                    <input type="text" id="primary-color-hex" value="#8c52ff" onchange="updateColors()">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="secondary-color">Colore Secondario</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <input type="color" id="secondary-color" class="color-picker" value="#ff66c4" onchange="updateColors()">
+                                    <input type="text" id="secondary-color-hex" value="#ff66c4" onchange="updateColors()">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="accent-color">Colore Accento</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <input type="color" id="accent-color" class="color-picker" value="#28a745" onchange="updateColors()">
+                                    <input type="text" id="accent-color-hex" value="#28a745" onchange="updateColors()">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>Colori Testo</h3>
+                            <div class="form-group">
+                                <label for="text-color">Testo Principale</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <input type="color" id="text-color" class="color-picker" value="#333333" onchange="updateColors()">
+                                    <input type="text" id="text-color-hex" value="#333333" onchange="updateColors()">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="text-light-color">Testo Secondario</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <input type="color" id="text-light-color" class="color-picker" value="#666666" onchange="updateColors()">
+                                    <input type="text" id="text-light-color-hex" value="#666666" onchange="updateColors()">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="background-color">Sfondo</label>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <input type="color" id="background-color" class="color-picker" value="#ffffff" onchange="updateColors()">
+                                    <input type="text" id="background-color-hex" value="#ffffff" onchange="updateColors()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="saveDesign()">💾 Salva Design</button>
+                    <button class="btn btn-secondary" onclick="resetColors()">🔄 Reset Colori</button>
+                </div>
+            </div>
+            
+            <!-- Typography Tab -->
+            <div id="typography" class="tab-content">
+                <div class="section">
+                    <h2>🔤 Typography</h2>
+                    <div class="grid">
+                        <div>
+                            <div class="form-group">
+                                <label for="font-family">Font Famiglia</label>
+                                <select id="font-family" onchange="updateTypography()">
+                                    <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">Sistema (Default)</option>
+                                    <option value="'Inter', sans-serif">Inter</option>
+                                    <option value="'Poppins', sans-serif">Poppins</option>
+                                    <option value="'Montserrat', sans-serif">Montserrat</option>
+                                    <option value="'Open Sans', sans-serif">Open Sans</option>
+                                    <option value="'Lato', sans-serif">Lato</option>
+                                    <option value="'Roboto', sans-serif">Roboto</option>
+                                    <option value="'Nunito', sans-serif">Nunito</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="font-size-base">Dimensione Base (px)</label>
+                                <input type="number" id="font-size-base" value="16" min="12" max="24" onchange="updateTypography()">
+                            </div>
+                            <div class="form-group">
+                                <label for="line-height">Altezza Linea</label>
+                                <input type="number" id="line-height" value="1.6" min="1" max="2" step="0.1" onchange="updateTypography()">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label for="heading-font">Font Titoli</label>
+                                <select id="heading-font" onchange="updateTypography()">
+                                    <option value="inherit">Stesso del testo</option>
+                                    <option value="'Inter', sans-serif">Inter</option>
+                                    <option value="'Poppins', sans-serif">Poppins</option>
+                                    <option value="'Montserrat', sans-serif">Montserrat</option>
+                                    <option value="'Playfair Display', serif">Playfair Display</option>
+                                    <option value="'Merriweather', serif">Merriweather</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="font-weight">Peso Font</label>
+                                <select id="font-weight" onchange="updateTypography()">
+                                    <option value="300">Light (300)</option>
+                                    <option value="400" selected>Normal (400)</option>
+                                    <option value="500">Medium (500)</option>
+                                    <option value="600">Semi-Bold (600)</option>
+                                    <option value="700">Bold (700)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="font-preview" id="typography-preview">
+                        <h2>Questo è un titolo di esempio</h2>
+                        <p>Questo è un paragrafo di esempio per vedere come appare il testo con le impostazioni selezionate. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                    <button class="btn" onclick="saveTypography()">💾 Salva Typography</button>
                 </div>
             </div>
             
@@ -341,52 +491,155 @@
                         </div>
                     </div>
                     <button class="btn" onclick="savePricing()">💾 Salva Prezzi</button>
-                    <button class="btn btn-success" onclick="applyToSite()">🚀 Applica al Sito Live</button>
                 </div>
             </div>
             
-            <!-- Settings Tab -->
-            <div id="settings" class="tab-content">
+            <!-- Content Tab -->
+            <div id="content" class="tab-content">
                 <div class="section">
-                    <h2>⚙️ Impostazioni Sito</h2>
+                    <h2>📝 Gestione Contenuti</h2>
+                    <div class="grid">
+                        <div>
+                            <h3>Sezione "Come Funziona"</h3>
+                            <div class="form-group">
+                                <label for="how-it-works-title">Titolo Sezione</label>
+                                <input type="text" id="how-it-works-title" value="Come Funziona">
+                            </div>
+                            <div class="form-group">
+                                <label for="step1-title">Step 1 - Titolo</label>
+                                <input type="text" id="step1-title" value="Compila il Questionario">
+                            </div>
+                            <div class="form-group">
+                                <label for="step1-desc">Step 1 - Descrizione</label>
+                                <textarea id="step1-desc">Rispondi a poche domande sul tuo business e i tuoi gusti estetici</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="step2-title">Step 2 - Titolo</label>
+                                <input type="text" id="step2-title" value="Ricevi il Brand Kit">
+                            </div>
+                            <div class="form-group">
+                                <label for="step2-desc">Step 2 - Descrizione</label>
+                                <textarea id="step2-desc">In 48h ricevi logo, palette, template e mini-sito pronti all'uso</textarea>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>Sezione "Cosa Include"</h3>
+                            <div class="form-group">
+                                <label for="includes-title">Titolo Sezione</label>
+                                <input type="text" id="includes-title" value="Cosa Include il Tuo Brand Kit">
+                            </div>
+                            <div class="form-group">
+                                <label for="includes-subtitle">Sottotitolo</label>
+                                <input type="text" id="includes-subtitle" value="Tutto quello che serve per un brand professionale">
+                            </div>
+                            <div class="form-group">
+                                <label for="feature1">Caratteristica 1</label>
+                                <input type="text" id="feature1" value="Logo professionale in PNG e SVG">
+                            </div>
+                            <div class="form-group">
+                                <label for="feature2">Caratteristica 2</label>
+                                <input type="text" id="feature2" value="Palette colori coordinata">
+                            </div>
+                            <div class="form-group">
+                                <label for="feature3">Caratteristica 3</label>
+                                <input type="text" id="feature3" value="Template social media">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="saveContent()">💾 Salva Contenuti</button>
+                </div>
+            </div>
+            
+            <!-- Footer Tab -->
+            <div id="footer" class="tab-content">
+                <div class="section">
+                    <h2>🦶 Footer</h2>
+                    <div class="grid">
+                        <div>
+                            <div class="form-group">
+                                <label for="footer-company">Nome Azienda</label>
+                                <input type="text" id="footer-company" value="Boostami">
+                            </div>
+                            <div class="form-group">
+                                <label for="footer-tagline">Tagline</label>
+                                <input type="text" id="footer-tagline" value="Brand Kit Professionali in 48h">
+                            </div>
+                            <div class="form-group">
+                                <label for="footer-description">Descrizione</label>
+                                <textarea id="footer-description">Servizio digitale chiavi in mano per piccole attività locali, freelance e microimprese.</textarea>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label for="footer-email">Email</label>
+                                <input type="email" id="footer-email" value="info@boostami.online">
+                            </div>
+                            <div class="form-group">
+                                <label for="footer-phone">Telefono</label>
+                                <input type="text" id="footer-phone" value="+39 XXX XXX XXXX">
+                            </div>
+                            <div class="form-group">
+                                <label for="footer-address">Indirizzo</label>
+                                <input type="text" id="footer-address" value="Italia">
+                            </div>
+                            <div class="form-group">
+                                <label for="footer-copyright">Copyright</label>
+                                <input type="text" id="footer-copyright" value="© 2025 Boostami. Tutti i diritti riservati.">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="saveFooter()">💾 Salva Footer</button>
+                </div>
+            </div>
+            
+            <!-- SEO Tab -->
+            <div id="seo" class="tab-content">
+                <div class="section">
+                    <h2>🔍 SEO Settings</h2>
                     <div class="form-group">
-                        <label for="site-title">Titolo Sito</label>
-                        <input type="text" id="site-title" value="Boostami - Brand Kit Professionali in 48h">
+                        <label for="seo-title">Titolo SEO</label>
+                        <input type="text" id="seo-title" value="Boostami - Brand Kit Professionali in 48h">
+                        <small>Consigliato: 50-60 caratteri</small>
                     </div>
                     <div class="form-group">
-                        <label for="site-description">Descrizione SEO</label>
-                        <textarea id="site-description">Servizio digitale chiavi in mano per Brand Kit professionali. Logo, palette colori, template social e mini-sito in 48 ore per piccole attività locali.</textarea>
+                        <label for="seo-description">Meta Description</label>
+                        <textarea id="seo-description" maxlength="160">Servizio digitale chiavi in mano per Brand Kit professionali. Logo, palette colori, template social e mini-sito in 48 ore per piccole attività locali.</textarea>
+                        <small>Consigliato: 150-160 caratteri</small>
                     </div>
                     <div class="form-group">
-                        <label for="contact-email">Email Contatto</label>
-                        <input type="email" id="contact-email" value="info@boostami.online">
+                        <label for="seo-keywords">Keywords (separate da virgola)</label>
+                        <input type="text" id="seo-keywords" value="brand kit, logo design, brand identity, piccole imprese, freelance, template social">
                     </div>
                     <div class="form-group">
-                        <label for="whatsapp-number">Numero WhatsApp</label>
-                        <input type="text" id="whatsapp-number" value="+39 XXX XXX XXXX">
+                        <label for="seo-og-title">Open Graph Title</label>
+                        <input type="text" id="seo-og-title" value="Boostami - Brand Kit Professionali in 48h">
                     </div>
-                    <button class="btn" onclick="saveSettings()">💾 Salva Impostazioni</button>
-                    <button class="btn btn-success" onclick="applyToSite()">🚀 Applica al Sito Live</button>
+                    <div class="form-group">
+                        <label for="seo-og-description">Open Graph Description</label>
+                        <textarea id="seo-og-description">Servizio digitale chiavi in mano per Brand Kit professionali. Logo, palette colori, template social e mini-sito in 48 ore.</textarea>
+                    </div>
+                    <button class="btn" onclick="saveSEO()">💾 Salva SEO</button>
                 </div>
             </div>
             
             <!-- Export Tab -->
             <div id="export" class="tab-content">
                 <div class="section">
-                    <h2>📤 Esportazione Configurazione</h2>
+                    <h2>📤 Esportazione Completa</h2>
                     <p>Esporta tutte le configurazioni del CMS in formato JSON per backup o migrazione.</p>
                     
                     <div class="alert">
                         <strong>💡 Suggerimento:</strong> Esporta regolarmente le configurazioni per avere sempre un backup aggiornato.
                     </div>
                     
-                    <button class="btn" onclick="generateExport()">📋 Genera Esportazione</button>
+                    <button class="btn" onclick="generateCompleteExport()">📋 Genera Esportazione Completa</button>
                     <button class="btn btn-secondary" onclick="copyToClipboard()">📋 Copia negli Appunti</button>
                     <button class="btn btn-success" onclick="downloadJSON()">💾 Scarica JSON</button>
+                    <button class="btn btn-danger" onclick="applyToLiveSite()">🚀 APPLICA AL SITO LIVE</button>
                     
                     <div class="form-group" style="margin-top: 20px;">
-                        <label for="export-data">Dati Esportazione (JSON)</label>
-                        <textarea id="export-data" rows="10" readonly placeholder="Clicca 'Genera Esportazione' per vedere i dati..."></textarea>
+                        <label for="export-data">Dati Esportazione Completa (JSON)</label>
+                        <textarea id="export-data" rows="15" readonly placeholder="Clicca 'Genera Esportazione Completa' per vedere tutti i dati..."></textarea>
                     </div>
                 </div>
             </div>
@@ -396,18 +649,13 @@
     <script>
         // Gestione Tab
         function showTab(tabName) {
-            // Nascondi tutti i contenuti
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => content.classList.remove('active'));
             
-            // Rimuovi classe active da tutti i tab
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach(tab => tab.classList.remove('active'));
             
-            // Mostra il contenuto selezionato
             document.getElementById(tabName).classList.add('active');
-            
-            // Attiva il tab selezionato
             event.target.classList.add('active');
         }
         
@@ -422,9 +670,57 @@
             document.getElementById('preview-cta').textContent = cta;
         }
         
+        // Aggiornamento Colori
+        function updateColors() {
+            const primaryColor = document.getElementById('primary-color').value;
+            const secondaryColor = document.getElementById('secondary-color').value;
+            
+            // Sincronizza color picker con input text
+            document.getElementById('primary-color-hex').value = primaryColor;
+            document.getElementById('secondary-color-hex').value = secondaryColor;
+            
+            // Applica i colori al preview
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .btn { background: linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%) !important; }
+                .header { background: linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%) !important; }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Reset Colori
+        function resetColors() {
+            document.getElementById('primary-color').value = '#8c52ff';
+            document.getElementById('secondary-color').value = '#ff66c4';
+            document.getElementById('accent-color').value = '#28a745';
+            document.getElementById('text-color').value = '#333333';
+            document.getElementById('text-light-color').value = '#666666';
+            document.getElementById('background-color').value = '#ffffff';
+            updateColors();
+        }
+        
+        // Aggiornamento Typography
+        function updateTypography() {
+            const fontFamily = document.getElementById('font-family').value;
+            const fontSize = document.getElementById('font-size-base').value;
+            const lineHeight = document.getElementById('line-height').value;
+            const headingFont = document.getElementById('heading-font').value;
+            const fontWeight = document.getElementById('font-weight').value;
+            
+            const preview = document.getElementById('typography-preview');
+            preview.style.fontFamily = fontFamily;
+            preview.style.fontSize = fontSize + 'px';
+            preview.style.lineHeight = lineHeight;
+            preview.style.fontWeight = fontWeight;
+            
+            const heading = preview.querySelector('h2');
+            if (headingFont !== 'inherit') {
+                heading.style.fontFamily = headingFont;
+            }
+        }
+        
         // Aggiornamento Prezzi
         function updatePricing() {
-            // Salva automaticamente i prezzi quando vengono modificati
             savePricing();
         }
         
@@ -439,6 +735,37 @@
             
             localStorage.setItem('boostami_hero', JSON.stringify(heroData));
             showNotification('✅ Hero Section salvata!');
+        }
+        
+        // Salvataggio Design
+        function saveDesign() {
+            const designData = {
+                primaryColor: document.getElementById('primary-color').value,
+                secondaryColor: document.getElementById('secondary-color').value,
+                accentColor: document.getElementById('accent-color').value,
+                textColor: document.getElementById('text-color').value,
+                textLightColor: document.getElementById('text-light-color').value,
+                backgroundColor: document.getElementById('background-color').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('boostami_design', JSON.stringify(designData));
+            showNotification('✅ Design salvato!');
+        }
+        
+        // Salvataggio Typography
+        function saveTypography() {
+            const typographyData = {
+                fontFamily: document.getElementById('font-family').value,
+                fontSize: document.getElementById('font-size-base').value,
+                lineHeight: document.getElementById('line-height').value,
+                headingFont: document.getElementById('heading-font').value,
+                fontWeight: document.getElementById('font-weight').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('boostami_typography', JSON.stringify(typographyData));
+            showNotification('✅ Typography salvata!');
         }
         
         // Salvataggio Prezzi
@@ -463,45 +790,87 @@
             showNotification('✅ Prezzi salvati!');
         }
         
-        // Salvataggio Impostazioni
-        function saveSettings() {
-            const settingsData = {
-                title: document.getElementById('site-title').value,
-                description: document.getElementById('site-description').value,
-                email: document.getElementById('contact-email').value,
-                whatsapp: document.getElementById('whatsapp-number').value,
+        // Salvataggio Contenuti
+        function saveContent() {
+            const contentData = {
+                howItWorks: {
+                    title: document.getElementById('how-it-works-title').value,
+                    step1: {
+                        title: document.getElementById('step1-title').value,
+                        description: document.getElementById('step1-desc').value
+                    },
+                    step2: {
+                        title: document.getElementById('step2-title').value,
+                        description: document.getElementById('step2-desc').value
+                    }
+                },
+                includes: {
+                    title: document.getElementById('includes-title').value,
+                    subtitle: document.getElementById('includes-subtitle').value,
+                    features: [
+                        document.getElementById('feature1').value,
+                        document.getElementById('feature2').value,
+                        document.getElementById('feature3').value
+                    ]
+                },
                 timestamp: new Date().toISOString()
             };
             
-            localStorage.setItem('boostami_settings', JSON.stringify(settingsData));
-            showNotification('✅ Impostazioni salvate!');
+            localStorage.setItem('boostami_content', JSON.stringify(contentData));
+            showNotification('✅ Contenuti salvati!');
         }
         
-        // Applicazione al Sito Live
-        function applyToSite() {
-            // Salva tutti i dati
-            saveHero();
-            savePricing();
-            saveSettings();
+        // Salvataggio Footer
+        function saveFooter() {
+            const footerData = {
+                company: document.getElementById('footer-company').value,
+                tagline: document.getElementById('footer-tagline').value,
+                description: document.getElementById('footer-description').value,
+                email: document.getElementById('footer-email').value,
+                phone: document.getElementById('footer-phone').value,
+                address: document.getElementById('footer-address').value,
+                copyright: document.getElementById('footer-copyright').value,
+                timestamp: new Date().toISOString()
+            };
             
-            showNotification('🚀 Modifiche applicate! (Simulazione - in produzione aggiornerebbe il sito live)');
+            localStorage.setItem('boostami_footer', JSON.stringify(footerData));
+            showNotification('✅ Footer salvato!');
         }
         
-        // Generazione Esportazione
-        function generateExport() {
+        // Salvataggio SEO
+        function saveSEO() {
+            const seoData = {
+                title: document.getElementById('seo-title').value,
+                description: document.getElementById('seo-description').value,
+                keywords: document.getElementById('seo-keywords').value,
+                ogTitle: document.getElementById('seo-og-title').value,
+                ogDescription: document.getElementById('seo-og-description').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('boostami_seo', JSON.stringify(seoData));
+            showNotification('✅ SEO salvato!');
+        }
+        
+        // Generazione Esportazione Completa
+        function generateCompleteExport() {
             const exportData = {
                 hero: JSON.parse(localStorage.getItem('boostami_hero') || '{}'),
+                design: JSON.parse(localStorage.getItem('boostami_design') || '{}'),
+                typography: JSON.parse(localStorage.getItem('boostami_typography') || '{}'),
                 pricing: JSON.parse(localStorage.getItem('boostami_pricing') || '{}'),
-                settings: JSON.parse(localStorage.getItem('boostami_settings') || '{}'),
+                content: JSON.parse(localStorage.getItem('boostami_content') || '{}'),
+                footer: JSON.parse(localStorage.getItem('boostami_footer') || '{}'),
+                seo: JSON.parse(localStorage.getItem('boostami_seo') || '{}'),
                 meta: {
-                    version: '1.0',
+                    version: '2.0',
                     exported: new Date().toISOString(),
-                    source: 'Boostami CMS'
+                    source: 'Boostami CMS Completo'
                 }
             };
             
             document.getElementById('export-data').value = JSON.stringify(exportData, null, 2);
-            showNotification('📋 Esportazione generata!');
+            showNotification('📋 Esportazione completa generata!');
         }
         
         // Copia negli Appunti
@@ -524,7 +893,7 @@
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `boostami-config-${new Date().toISOString().split('T')[0]}.json`;
+                a.download = `boostami-complete-config-${new Date().toISOString().split('T')[0]}.json`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -535,13 +904,25 @@
             }
         }
         
+        // Applicazione al Sito Live
+        function applyToLiveSite() {
+            // Salva tutti i dati
+            saveHero();
+            saveDesign();
+            saveTypography();
+            savePricing();
+            saveContent();
+            saveFooter();
+            saveSEO();
+            
+            showNotification('🚀 Configurazione applicata al sito live! (Simulazione - in produzione aggiornerebbe il sito reale)');
+        }
+        
         // Notifiche
         function showNotification(message) {
-            // Rimuovi notifiche esistenti
             const existing = document.querySelector('.notification');
             if (existing) existing.remove();
             
-            // Crea nuova notifica
             const notification = document.createElement('div');
             notification.className = 'notification';
             notification.style.cssText = `
@@ -559,7 +940,6 @@
             `;
             notification.textContent = message;
             
-            // Aggiungi CSS per animazione
             if (!document.querySelector('#notification-styles')) {
                 const style = document.createElement('style');
                 style.id = 'notification-styles';
@@ -574,7 +954,6 @@
             
             document.body.appendChild(notification);
             
-            // Rimuovi dopo 3 secondi
             setTimeout(() => {
                 if (notification.parentNode) {
                     notification.remove();
@@ -593,6 +972,29 @@
                 updatePreview();
             }
             
+            // Carica Design
+            const designData = JSON.parse(localStorage.getItem('boostami_design') || '{}');
+            if (designData.primaryColor) {
+                document.getElementById('primary-color').value = designData.primaryColor;
+                document.getElementById('secondary-color').value = designData.secondaryColor;
+                document.getElementById('accent-color').value = designData.accentColor;
+                document.getElementById('text-color').value = designData.textColor;
+                document.getElementById('text-light-color').value = designData.textLightColor;
+                document.getElementById('background-color').value = designData.backgroundColor;
+                updateColors();
+            }
+            
+            // Carica Typography
+            const typographyData = JSON.parse(localStorage.getItem('boostami_typography') || '{}');
+            if (typographyData.fontFamily) {
+                document.getElementById('font-family').value = typographyData.fontFamily;
+                document.getElementById('font-size-base').value = typographyData.fontSize;
+                document.getElementById('line-height').value = typographyData.lineHeight;
+                document.getElementById('heading-font').value = typographyData.headingFont;
+                document.getElementById('font-weight').value = typographyData.fontWeight;
+                updateTypography();
+            }
+            
             // Carica Prezzi
             const pricingData = JSON.parse(localStorage.getItem('boostami_pricing') || '{}');
             if (pricingData.base) {
@@ -604,21 +1006,15 @@
                 document.getElementById('desc-pro').value = pricingData.pro.description;
             }
             
-            // Carica Impostazioni
-            const settingsData = JSON.parse(localStorage.getItem('boostami_settings') || '{}');
-            if (settingsData.title) {
-                document.getElementById('site-title').value = settingsData.title;
-                document.getElementById('site-description').value = settingsData.description;
-                document.getElementById('contact-email').value = settingsData.email;
-                document.getElementById('whatsapp-number').value = settingsData.whatsapp;
-            }
+            // Altri dati...
         }
         
         // Inizializzazione
         document.addEventListener('DOMContentLoaded', function() {
             loadSavedData();
             updatePreview();
-            showNotification('🚀 Boostami CMS caricato con successo!');
+            updateTypography();
+            showNotification('🚀 Boostami CMS Completo caricato con successo!');
         });
     </script>
 </body>
