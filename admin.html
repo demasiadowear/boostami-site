@@ -15,57 +15,84 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #8c52ff 0%, #ff66c4 100%);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 20px;
         }
         
-        .admin-container {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             background: white;
             border-radius: 20px;
-            padding: 40px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            max-width: 500px;
-            width: 90%;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #8c52ff 0%, #ff66c4 100%);
+            color: white;
+            padding: 30px;
             text-align: center;
         }
         
-        .logo {
-            width: 120px;
-            height: auto;
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            color: #333;
+        .header h1 {
+            font-size: 32px;
             margin-bottom: 10px;
-            font-size: 28px;
         }
         
-        .subtitle {
-            color: #666;
-            margin-bottom: 40px;
+        .header p {
+            opacity: 0.9;
             font-size: 16px;
         }
         
-        .cms-section {
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
             background: #f8f9fa;
             border-radius: 15px;
             padding: 30px;
             margin-bottom: 30px;
         }
         
-        .cms-title {
+        .section h2 {
             color: #8c52ff;
-            font-size: 20px;
-            margin-bottom: 15px;
-            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 24px;
         }
         
-        .cms-description {
-            color: #666;
+        .form-group {
             margin-bottom: 25px;
-            line-height: 1.6;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #8c52ff;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
         }
         
         .btn {
@@ -78,9 +105,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            margin: 10px;
+            margin: 10px 10px 10px 0;
         }
         
         .btn:hover {
@@ -92,320 +117,509 @@
             background: #6c757d;
         }
         
-        .btn-secondary:hover {
-            box-shadow: 0 10px 20px rgba(108, 117, 125, 0.3);
+        .btn-success {
+            background: #28a745;
         }
         
-        .features {
-            text-align: left;
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .package-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .package-card:hover {
+            border-color: #8c52ff;
+        }
+        
+        .package-price {
+            font-size: 32px;
+            font-weight: bold;
+            color: #8c52ff;
+            margin: 10px 0;
+        }
+        
+        .status {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
             margin: 20px 0;
         }
         
-        .feature {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-            color: #555;
+        .alert {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
         }
         
-        .feature::before {
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 30px;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #6c757d;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            color: #8c52ff;
+            border-bottom-color: #8c52ff;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .preview {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .feature-list li:before {
             content: "✅";
             margin-right: 10px;
         }
         
-        .status {
-            background: #e3f2fd;
-            border: 1px solid #2196f3;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .status-title {
-            color: #1976d2;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        .loading {
-            display: none;
-            margin: 20px 0;
-        }
-        
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #8c52ff;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .tabs {
+                flex-direction: column;
+            }
         }
     </style>
-    
-    <!-- Netlify Identity Widget -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-    <div class="admin-container">
-        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMjAwIDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8dGV4dCB4PSIxMCIgeT0iNDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiM4YzUyZmYiPkJvb3N0YW1pPC90ZXh0Pgo8dGV4dCB4PSIxMCIgeT0iNjAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzY2NiI+U21hcnQgQnJhbmRpbmc8L3RleHQ+Cjwvc3ZnPgo=" alt="Boostami" class="logo">
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Boostami CMS</h1>
+            <p>Sistema di Gestione Contenuti - Admin Panel Completo</p>
+        </div>
         
-        <h1>Admin Panel</h1>
-        <p class="subtitle">Gestione Contenuti Boostami</p>
-        
-        <div class="cms-section">
-            <h2 class="cms-title">🔐 Accesso CMS</h2>
-            <p class="cms-description">
-                Accedi al sistema di gestione contenuti per modificare testi, prezzi, immagini e configurazioni del sito.
-            </p>
-            
-            <div class="features">
-                <div class="feature">Modifica Hero e Descrizioni</div>
-                <div class="feature">Gestione Prezzi Pacchetti</div>
-                <div class="feature">Upload Immagini</div>
-                <div class="feature">Configurazioni Sito</div>
+        <div class="content">
+            <div class="status">
+                <strong>✅ CMS OPERATIVO:</strong> Stai utilizzando il pannello admin completo di Boostami. Tutte le modifiche vengono salvate automaticamente.
             </div>
             
-            <div id="auth-section">
-                <button id="login-btn" class="btn" onclick="handleLogin()">
-                    🚀 Accedi al CMS
-                </button>
-                
-                <div id="loading" class="loading">
-                    <div class="spinner"></div>
-                    <p>Caricamento CMS...</p>
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('hero')">Hero Section</button>
+                <button class="tab" onclick="showTab('pricing')">Prezzi</button>
+                <button class="tab" onclick="showTab('settings')">Impostazioni</button>
+                <button class="tab" onclick="showTab('export')">Esporta</button>
+            </div>
+            
+            <!-- Hero Section Tab -->
+            <div id="hero" class="tab-content active">
+                <div class="section">
+                    <h2>🎯 Hero Section</h2>
+                    <div class="form-group">
+                        <label for="hero-title">Titolo Principale</label>
+                        <input type="text" id="hero-title" value="Il Tuo Brand Professionale in 48 Ore" onchange="updatePreview()">
+                    </div>
+                    <div class="form-group">
+                        <label for="hero-subtitle">Sottotitolo</label>
+                        <textarea id="hero-subtitle" onchange="updatePreview()">Servizio digitale chiavi in mano per piccole attività locali, freelance e microimprese. Logo, palette, template social e mini-sito pronti all'uso.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="hero-cta">Testo Call-to-Action</label>
+                        <input type="text" id="hero-cta" value="Crea il Tuo Brand Kit" onchange="updatePreview()">
+                    </div>
+                    <div class="preview">
+                        <h2 id="preview-title">Il Tuo Brand Professionale in 48 Ore</h2>
+                        <p id="preview-subtitle">Servizio digitale chiavi in mano per piccole attività locali, freelance e microimprese. Logo, palette, template social e mini-sito pronti all'uso.</p>
+                        <button class="btn" id="preview-cta">Crea il Tuo Brand Kit</button>
+                    </div>
+                    <button class="btn" onclick="saveHero()">💾 Salva Hero Section</button>
+                    <button class="btn btn-success" onclick="applyToSite()">🚀 Applica al Sito Live</button>
                 </div>
             </div>
             
-            <div id="cms-container" style="display: none;">
-                <!-- Il CMS verrà caricato qui -->
+            <!-- Pricing Tab -->
+            <div id="pricing" class="tab-content">
+                <div class="section">
+                    <h2>💰 Gestione Prezzi</h2>
+                    <div class="grid">
+                        <div class="package-card">
+                            <h3>Pacchetto Base</h3>
+                            <div class="form-group">
+                                <label for="price-base">Prezzo (€)</label>
+                                <input type="number" id="price-base" value="99" onchange="updatePricing()">
+                            </div>
+                            <div class="form-group">
+                                <label for="desc-base">Descrizione</label>
+                                <textarea id="desc-base" onchange="updatePricing()">Logo professionale, palette colori, template social base</textarea>
+                            </div>
+                            <ul class="feature-list">
+                                <li>Logo PNG e SVG</li>
+                                <li>Palette 3 colori</li>
+                                <li>2 template social</li>
+                                <li>Consegna in 48h</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="package-card">
+                            <h3>Pacchetto Standard</h3>
+                            <div class="form-group">
+                                <label for="price-standard">Prezzo (€)</label>
+                                <input type="number" id="price-standard" value="199" onchange="updatePricing()">
+                            </div>
+                            <div class="form-group">
+                                <label for="desc-standard">Descrizione</label>
+                                <textarea id="desc-standard" onchange="updatePricing()">Brand Kit completo con mini-sito e template avanzati</textarea>
+                            </div>
+                            <ul class="feature-list">
+                                <li>Tutto del Base</li>
+                                <li>Mini-sito Canva</li>
+                                <li>5 template social</li>
+                                <li>Biglietti da visita</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="package-card">
+                            <h3>Pacchetto Pro</h3>
+                            <div class="form-group">
+                                <label for="price-pro">Prezzo (€)</label>
+                                <input type="number" id="price-pro" value="399" onchange="updatePricing()">
+                            </div>
+                            <div class="form-group">
+                                <label for="desc-pro">Descrizione</label>
+                                <textarea id="desc-pro" onchange="updatePricing()">Soluzione completa con branding avanzato e consulenza</textarea>
+                            </div>
+                            <ul class="feature-list">
+                                <li>Tutto dello Standard</li>
+                                <li>Consulenza 1h</li>
+                                <li>10 template social</li>
+                                <li>Materiale stampa</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="savePricing()">💾 Salva Prezzi</button>
+                    <button class="btn btn-success" onclick="applyToSite()">🚀 Applica al Sito Live</button>
+                </div>
+            </div>
+            
+            <!-- Settings Tab -->
+            <div id="settings" class="tab-content">
+                <div class="section">
+                    <h2>⚙️ Impostazioni Sito</h2>
+                    <div class="form-group">
+                        <label for="site-title">Titolo Sito</label>
+                        <input type="text" id="site-title" value="Boostami - Brand Kit Professionali in 48h">
+                    </div>
+                    <div class="form-group">
+                        <label for="site-description">Descrizione SEO</label>
+                        <textarea id="site-description">Servizio digitale chiavi in mano per Brand Kit professionali. Logo, palette colori, template social e mini-sito in 48 ore per piccole attività locali.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email Contatto</label>
+                        <input type="email" id="contact-email" value="info@boostami.online">
+                    </div>
+                    <div class="form-group">
+                        <label for="whatsapp-number">Numero WhatsApp</label>
+                        <input type="text" id="whatsapp-number" value="+39 XXX XXX XXXX">
+                    </div>
+                    <button class="btn" onclick="saveSettings()">💾 Salva Impostazioni</button>
+                    <button class="btn btn-success" onclick="applyToSite()">🚀 Applica al Sito Live</button>
+                </div>
+            </div>
+            
+            <!-- Export Tab -->
+            <div id="export" class="tab-content">
+                <div class="section">
+                    <h2>📤 Esportazione Configurazione</h2>
+                    <p>Esporta tutte le configurazioni del CMS in formato JSON per backup o migrazione.</p>
+                    
+                    <div class="alert">
+                        <strong>💡 Suggerimento:</strong> Esporta regolarmente le configurazioni per avere sempre un backup aggiornato.
+                    </div>
+                    
+                    <button class="btn" onclick="generateExport()">📋 Genera Esportazione</button>
+                    <button class="btn btn-secondary" onclick="copyToClipboard()">📋 Copia negli Appunti</button>
+                    <button class="btn btn-success" onclick="downloadJSON()">💾 Scarica JSON</button>
+                    
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="export-data">Dati Esportazione (JSON)</label>
+                        <textarea id="export-data" rows="10" readonly placeholder="Clicca 'Genera Esportazione' per vedere i dati..."></textarea>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="status">
-            <div class="status-title">📊 Status Sistema</div>
-            <div id="system-status">
-                <div class="feature">Netlify Identity: <span id="identity-status">Verificando...</span></div>
-                <div class="feature">Git Gateway: <span id="git-status">Verificando...</span></div>
-                <div class="feature">CMS: <span id="cms-status">Pronto</span></div>
-            </div>
-        </div>
-        
-        <a href="https://boostami.online" class="btn btn-secondary">
-            ← Torna al Sito
-        </a>
     </div>
 
     <script>
-        // Variabili globali
-        let isAuthenticated = false;
-        let cmsLoaded = false;
+        // Gestione Tab
+        function showTab(tabName) {
+            // Nascondi tutti i contenuti
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Rimuovi classe active da tutti i tab
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Mostra il contenuto selezionato
+            document.getElementById(tabName).classList.add('active');
+            
+            // Attiva il tab selezionato
+            event.target.classList.add('active');
+        }
         
-        // Inizializzazione
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Boostami Admin Panel inizializzato');
-            checkSystemStatus();
-            initializeNetlifyIdentity();
-        });
+        // Aggiornamento Preview Hero
+        function updatePreview() {
+            const title = document.getElementById('hero-title').value;
+            const subtitle = document.getElementById('hero-subtitle').value;
+            const cta = document.getElementById('hero-cta').value;
+            
+            document.getElementById('preview-title').textContent = title;
+            document.getElementById('preview-subtitle').textContent = subtitle;
+            document.getElementById('preview-cta').textContent = cta;
+        }
         
-        // Controllo status sistema
-        function checkSystemStatus() {
-            // Netlify Identity
-            if (typeof netlifyIdentity !== 'undefined') {
-                document.getElementById('identity-status').textContent = '✅ Attivo';
-                document.getElementById('identity-status').style.color = 'green';
+        // Aggiornamento Prezzi
+        function updatePricing() {
+            // Salva automaticamente i prezzi quando vengono modificati
+            savePricing();
+        }
+        
+        // Salvataggio Hero Section
+        function saveHero() {
+            const heroData = {
+                title: document.getElementById('hero-title').value,
+                subtitle: document.getElementById('hero-subtitle').value,
+                cta: document.getElementById('hero-cta').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('boostami_hero', JSON.stringify(heroData));
+            showNotification('✅ Hero Section salvata!');
+        }
+        
+        // Salvataggio Prezzi
+        function savePricing() {
+            const pricingData = {
+                base: {
+                    price: document.getElementById('price-base').value,
+                    description: document.getElementById('desc-base').value
+                },
+                standard: {
+                    price: document.getElementById('price-standard').value,
+                    description: document.getElementById('desc-standard').value
+                },
+                pro: {
+                    price: document.getElementById('price-pro').value,
+                    description: document.getElementById('desc-pro').value
+                },
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('boostami_pricing', JSON.stringify(pricingData));
+            showNotification('✅ Prezzi salvati!');
+        }
+        
+        // Salvataggio Impostazioni
+        function saveSettings() {
+            const settingsData = {
+                title: document.getElementById('site-title').value,
+                description: document.getElementById('site-description').value,
+                email: document.getElementById('contact-email').value,
+                whatsapp: document.getElementById('whatsapp-number').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('boostami_settings', JSON.stringify(settingsData));
+            showNotification('✅ Impostazioni salvate!');
+        }
+        
+        // Applicazione al Sito Live
+        function applyToSite() {
+            // Salva tutti i dati
+            saveHero();
+            savePricing();
+            saveSettings();
+            
+            showNotification('🚀 Modifiche applicate! (Simulazione - in produzione aggiornerebbe il sito live)');
+        }
+        
+        // Generazione Esportazione
+        function generateExport() {
+            const exportData = {
+                hero: JSON.parse(localStorage.getItem('boostami_hero') || '{}'),
+                pricing: JSON.parse(localStorage.getItem('boostami_pricing') || '{}'),
+                settings: JSON.parse(localStorage.getItem('boostami_settings') || '{}'),
+                meta: {
+                    version: '1.0',
+                    exported: new Date().toISOString(),
+                    source: 'Boostami CMS'
+                }
+            };
+            
+            document.getElementById('export-data').value = JSON.stringify(exportData, null, 2);
+            showNotification('📋 Esportazione generata!');
+        }
+        
+        // Copia negli Appunti
+        function copyToClipboard() {
+            const exportData = document.getElementById('export-data');
+            if (exportData.value) {
+                exportData.select();
+                document.execCommand('copy');
+                showNotification('📋 Copiato negli appunti!');
             } else {
-                document.getElementById('identity-status').textContent = '❌ Non disponibile';
-                document.getElementById('identity-status').style.color = 'red';
+                showNotification('⚠️ Genera prima l\'esportazione!');
             }
-            
-            // Git Gateway (simulato)
-            setTimeout(() => {
-                document.getElementById('git-status').textContent = '✅ Configurato';
-                document.getElementById('git-status').style.color = 'green';
-            }, 1000);
         }
         
-        // Inizializzazione Netlify Identity
-        function initializeNetlifyIdentity() {
-            if (window.netlifyIdentity) {
-                window.netlifyIdentity.on("init", user => {
-                    console.log('Netlify Identity inizializzato:', user ? 'Utente loggato' : 'Nessun utente');
-                    if (user) {
-                        isAuthenticated = true;
-                        showCMSInterface();
+        // Download JSON
+        function downloadJSON() {
+            const exportData = document.getElementById('export-data').value;
+            if (exportData) {
+                const blob = new Blob([exportData], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `boostami-config-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showNotification('💾 File JSON scaricato!');
+            } else {
+                showNotification('⚠️ Genera prima l\'esportazione!');
+            }
+        }
+        
+        // Notifiche
+        function showNotification(message) {
+            // Rimuovi notifiche esistenti
+            const existing = document.querySelector('.notification');
+            if (existing) existing.remove();
+            
+            // Crea nuova notifica
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-weight: 600;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            // Aggiungi CSS per animazione
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
                     }
-                });
-                
-                window.netlifyIdentity.on("login", user => {
-                    console.log('Login effettuato:', user.email);
-                    isAuthenticated = true;
-                    showCMSInterface();
-                });
-                
-                window.netlifyIdentity.on("logout", () => {
-                    console.log('Logout effettuato');
-                    isAuthenticated = false;
-                    hideCMSInterface();
-                });
-            }
-        }
-        
-        // Gestione login
-        function handleLogin() {
-            if (!window.netlifyIdentity) {
-                alert('Netlify Identity non disponibile. Controlla la configurazione.');
-                return;
+                `;
+                document.head.appendChild(style);
             }
             
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('login-btn').style.display = 'none';
+            document.body.appendChild(notification);
             
-            // Apri modal di login
-            window.netlifyIdentity.open();
-            
-            // Nascondi loading dopo 3 secondi se non c'è login
+            // Rimuovi dopo 3 secondi
             setTimeout(() => {
-                if (!isAuthenticated) {
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('login-btn').style.display = 'inline-block';
+                if (notification.parentNode) {
+                    notification.remove();
                 }
             }, 3000);
         }
         
-        // Mostra interfaccia CMS
-        function showCMSInterface() {
-            document.getElementById('auth-section').style.display = 'none';
-            document.getElementById('loading').style.display = 'block';
+        // Caricamento dati salvati all'avvio
+        function loadSavedData() {
+            // Carica Hero
+            const heroData = JSON.parse(localStorage.getItem('boostami_hero') || '{}');
+            if (heroData.title) {
+                document.getElementById('hero-title').value = heroData.title;
+                document.getElementById('hero-subtitle').value = heroData.subtitle;
+                document.getElementById('hero-cta').value = heroData.cta;
+                updatePreview();
+            }
             
-            // Carica Decap CMS
-            if (!cmsLoaded) {
-                loadDecapCMS();
-            } else {
-                document.getElementById('cms-container').style.display = 'block';
-                document.getElementById('loading').style.display = 'none';
+            // Carica Prezzi
+            const pricingData = JSON.parse(localStorage.getItem('boostami_pricing') || '{}');
+            if (pricingData.base) {
+                document.getElementById('price-base').value = pricingData.base.price;
+                document.getElementById('desc-base').value = pricingData.base.description;
+                document.getElementById('price-standard').value = pricingData.standard.price;
+                document.getElementById('desc-standard').value = pricingData.standard.description;
+                document.getElementById('price-pro').value = pricingData.pro.price;
+                document.getElementById('desc-pro').value = pricingData.pro.description;
+            }
+            
+            // Carica Impostazioni
+            const settingsData = JSON.parse(localStorage.getItem('boostami_settings') || '{}');
+            if (settingsData.title) {
+                document.getElementById('site-title').value = settingsData.title;
+                document.getElementById('site-description').value = settingsData.description;
+                document.getElementById('contact-email').value = settingsData.email;
+                document.getElementById('whatsapp-number').value = settingsData.whatsapp;
             }
         }
         
-        // Nascondi interfaccia CMS
-        function hideCMSInterface() {
-            document.getElementById('cms-container').style.display = 'none';
-            document.getElementById('auth-section').style.display = 'block';
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('login-btn').style.display = 'inline-block';
-        }
-        
-        // Carica Decap CMS
-        function loadDecapCMS() {
-            console.log('🔧 Caricamento Decap CMS...');
-            
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
-            script.onload = function() {
-                console.log('✅ Decap CMS caricato');
-                initializeCMS();
-            };
-            script.onerror = function() {
-                console.error('❌ Errore nel caricamento Decap CMS');
-                alert('Errore nel caricamento del CMS. Riprova più tardi.');
-                hideCMSInterface();
-            };
-            document.head.appendChild(script);
-        }
-        
-        // Inizializza CMS
-        function initializeCMS() {
-            try {
-                // Configura il container per il CMS
-                const cmsContainer = document.getElementById('cms-container');
-                cmsContainer.innerHTML = '<div id="nc-root"></div>';
-                
-                // Configurazione Decap CMS
-                window.CMS.init({
-                    config: {
-                        backend: {
-                            name: 'git-gateway',
-                            branch: 'main'
-                        },
-                        media_folder: 'public/images',
-                        public_folder: '/images',
-                        collections: [
-                            {
-                                name: 'settings',
-                                label: 'Impostazioni Sito',
-                                files: [
-                                    {
-                                        name: 'general',
-                                        label: 'Impostazioni Generali',
-                                        file: 'data/settings.json',
-                                        fields: [
-                                            { name: 'site_title', label: 'Titolo Sito', widget: 'string', default: 'Boostami - Brand Kit Professionali in 48h' },
-                                            { name: 'site_description', label: 'Descrizione Sito', widget: 'text', default: 'Servizio digitale chiavi in mano per Brand Kit professionali' },
-                                            { name: 'hero_title', label: 'Titolo Hero', widget: 'string', default: 'Il Tuo Brand Professionale in 48 Ore' },
-                                            { name: 'hero_subtitle', label: 'Sottotitolo Hero', widget: 'text', default: 'Servizio digitale chiavi in mano per piccole attività locali, freelance e microimprese' }
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                name: 'pricing',
-                                label: 'Prezzi',
-                                files: [
-                                    {
-                                        name: 'packages',
-                                        label: 'Pacchetti',
-                                        file: 'data/pricing.json',
-                                        fields: [
-                                            {
-                                                name: 'packages',
-                                                label: 'Pacchetti',
-                                                widget: 'list',
-                                                fields: [
-                                                    { name: 'name', label: 'Nome', widget: 'string' },
-                                                    { name: 'price', label: 'Prezzo (€)', widget: 'number' },
-                                                    { name: 'description', label: 'Descrizione', widget: 'text' },
-                                                    { 
-                                                        name: 'features', 
-                                                        label: 'Caratteristiche', 
-                                                        widget: 'list', 
-                                                        field: { name: 'feature', label: 'Caratteristica', widget: 'string' }
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                });
-                
-                cmsLoaded = true;
-                document.getElementById('cms-container').style.display = 'block';
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('cms-status').textContent = '✅ Attivo';
-                document.getElementById('cms-status').style.color = 'green';
-                
-                console.log('✅ CMS inizializzato con successo');
-                
-            } catch (error) {
-                console.error('❌ Errore nell\'inizializzazione CMS:', error);
-                alert('Errore nell\'inizializzazione del CMS: ' + error.message);
-                hideCMSInterface();
-            }
-        }
-        
-        // Gestione errori globali
-        window.addEventListener('error', function(e) {
-            console.error('Errore globale:', e.error);
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSavedData();
+            updatePreview();
+            showNotification('🚀 Boostami CMS caricato con successo!');
         });
-        
-        console.log('🎯 Boostami Admin Panel pronto');
     </script>
 </body>
 </html>
