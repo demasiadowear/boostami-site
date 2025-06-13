@@ -27,33 +27,34 @@ const Home = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 py-20 lg:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center">
-            <div className="mb-6">
-              <Badge variant="outline" className="text-sm px-4 py-2">
-                {content.site?.tagline || 'Potenzia il tuo business'}
-              </Badge>
-            </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-              {content.hero?.title || 'Trasforma le tue idee in successo'}
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
-              {content.hero?.subtitle || 'Con Boostami, il tuo business raggiunge nuove vette. Soluzioni innovative, risultati concreti.'}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="text-lg px-8 py-4 shadow-lg hover:shadow-xl transition-all duration-300">
-                {content.hero?.ctaText || 'Inizia Ora'}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-4">
-                Scopri di più
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+<section className="bg-black py-20 lg:py-32 relative overflow-hidden">
+  <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-600/20 via-pink-500/10 to-violet-600/10"></div>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div className="flex flex-col items-center text-center">
+      <img
+        src="/images/boostami.svg"
+        alt="Boostami Logo"
+        className="h-64 w-auto mb-8"
+      />
+      <h1 className="text-4xl md:text-6xl font-bold text-fuchsia-500 mb-4">
+        {content.hero?.title || 'Trasforma le tue idee in successo'}
+      </h1>
+      <p className="text-xl md:text-2xl text-pink-200 mb-8 max-w-4xl">
+        {content.hero?.subtitle || 'Con Boostami, il tuo business raggiunge nuove vette. Soluzioni innovative, risultati concreti.'}
+      </p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button size="lg" className="text-lg px-8 py-4 bg-fuchsia-600 text-white shadow-lg hover:bg-fuchsia-700">
+          {content.hero?.ctaText || 'Inizia Ora'}
+          <ArrowRight className="ml-2 h-5 w-5" />
+        </Button>
+        <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-fuchsia-500 text-fuchsia-500 hover:bg-fuchsia-500/10">
+          Scopri di più
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Services Section */}
       <section id="servizi" className="py-20 lg:py-32 bg-white">
