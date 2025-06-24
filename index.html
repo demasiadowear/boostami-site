@@ -240,11 +240,12 @@
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* Changed border to neon pink for all pricing cards */
+            border: 1px solid var(--neon-pink);
         }
 
         .pricing-card.popular {
-            border: 1px solid var(--neon-pink);
+            /* Keep popular shadow if desired, or remove if border is enough */
             box-shadow: 0 0 30px rgba(255, 105, 211, 0.3);
         }
 
@@ -766,7 +767,7 @@
                         <li class="disabled">Linktree personalizzato</li>
                         <li class="disabled">Strategia social</li>
                     </ul>
-                    <button class="glow-button select-package" data-package="Starter" style="background-color: #333; width: 100%;">Scegli Starter</button>
+                    <button class="glow-button select-package" data-package="Starter" style="background-color: var(--neon-pink); width: 100%;">Scegli Starter</button>
                 </div>
 
                 <div class="pricing-card popular">
@@ -879,8 +880,7 @@
             <h2>Richiedi il tuo Brand Kit</h2>
             <form id="briefForm" class="popup-form">
                 <div class="form-group">
-                    <label for="fullName">Nome e Cognome *</label>
-                    <input type="text" id="fullName" name="fullName" required>
+                    <label for="fullName">Nome e Cognome *</label> <input type="text" id="fullName" name="fullName" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email *</label>
@@ -1026,7 +1026,7 @@
             briefPopup.style.display = 'none';
         });
 
-        // Close popup when clicking outside
+        // Close popup when clicking outside (on the overlay)
         briefPopup.addEventListener('click', (e) => {
             if (e.target === briefPopup) {
                 briefPopup.style.display = 'none';
@@ -1070,13 +1070,21 @@
             const noneCheckbox = document.querySelector('input[name="socialChannels"][value="Nessuno"]');
             const anySocialChecked = Array.from(socialChannelsCheckboxes).some(cb => cb.checked && cb.value !== 'Nessuno');
 
-            if (!noneCheckbox.checked && !anySocialChecked) {
-                isValid = false;
-                // Highlight the first social channel checkbox or the group for error
-                socialChannelsCheckboxes[0].classList.add('error');
-            } else if (noneCheckbox.checked && anySocialChecked) {
-                isValid = false; // Cannot select "Nessuno" and other channels
-                socialChannelsCheckboxes.forEach(cb => cb.classList.add('error'));
+            // If "Nessuno" is checked, no other social channel should be checked.
+            // If "Nessuno" is NOT checked, at least one other social channel MUST be checked.
+            if (noneCheckbox.checked) {
+                // If "Nessuno" is checked, ensure no other social channel is checked.
+                const otherSocialsChecked = Array.from(socialChannelsCheckboxes).some(cb => cb.checked && cb.value !== 'Nessuno');
+                if (otherSocialsChecked) {
+                    isValid = false;
+                    socialChannelsCheckboxes.forEach(cb => cb.classList.add('error')); // Highlight all for conflict
+                }
+            } else {
+                // If "Nessuno" is not checked, at least one other social channel must be checked.
+                if (!anySocialChecked) {
+                    isValid = false;
+                    socialChannelsCheckboxes[0].classList.add('error'); // Highlight the first one for error visibility
+                }
             }
 
 
@@ -1093,17 +1101,23 @@
 
             for (let [key, value] of formData.entries()) {
                 if (key === 'privacyConsent') {
-                    emailBody += `Consenso Privacy: ${value === 'on' ? 'Accettato' : 'Non Accettato'}\n`;
+                    // Privacy consent is handled implicitly by the button being enabled
+                    // No need to explicitly add to email body unless specific value (true/false) is preferred
+                    continue; // Skip adding privacyConsent to direct email body
                 } else if (key === 'socialChannels') {
-                    // Collect all selected social channels
-                    const selectedChannels = Array.from(document.querySelectorAll('input[name="socialChannels"]:checked'))
-                                                .map(cb => cb.value)
-                                                .join(', ');
-                    emailBody += `Canali social attivi: ${selectedChannels || 'Nessuno selezionato'}\n`;
+                    // Collect all selected social channels. This will be added once.
+                    // Skip individual entries from formData.entries() to avoid duplicates.
+                    continue;
                 } else {
                     emailBody += `${key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}: ${value}\n`;
                 }
             }
+            // Add social channels once after iterating other fields
+            const selectedChannels = Array.from(document.querySelectorAll('input[name="socialChannels"]:checked'))
+                                        .map(cb => cb.value)
+                                        .join(', ');
+            emailBody += `Canali social attivi: ${selectedChannels || 'Nessuno selezionato'}\n`;
+
 
             // Get client name for email subject
             const clientName = formData.get('fullName') || 'Cliente Sconosciuto';
@@ -1122,9 +1136,6 @@
             formMessage.textContent = '✔ Grazie! Ti contatteremo entro 24 ore.';
             formMessage.classList.add('success');
             formMessage.style.display = 'block';
-
-            // Optional: Hide form and show only message after submission
-            // briefForm.style.display = 'none';
 
             // Close popup after a short delay for demonstration, in a real app this might be after actual backend success
             setTimeout(() => {
