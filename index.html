@@ -197,7 +197,8 @@
         }
 
         .feature-card {
-            background: rgba(15, 15, 15, 0.7);
+            /* Changed background to pure black */
+            background: var(--pure-black);
             border-radius: 10px;
             padding: 30px;
             transition: transform 0.3s ease;
@@ -234,7 +235,8 @@
         }
 
         .pricing-card {
-            background: rgba(20, 20, 20, 0.8);
+            /* Changed background to pure black */
+            background: var(--pure-black);
             border-radius: 10px;
             padding: 40px 30px;
             position: relative;
@@ -272,11 +274,6 @@
             font-weight: bold;
             margin-bottom: 20px;
             color: var(--neon-violet);
-        }
-
-        .price span {
-            font-size: 1rem;
-            opacity: 0.7;
         }
 
         .pricing-features {
@@ -349,7 +346,8 @@
 
         /* FOOTER */
         footer {
-            background-color: var(--dark-gray);
+            /* Changed background to pure black */
+            background-color: var(--pure-black);
             padding: 50px 0 30px;
             text-align: center;
         }
@@ -917,233 +915,4 @@
                 </div>
                 <div class="form-group">
                     <label for="favColors">Colori preferiti *</label>
-                    <input type="text" id="favColors" name="favColors" required>
-                </div>
-                <div class="form-group">
-                    <label for="avoidColors">Colori da evitare *</label>
-                    <input type="text" id="avoidColors" name="avoidColors" required>
-                </div>
-                <div class="form-group">
-                    <label for="graphicStyle">Stile grafico o brand di riferimento *</label>
-                    <input type="text" id="graphicStyle" name="graphicStyle" required>
-                </div>
-                <div class="form-group">
-                    <label for="additionalNotes">Note aggiuntive (opzionale)</label>
-                    <textarea id="additionalNotes" name="additionalNotes"></textarea>
-                </div>
-                <div class="form-group privacy-checkbox">
-                    <input type="checkbox" id="privacyConsent" name="privacyConsent" required>
-                    <label for="privacyConsent">Autorizzo il trattamento dei dati personali secondo la normativa GDPR *</label>
-                </div>
-                <button type="submit" class="submit-button" id="submitBriefBtn" disabled>Invia Brief</button>
-                <div id="form-message"></div>
-            </form>
-        </div>
-    </div>
-
-
-    <script>
-        // Countdown animation
-        const countdownElement = document.createElement('div');
-        countdownElement.innerHTML = `
-            <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #C371FF; z-index: 1000;">
-                <div style="color: #FF69D3; font-size: 24px; font-weight: bold;" id="countdown-days">5</div>
-                <div style="color: #C371FF; text-transform: uppercase; letter-spacing: 3px; font-size: 12px;">Giorni</div>
-            </div>
-        `;
-        document.body.appendChild(countdownElement);
-
-        let days = 5;
-        setInterval(() => {
-            days = days > 1 ? days - 1 : 5;
-            document.getElementById('countdown-days').textContent = days;
-        }, 5000);
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Animation on scroll
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.feature-card, .step');
-            elements.forEach(el => {
-                const elPosition = el.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
-
-                if(elPosition < screenPosition) {
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                }
-            });
-        };
-
-        // Set initial state
-        document.querySelectorAll('.feature-card, .step').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease';
-        });
-
-        window.addEventListener('scroll', animateOnScroll);
-        window.addEventListener('load', animateOnScroll);
-
-
-        // POPUP FORM LOGIC
-        const briefPopup = document.getElementById('briefPopup');
-        const briefForm = document.getElementById('briefForm');
-        const closePopup = document.querySelector('.popup-close');
-        const selectPackageButtons = document.querySelectorAll('.select-package');
-        const privacyConsentCheckbox = document.getElementById('privacyConsent');
-        const submitBriefBtn = document.getElementById('submitBriefBtn');
-        const formMessage = document.getElementById('form-message');
-
-        let selectedPackage = ''; // To store which package button was clicked
-
-        // Open popup
-        selectPackageButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                selectedPackage = button.dataset.package;
-                briefPopup.style.display = 'flex';
-                // Reset form and message on open
-                briefForm.reset();
-                formMessage.style.display = 'none';
-                formMessage.className = '';
-                privacyConsentCheckbox.checked = false; // Ensure privacy is unchecked on open
-                submitBriefBtn.disabled = true; // Disable button until privacy is checked
-                // Remove error highlighting
-                briefForm.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-            });
-        });
-
-        // Close popup
-        closePopup.addEventListener('click', () => {
-            briefPopup.style.display = 'none';
-        });
-
-        // Close popup when clicking outside (on the overlay)
-        briefPopup.addEventListener('click', (e) => {
-            if (e.target === briefPopup) {
-                briefPopup.style.display = 'none';
-            }
-        });
-
-        // Enable/Disable submit button based on privacy consent
-        privacyConsentCheckbox.addEventListener('change', () => {
-            submitBriefBtn.disabled = !privacyConsentCheckbox.checked;
-        });
-
-        // Form submission handling
-        briefForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent default form submission
-
-            formMessage.style.display = 'none'; // Hide previous messages
-            formMessage.className = ''; // Clear previous classes
-            let isValid = true;
-            const requiredFields = briefForm.querySelectorAll('[required]');
-
-            // Reset error highlighting
-            requiredFields.forEach(field => {
-                field.classList.remove('error');
-            });
-
-            // Validate all required fields
-            requiredFields.forEach(field => {
-                if (field.type === 'checkbox') {
-                    if (!field.checked) {
-                        isValid = false;
-                        field.classList.add('error');
-                    }
-                } else if (field.value.trim() === '') {
-                    isValid = false;
-                    field.classList.add('error');
-                }
-            });
-
-            // Specific validation for social channels (at least one checkbox if "Nessuno" is not checked)
-            const socialChannelsCheckboxes = document.querySelectorAll('input[name="socialChannels"]');
-            const noneCheckbox = document.querySelector('input[name="socialChannels"][value="Nessuno"]');
-            const anySocialChecked = Array.from(socialChannelsCheckboxes).some(cb => cb.checked && cb.value !== 'Nessuno');
-
-            // If "Nessuno" is checked, no other social channel should be checked.
-            // If "Nessuno" is NOT checked, at least one other social channel MUST be checked.
-            if (noneCheckbox.checked) {
-                // If "Nessuno" is checked, ensure no other social channel is checked.
-                const otherSocialsChecked = Array.from(socialChannelsCheckboxes).some(cb => cb.checked && cb.value !== 'Nessuno');
-                if (otherSocialsChecked) {
-                    isValid = false;
-                    socialChannelsCheckboxes.forEach(cb => cb.classList.add('error')); // Highlight all for conflict
-                }
-            } else {
-                // If "Nessuno" is not checked, at least one other social channel must be checked.
-                if (!anySocialChecked) {
-                    isValid = false;
-                    socialChannelsCheckboxes[0].classList.add('error'); // Highlight the first one for error visibility
-                }
-            }
-
-
-            if (!isValid) {
-                formMessage.textContent = 'Per favore, compila tutti i campi obbligatori e accetta la normativa privacy.';
-                formMessage.classList.add('error');
-                formMessage.style.display = 'block';
-                return; // Stop if validation fails
-            }
-
-            // Construct form data for email
-            const formData = new FormData(briefForm);
-            let emailBody = `Nuova richiesta per pacchetto: ${selectedPackage}\n\n`;
-
-            for (let [key, value] of formData.entries()) {
-                if (key === 'privacyConsent') {
-                    // Privacy consent is handled implicitly by the button being enabled
-                    // No need to explicitly add to email body unless specific value (true/false) is preferred
-                    continue; // Skip adding privacyConsent to direct email body
-                } else if (key === 'socialChannels') {
-                    // Collect all selected social channels. This will be added once.
-                    // Skip individual entries from formData.entries() to avoid duplicates.
-                    continue;
-                } else {
-                    emailBody += `${key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}: ${value}\n`;
-                }
-            }
-            // Add social channels once after iterating other fields
-            const selectedChannels = Array.from(document.querySelectorAll('input[name="socialChannels"]:checked'))
-                                        .map(cb => cb.value)
-                                        .join(', ');
-            emailBody += `Canali social attivi: ${selectedChannels || 'Nessuno selezionato'}\n`;
-
-
-            // Get client name for email subject
-            const clientName = formData.get('fullName') || 'Cliente Sconosciuto';
-            const emailSubject = `Nuova richiesta Boostami – ${clientName}`;
-
-            // Simulate email sending (in a real scenario, this would be an AJAX call to a backend script)
-            // For this client-side example, we'll open a mailto link.
-            // THIS IS NOT A REAL EMAIL SUBMISSION; it opens the user's email client.
-            // For actual submission, you'd need a backend script (e.g., PHP, Node.js, Python).
-            const mailtoLink = `mailto:info@boostami.online?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-
-            // Open email client
-            window.location.href = mailtoLink;
-
-            // Display success message (assuming mailto link opened, or after actual AJAX success)
-            formMessage.textContent = '✔ Grazie! Ti contatteremo entro 24 ore.';
-            formMessage.classList.add('success');
-            formMessage.style.display = 'block';
-
-            // Close popup after a short delay for demonstration, in a real app this might be after actual backend success
-            setTimeout(() => {
-                briefPopup.style.display = 'none';
-                briefForm.reset(); // Reset the form after closing
-            }, 3000); // Close after 3 seconds
-        });
-    </script>
-
-</body>
-</html>
+                    <input type="text" id="favColors" name
