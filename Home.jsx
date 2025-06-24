@@ -1,1 +1,0 @@
-import React from 'react'; const Home = () => <div className='text-2xl font-bold text-center mt-20'>🚀 Boostami – Coming Soon</div>; export default Home;
