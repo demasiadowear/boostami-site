@@ -37,882 +37,232 @@
             font-weight: 800;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        /* [TUTTI GLI ALTRI STILI ESISTENTI...] */
+        /* ... (mantieni tutto il CSS esistente) ... */
 
-        section {
-            padding: 80px 0;
-            position: relative;
-        }
-
-        /* HEADER & LOGO */
-        .header {
-            width: 100%;
-            padding: 20px 0;
-            text-align: center;
-            background-color: var(--pure-black);
-            z-index: 100;
-            position: relative; /* Ensure it sits above other content but below pop-up */
-        }
-
-        .header img {
-            max-width: 200px; /* Adjust as needed */
-            height: auto;
-            display: block;
-            margin: 0 auto;
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)); /* Subtle white glow */
-        }
-
-        /* HERO SECTION */
-        .hero {
-            height: 100vh;
-            min-height: 800px;
-            display: flex;
-            align-items: center;
-            background:
-                radial-gradient(circle at 20% 30%, rgba(195, 113, 255, 0.15) 0%, transparent 30%),
-                radial-gradient(circle at 80% 70%, rgba(255, 105, 211, 0.15) 0%, transparent 30%),
-                var(--pure-black);
-            overflow: hidden;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-
-        .hero h1 span {
-            display: block;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            max-width: 600px;
-            margin-bottom: 40px;
-            opacity: 0.9;
-        }
-
-        /* GLOW BUTTON */
-        .glow-button {
-            position: relative;
-            display: inline-block;
-            padding: 18px 36px;
-            background-color: var(--neon-pink);
-            color: var(--pure-black);
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-decoration: none;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(255, 105, 211, 0.5);
-        }
-
-        .glow-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(255, 105, 211, 0.8);
-        }
-
-        .glow-button::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border: 2px solid var(--neon-violet);
-            border-radius: 4px;
-            opacity: 0;
-            animation: pulse 2s infinite;
-        }
-
-        .glow-button:hover::before {
-            opacity: 1;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.7;
-            }
-            70% {
-                transform: scale(1.05);
-                opacity: 0.2;
-            }
-            100% {
-                transform: scale(1.1);
-                opacity: 0;
-            }
-        }
-
-        /* FEATURES SECTION */
-        .features {
-            background-color: var(--pure-black);
-            position: relative;
-        }
-
-        .features::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                linear-gradient(45deg, transparent 65%, rgba(195, 113, 255, 0.05) 65%),
-                linear-gradient(-45deg, transparent 65%, rgba(255, 105, 211, 0.05) 65%);
-            background-size: 40px 40px;
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-            font-size: 2.5rem;
-        }
-
-        .section-title span {
-            color: var(--neon-violet);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            /* Changed background to pure black */
-            background: var(--pure-black);
-            border-radius: 10px;
-            padding: 30px;
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--neon-violet);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--neon-pink);
-        }
-
-        .feature-card h3 {
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        /* PRICING SECTION */
-        .pricing {
-            background-color: var(--pure-black);
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .pricing-card {
-            /* Changed background to pure black */
-            background: var(--pure-black);
-            border-radius: 10px;
-            padding: 40px 30px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            /* Changed border to neon pink for all pricing cards */
-            border: 1px solid var(--neon-pink);
-        }
-
-        .pricing-card.popular {
-            /* Keep popular shadow if desired, or remove if border is enough */
-            box-shadow: 0 0 30px rgba(255, 105, 211, 0.3);
-        }
-
-        .pricing-card.popular::before {
-            content: 'POPOLARE';
-            position: absolute;
-            top: 15px;
-            right: -30px;
-            background-color: var(--neon-pink);
-            color: var(--pure-black);
-            padding: 5px 30px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            transform: rotate(45deg);
-        }
-
-        .pricing-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-
-        .price {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: var(--neon-violet);
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-
-        .pricing-features li {
-            margin-bottom: 10px;
-            position: relative;
-            padding-left: 25px;
-        }
-
-        .pricing-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--neon-pink);
-            font-weight: bold;
-        }
-
-        .pricing-features li.disabled {
-            opacity: 0.5;
-        }
-
-        .pricing-features li.disabled::before {
-            content: '✗';
-        }
-
-        /* HOW IT WORKS SECTION */
-        .steps {
-            background-color: var(--pure-black);
-            position: relative;
-        }
-
-        .steps-container {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .step {
-            display: flex;
-            gap: 30px;
-            align-items: flex-start;
-        }
-
-        .step-number {
-            background-color: var(--pure-black);
-            color: var(--neon-violet);
-            border: 2px solid var(--neon-violet);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .step-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--neon-pink);
-        }
-
-        /* FOOTER */
-        footer {
-            /* Changed background to pure black */
-            background-color: var(--pure-black);
-            padding: 50px 0 30px;
-            text-align: center;
-        }
-
-        .footer-logo {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: var(--neon-violet);
-        }
-
-        .footer-logo span {
-            color: var(--neon-pink);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--pure-white);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--neon-pink);
-        }
-
-        .copyright {
-            opacity: 0.7;
-            font-size: 0.9rem;
-        }
-
-        /* POPUP FORM STYLES */
+        /* AGGIUNGI QUESTI NUOVI STILI */
         .popup-overlay {
-            display: none; /* Hidden by default */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8); /* Dark overlay */
-            backdrop-filter: blur(5px);
-            z-index: 9999; /* Above everything else */
+            display: none !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background-color: rgba(0,0,0,0.9) !important;
+            z-index: 99999 !important;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            overflow-y: auto; /* Enable scrolling for small screens */
         }
 
         .popup-content {
-            background-color: var(--pure-black);
-            border-radius: 10px;
-            padding: 40px;
-            max-width: 600px;
+            position: relative !important;
+            z-index: 100000 !important;
+        }
+
+        body.popup-open {
+            overflow: hidden !important;
+            position: fixed;
             width: 100%;
-            box-shadow: 0 0 30px rgba(195, 113, 255, 0.5);
-            position: relative;
-            animation: fadeInScale 0.3s ease-out;
-            color: var(--pure-white);
-        }
-
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .popup-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 2rem;
-            color: var(--pure-white);
-            cursor: pointer;
-            line-height: 1;
-            transition: color 0.2s ease;
-        }
-
-        .popup-close:hover {
-            color: var(--neon-pink);
-        }
-
-        .popup-content h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2rem;
-            color: var(--neon-violet);
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .popup-form .form-group {
-            margin-bottom: 20px;
-        }
-
-        .popup-form label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--pure-white);
-            font-size: 0.95rem;
-        }
-
-        .popup-form input[type="text"],
-        .popup-form input[type="email"],
-        .popup-form input[type="tel"],
-        .popup-form select,
-        .popup-form textarea {
-            width: 100%;
-            padding: 12px 15px;
-            background-color: rgba(255, 255, 255, 0.05); /* Slightly transparent white for input backgrounds */
-            border: 2px solid rgba(255, 255, 255, 0.1); /* Subtle border */
-            border-radius: 8px; /* Rounded corners */
-            color: var(--pure-white);
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .popup-form input:focus,
-        .popup-form select:focus,
-        .popup-form textarea:focus {
-            border-color: var(--neon-violet); /* Neon violet on focus */
-            box-shadow: 0 0 10px rgba(195, 113, 255, 0.5);
-        }
-
-        .popup-form input.error,
-        .popup-form select.error,
-        .popup-form textarea.error {
-            border-color: red;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
-
-        .popup-form textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .popup-form select option {
-            background-color: var(--pure-black); /* Dark background for dropdown options */
-            color: var(--pure-white);
-        }
-
-        .popup-form .checkbox-group label {
-            display: inline-flex;
-            align-items: center;
-            margin-right: 20px;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
-
-        .popup-form .checkbox-group input[type="checkbox"] {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--neon-violet);
-            border-radius: 4px;
-            margin-right: 10px;
-            cursor: pointer;
-            position: relative;
-            flex-shrink: 0;
-            transition: background-color 0.2s ease, border-color 0.2s ease;
-        }
-
-        .popup-form .checkbox-group input[type="checkbox"]:checked {
-            background-color: var(--neon-pink);
-            border-color: var(--neon-pink);
-        }
-
-        .popup-form .checkbox-group input[type="checkbox"]:checked::after {
-            content: '✔';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: var(--pure-black);
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .popup-form .privacy-checkbox {
-            display: flex;
-            align-items: flex-start;
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-
-        .popup-form .privacy-checkbox input[type="checkbox"] {
-            margin-top: 2px;
-        }
-
-        .popup-form .privacy-checkbox label {
-            margin-bottom: 0;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            color: var(--pure-white);
-        }
-
-        .popup-form button.submit-button {
-            width: 100%;
-            padding: 15px 25px;
-            background-color: var(--neon-pink);
-            color: var(--pure-black);
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
-            font-size: 1.1rem;
-        }
-
-        .popup-form button.submit-button:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-            opacity: 0.6;
-            box-shadow: none;
-        }
-
-        .popup-form button.submit-button:not(:disabled):hover {
-            background-color: #FF85D7; /* Lighter pink on hover */
-            box-shadow: 0 0 20px rgba(255, 105, 211, 0.7);
-        }
-
-        #form-message {
-            text-align: center;
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            display: none; /* Hidden by default */
-        }
-
-        #form-message.success {
-            background-color: rgba(40, 167, 69, 0.2); /* Green tint */
-            color: #28a745;
-            border: 1px solid #28a745;
-        }
-
-        #form-message.error {
-            background-color: rgba(220, 53, 69, 0.2); /* Red tint */
-            color: #dc3545;
-            border: 1px solid #dc3545;
-        }
-
-
-        /* RESPONSIVE STYLES */
-        @media (max-width: 768px) {
-            section {
-                padding: 60px 0;
-            }
-
-            .hero {
-                min-height: auto;
-                padding: 100px 0;
-                height: auto;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-                margin-bottom: 40px;
-            }
-
-            .step {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .glow-button {
-                padding: 15px 30px;
-            }
-
-            .popup-content {
-                padding: 30px 20px;
-            }
-
-            .popup-content h2 {
-                font-size: 1.5rem;
-                margin-bottom: 20px;
-            }
-        }
-
-        /* ANIMATIONS */
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* UTILITY CLASSES */
-        .text-violet {
-            color: var(--neon-violet);
-        }
-
-        .text-pink {
-            color: var(--neon-pink);
-        }
-
-        .mt-20 {
-            margin-top: 20px;
-        }
-
-        .mb-20 {
-            margin-bottom: 20px;
-        }
-
-        .text-center {
-            text-align: center;
         }
     </style>
-
 </head>
 <body>
-    <header class="header">
-        <img src="image.png" alt="Boostami Logo">
-    </header>
-
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>
-                    <span class="text-violet">BRAND KIT</span>
-                    <span class="text-pink">IN 5 GIORNI</span>
-                </h1>
-                <p>Logo, social kit e strategia. Senza riunioni infinite.</p>
-                <button class="glow-button" onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });">🚀 Richiedi Ora</button>
-            </div>
-        </div>
-    </section>
-
-    <section class="features">
-        <div class="container">
-            <h2 class="section-title">Cosa <span>include</span>?</h2>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3>Logo Professionale</h3>
-                    <p>3 varianti pronte all'uso (orizzontale, verticale e simbolo) in formato vettoriale e PNG.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🌈</div>
-                    <h3>Palette Colori</h3>
-                    <p>Combinazioni studiate per il tuo settore, con codici esatti per stampa e digitale.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">✏️</div>
-                    <h3>Font Abbinati</h3>
-                    <p>Scelta di font premium con licenza inclusa, perfetti per il tuo brand identity.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Template Social</h3>
-                    <p>5 template Canva pronti per Instagram (post e stories) con il tuo branding.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🔗</div>
-                    <h3>Linktree Personalizzato</h3>
-                    <p>Pagina di collegamento con il tuo stile, ottimizzata per conversioni.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📈</div>
-                    <h3>Mini Strategia Social</h3>
-                    <p>Linee guida per i primi 3 mesi di contenuti con esempi pratici.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <h2 class="section-title">Scegli il tuo <span>pacchetto</span></h2>
-
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Starter</h3>
-                    <div class="price">199€ <span>/ una tantum</span></div>
-                    <ul class="pricing-features">
-                        <li>Logo base (1 variante)</li>
-                        <li>Palette colori</li>
-                        <li>2 template Canva</li>
-                        <li class="disabled">Linktree personalizzato</li>
-                        <li class="disabled">Strategia social</li>
-                    </ul>
-                    <button class="glow-button select-package" data-package="Starter" style="background-color: var(--neon-pink); width: 100%;">Scegli Starter</button>
-                </div>
-
-                <div class="pricing-card popular">
-                    <h3>Pro</h3>
-                    <div class="price">349€ <span>/ una tantum</span></div>
-                    <ul class="pricing-features">
-                        <li>Logo completo (3 varianti)</li>
-                        <li>Palette colori premium</li>
-                        <li>5 template Canva</li>
-                        <li>Linktree personalizzato</li>
-                        <li>Mini strategia social</li>
-                    </ul>
-                    <button class="glow-button select-package" data-package="Pro" style="width: 100%;">Scegli Pro</button>
-                </div>
-
-                <div class="pricing-card">
-                    <h3>VIP</h3>
-                    <div class="price">499€ <span>/ una tantum</span></div>
-                    <ul class="pricing-features">
-                        <li>Logo premium (5 varianti)</li>
-                        <li>Palette colori avanzata</li>
-                        <li>10 template Canva</li>
-                        <li>Linktree animato</li>
-                        <li>Strategia social completa</li>
-                        <li>Priorità assoluta (72h)</li>
-                    </ul>
-                    <button class="glow-button select-package" data-package="VIP" style="background-color: var(--neon-violet); width: 100%;">Scegli VIP</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="steps">
-        <div class="container">
-            <h2 class="section-title">Come <span>funziona</span>?</h2>
-
-            <div class="steps-container">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Compila il brief</h3>
-                        <p>Rispondi al nostro questionario online (5 minuti) per farci capire il tuo stile e necessità.</p>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>Pagamento sicuro</h3>
-                        <p>Completa l'acquisto con carta, PayPal o bonifico. Niente costi nascosti.</p>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3>Prima bozza in 48h</h3>
-                        <p>Ricevi la prima proposta via email con 3 concept diversi tra cui scegliere.</p>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h3>Revisioni illimitate</h3>
-                        <p>Chiedi tutte le modifiche che vuoi finché non sei soddisfatto al 100%.</p>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <div class="step-content">
-                        <h3>Consegna in 5 giorni</h3>
-                        <p>Ricevi tutto il materiale pronto all'uso nei formati richiesti.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-logo">BOOST<span>AMI</span></div>
-            <p>Il tuo brand, senza sbatti.</p>
-
-            <div class="footer-links">
-                <a href="#">Home</a>
-                <a href="#">Come funziona</a>
-                <a href="#">Prezzi</a>
-                <a href="#">Portfolio</a>
-                <a href="mailto:info@boostami.online">Contatti</a>
-                <a href="#">Termini e condizioni</a>
-            </div>
-            <div class="social-icons" style="margin-bottom: 20px;">
-                <a href="https://www.instagram.com/boostami.online" target="_blank" style="margin: 0 10px; color: var(--pure-white); text-decoration: none;">Instagram</a>
-                <a href="https://www.facebook.com/boostami.online" target="_blank" style="margin: 0 10px; color: var(--pure-white); text-decoration: none;">Facebook</a>
-                <a href="https://t.me/boostami" target="_blank" style="margin: 0 10px; color: var(--pure-white); text-decoration: none;">Telegram</a>
-            </div>
-
-            <div class="copyright mt-20">
-                <p>© 2023 BOOSTAMI by AYROMEX SRL. Tutti i diritti riservati.</p>
-                <p>P.IVA: IT12345678901 | Foro competente: Bari (Italia)</p>
-            </div>
-        </div>
-    </footer>
+    <!-- [TUTTO IL TUO HTML ESISTENTE...] -->
+    <!-- ... (mantieni tutto l'HTML esistente) ... -->
 
     <div id="briefPopup" class="popup-overlay">
         <div class="popup-content">
-            <span class="popup-close">&times;</span>
-            <h2>Richiedi il tuo Brand Kit</h2>
-            <form id="briefForm" class="popup-form">
-                <div class="form-group">
-                    <label for="fullName">Nome e Cognome *</label> <input type="text" id="fullName" name="fullName" required>
+            <!-- [MANTIENI IL FORM POPUP ESISTENTE...] -->
+        </div>
+    </div>
+
+    <script>
+    // VERSIONE MIGLIORATA E STABILE DEL CODICE
+    function initBoostami() {
+        // 1. INIT POPUP SYSTEM
+        const popup = {
+            elements: {
+                overlay: document.getElementById('briefPopup'),
+                form: document.getElementById('briefForm'),
+                closeBtn: document.querySelector('.popup-close'),
+                packageBtns: document.querySelectorAll('.select-package'),
+                privacyCheck: document.getElementById('privacyConsent'),
+                submitBtn: document.getElementById('submitBriefBtn'),
+                message: document.getElementById('form-message')
+            },
+            selectedPackage: '',
+            
+            init: function() {
+                // Apertura popup
+                this.elements.packageBtns.forEach(btn => {
+                    btn.addEventListener('click', e => {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        this.selectedPackage = btn.dataset.package;
+                        this.show();
+                    });
+                });
+
+                // Chiusura popup
+                this.elements.closeBtn.addEventListener('click', () => this.hide());
+                this.elements.overlay.addEventListener('click', e => {
+                    if(e.target === this.elements.overlay) this.hide();
+                });
+
+                // Privacy checkbox
+                this.elements.privacyCheck.addEventListener('change', () => {
+                    this.elements.submitBtn.disabled = !this.elements.privacyCheck.checked;
+                });
+
+                // Form submit
+                this.elements.form.addEventListener('submit', e => this.handleSubmit(e));
+            },
+            
+            show: function() {
+                this.elements.overlay.style.display = 'flex';
+                document.body.classList.add('popup-open');
+                this.resetForm();
+            },
+            
+            hide: function() {
+                this.elements.overlay.style.display = 'none';
+                document.body.classList.remove('popup-open');
+            },
+            
+            resetForm: function() {
+                this.elements.form.reset();
+                this.elements.message.style.display = 'none';
+                this.elements.privacyCheck.checked = false;
+                this.elements.submitBtn.disabled = true;
+                this.elements.form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+            },
+            
+            handleSubmit: function(e) {
+                e.preventDefault();
+                this.elements.message.style.display = 'none';
+                
+                // Validazione
+                let isValid = true;
+                const requiredFields = this.elements.form.querySelectorAll('[required]');
+                
+                requiredFields.forEach(field => {
+                    field.classList.remove('error');
+                    
+                    if(field.type === 'checkbox' && !field.checked) {
+                        isValid = false;
+                        field.classList.add('error');
+                    } 
+                    else if(!field.value.trim() && field.type !== 'checkbox') {
+                        isValid = false;
+                        field.classList.add('error');
+                    }
+                });
+
+                if(!isValid) {
+                    this.showMessage('Compila tutti i campi obbligatori', 'error');
+                    return;
+                }
+
+                // Invio dati
+                const formData = new FormData(this.elements.form);
+                const data = {
+                    package: this.selectedPackage,
+                    name: formData.get('fullName'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    business: formData.get('businessName'),
+                    notes: formData.get('additionalNotes') || 'Nessuna nota'
+                };
+
+                this.sendData(data);
+            },
+            
+            showMessage: function(text, type) {
+                this.elements.message.textContent = text;
+                this.elements.message.className = type;
+                this.elements.message.style.display = 'block';
+            },
+            
+            sendData: function(data) {
+                const subject = `Richiesta ${data.package} - ${data.business}`;
+                const body = `Nuova richiesta:\n\nPacchetto: ${data.package}\nNome: ${data.name}\nEmail: ${data.email}\nTelefono: ${data.phone}\nBrand: ${data.business}\nNote: ${data.notes}`;
+                
+                this.showMessage('✔ Invio in corso...', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = `mailto:info@boostami.online?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    this.hide();
+                }, 1000);
+            }
+        };
+
+        // 2. COUNTDOWN TIMER
+        function initCountdown() {
+            const countdownEl = document.createElement('div');
+            countdownEl.innerHTML = `
+                <div style="position:fixed;bottom:20px;right:20px;background:rgba(0,0,0,0.7);padding:15px;border-radius:8px;text-align:center;border:1px solid #C371FF;z-index:1000;">
+                    <div style="color:#FF69D3;font-size:24px;font-weight:bold;" id="countdown-days">5</div>
+                    <div style="color:#C371FF;text-transform:uppercase;letter-spacing:3px;font-size:12px;">Giorni</div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Telefono *</label>
-                    <input type="tel" id="phone" name="phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="businessName">Nome Attività o Brand *</label>
-                    <input type="text" id="businessName" name="businessName" required>
-                </div>
-                <div class="form-group">
-                    <label for="businessType">Tipo di attività *</label>
-                    <select id="businessType" name="businessType" required>
-                        <option value="">Seleziona...</option>
-                        <option value="Negozio">Negozio</option>
-                        <option value="Influencer">Influencer</option>
-                        <option value="Estetista">Estetista</option>
-                        <option value="Avvocato">Avvocato</option>
-                        <option value="Ristorante">Ristorante</option>
-                        <option value="Altro">Altro</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Canali social attivi *</label>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="socialChannels" value="Instagram"> Instagram</label>
-                        <label><input type="checkbox" name="socialChannels" value="Facebook"> Facebook</label>
-                        <label><input type="checkbox" name="socialChannels" value="TikTok"> TikTok</label>
-                        <label><input type="checkbox" name="socialChannels" value="Nessuno"> Nessuno</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="favColors">Colori preferiti *</label>
-                    <input type="text" id="favColors" name
+            `;
+            document.body.appendChild(countdownEl);
+
+            let days = 5;
+            setInterval(() => {
+                days = days > 1 ? days - 1 : 5;
+                document.getElementById('countdown-days').textContent = days;
+            }, 5000);
+        }
+
+        // 3. SMOOTH SCROLL
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if(target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        // 4. SCROLL ANIMATIONS
+        function initScrollAnimations() {
+            const animateElements = () => {
+                document.querySelectorAll('.feature-card, .step').forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if(rect.top < window.innerHeight * 0.75) {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+
+            document.querySelectorAll('.feature-card, .step').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+            });
+
+            window.addEventListener('scroll', animateElements);
+            animateElements();
+        }
+
+        // INIT ALL FEATURES
+        popup.init();
+        initCountdown();
+        initSmoothScroll();
+        initScrollAnimations();
+    }
+
+    // SAFE INITIALIZATION
+    if(document.readyState === 'complete') {
+        initBoostami();
+    } else {
+        document.addEventListener('DOMContentLoaded', initBoostami);
+        window.addEventListener('load', initBoostami);
+    }
+    </script>
+</body>
+</html>
