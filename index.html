@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* RESET & BASE STYLES */
         :root {
@@ -30,6 +31,7 @@
             color: var(--pure-white);
             line-height: 1.6;
             overflow-x: hidden;
+            scroll-behavior: smooth; /* Smooth scroll per tutta la pagina */
         }
 
         h1, h2, h3, h4, .font-montserrat {
@@ -66,6 +68,59 @@
             margin: 0 auto;
             filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)); /* Subtle white glow */
         }
+
+        /* NAVIGATION MENU */
+        .navbar {
+            background-color: var(--pure-black);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--pure-white);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -5px;
+            transform: translateX(-50%) scaleX(0);
+            width: 100%;
+            height: 2px;
+            background-color: var(--neon-pink);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-pink);
+        }
+
+        .nav-links a:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
 
         /* HERO SECTION */
         .hero {
@@ -345,6 +400,248 @@
             color: var(--neon-pink);
         }
 
+        /* PORTFOLIO SECTION */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .portfolio-item {
+            background: var(--dark-gray);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .portfolio-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .portfolio-info h3 {
+            color: var(--neon-violet);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .portfolio-info p {
+            color: var(--pure-white);
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        /* TESTIMONIALS SECTION */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .testimonial-card {
+            background: var(--dark-gray);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .testimonial-card::before {
+            content: '❝';
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 4rem;
+            color: rgba(255, 105, 211, 0.2);
+            z-index: 0;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .testimonial-author img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid var(--neon-violet);
+        }
+
+        .author-info strong {
+            display: block;
+            font-size: 1.1rem;
+            color: var(--neon-violet);
+        }
+
+        .author-info span {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* FAQ SECTION */
+        .faq-container {
+            max-width: 800px;
+            margin: 50px auto 0 auto;
+        }
+
+        .faq-item {
+            background: var(--dark-gray);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--neon-pink);
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: rgba(255, 105, 211, 0.1);
+        }
+
+        .faq-question .icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            padding: 0 25px 20px 25px;
+            font-size: 1rem;
+            color: var(--pure-white);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            opacity: 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Adjust as needed for content */
+            padding-top: 10px;
+            opacity: 1;
+        }
+
+        .faq-item.active .faq-question .icon {
+            transform: rotate(180deg);
+        }
+
+        /* COUNTERS SECTION */
+        .counters-section {
+            background-color: var(--pure-black);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .counters-grid {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .counter-item {
+            background: var(--dark-gray);
+            border-radius: 10px;
+            padding: 30px;
+            width: 250px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--neon-violet);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+        }
+
+        .counter-item.animated {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .counter-item .number {
+            font-size: 3.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            color: var(--neon-pink);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .counter-item .text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--pure-white);
+            opacity: 0.9;
+        }
+
+        /* WHATSAPP WIDGET */
+        .whatsapp-widget {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            z-index: 1000;
+        }
+
+        .whatsapp-widget a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #25D366;
+            color: var(--pure-white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .whatsapp-widget a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        }
+
+
         /* FOOTER */
         footer {
             background-color: var(--pure-black); /* Pure black background */
@@ -381,9 +678,22 @@
             color: var(--neon-pink);
         }
 
+        .social-icons a {
+            color: var(--pure-white);
+            font-size: 1.8rem;
+            margin: 0 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--neon-pink);
+            transform: translateY(-3px);
+        }
+
         .copyright {
             opacity: 0.7;
             font-size: 0.9rem;
+            margin-top: 20px;
         }
 
         /* POPUP FORM STYLES */
@@ -649,6 +959,25 @@
                 font-size: 1.5rem;
                 margin-bottom: 20px;
             }
+
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .counters-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            .counter-item {
+                width: 100%;
+                max-width: 250px;
+            }
         }
 
         /* ANIMATIONS */
@@ -693,7 +1022,22 @@
         <img src="boostami-logo.svg" alt="Boostami Logo">
     </header>
 
-    <section class="hero">
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#features">Cosa include</a></li>
+                <li><a href="#pricing">Prezzi</a></li>
+                <li><a href="#how-it-works">Come funziona</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#testimonials">Testimonianze</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Contatti</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero" id="hero">
         <div class="container">
             <div class="hero-content">
                 <h1>
@@ -706,7 +1050,7 @@
         </div>
     </section>
 
-    <section class="features">
+    <section class="features" id="features">
         <div class="container">
             <h2 class="section-title">Cosa <span>include</span>?</h2>
 
@@ -798,7 +1142,7 @@
         </div>
     </section>
 
-    <section class="steps">
+    <section class="steps" id="how-it-works">
         <div class="container">
             <h2 class="section-title">Come <span>funziona</span>?</h2>
 
@@ -846,23 +1190,158 @@
         </div>
     </section>
 
-    <footer>
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2 class="section-title">Il nostro <span>Portfolio</span></h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/400x250/C371FF/FFFFFF?text=Mockup+1" alt="Mockup Progetto 1">
+                    <div class="portfolio-info">
+                        <h3>Progetto Alpha</h3>
+                        <p>Brand identity completa per startup tecnologica.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/400x250/FF69D3/FFFFFF?text=Mockup+2" alt="Mockup Progetto 2">
+                    <div class="portfolio-info">
+                        <h3>Ristorante Delice</h3>
+                        <p>Restyling logo e template social per locale gourmet.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/400x250/C371FF/FFFFFF?text=Mockup+3" alt="Mockup Progetto 3">
+                    <div class="portfolio-info">
+                        <h3>Beauty Salon Aura</h3>
+                        <p>Creazione brand kit completo per centro estetico.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/400x250/FF69D3/FFFFFF?text=Mockup+4" alt="Mockup Progetto 4">
+                    <div class="portfolio-info">
+                        <h3>Fitness Coach Zen</h3>
+                        <p>Logo e asset digitali per personal trainer online.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Dicono <span>di noi</span></h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Boostami ha trasformato la mia attività! Il logo e i template social sono fantastici e hanno catturato perfettamente l'essenza del mio brand. Super consigliati!"</p>
+                    <div class="testimonial-author">
+                        <img src="https://via.placeholder.com/60/C371FF/FFFFFF?text=JS" alt="Cliente 1">
+                        <div class="author-info">
+                            <strong>Giulia S.</strong>
+                            <span>Imprenditrice Digitale</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Veloci, professionali e creativi. In soli 5 giorni ho avuto un brand kit che prima mi sembrava impossibile da realizzare. Hanno superato le mie aspettative!"</p>
+                    <div class="testimonial-author">
+                        <img src="https://via.placeholder.com/60/FF69D3/FFFFFF?text=MA" alt="Cliente 2">
+                        <div class="author-info">
+                            <strong>Marco A.</strong>
+                            <span>Artigiano Locale</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Ho apprezzato tantissimo la mini strategia social inclusa. Mi ha dato una direzione chiara e i miei canali hanno già iniziato a crescere. Un servizio impeccabile!"</p>
+                    <div class="testimonial-author">
+                        <img src="https://via.placeholder.com/60/C371FF/FFFFFF?text=LF" alt="Cliente 3">
+                        <div class="author-info">
+                            <strong>Laura F.</strong>
+                            <span>Influencer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="counters-section">
+        <div class="container">
+            <h2 class="section-title">I nostri <span>numeri</span></h2>
+            <div class="counters-grid">
+                <div class="counter-item" data-target="150">
+                    <div class="number" id="clients-count">0</div>
+                    <div class="text">Clienti Serviti</div>
+                </div>
+                <div class="counter-item" data-target="200">
+                    <div class="number" id="projects-count">0</div>
+                    <div class="text">Progetti Completati</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">Domande <span>Frequenti</span></h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Quanto tempo ci vuole per ricevere il brand kit?
+                        <span class="icon">&#9660;</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Il tempo di consegna standard è di 5 giorni lavorativi dalla compilazione del brief e dal ricevimento del pagamento. Per il pacchetto VIP, la priorità assoluta garantisce una consegna in 72 ore.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Quante revisioni posso chiedere?
+                        <span class="icon">&#9660;</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Offriamo revisioni illimitate finché non sarai completamente soddisfatto del risultato finale. Il nostro obiettivo è la tua piena soddisfazione.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Riceverò i file in formato modificabile?
+                        <span class="icon">&#9660;</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sì, ti forniremo il logo in formato vettoriale (AI, EPS, SVG) e PNG, oltre ai template Canva che potrai modificare facilmente con il tuo account Canva gratuito o Pro.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Cosa succede se non mi piace nessuna delle prime proposte di logo?
+                        <span class="icon">&#9660;</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Nel raro caso in cui nessuna delle prime proposte soddisfi le tue aspettative, discuteremo approfonditamente le tue preferenze e realizzeremo nuovi concept fino a trovare quello perfetto per te, senza costi aggiuntivi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer id="contact">
         <div class="container">
             <div class="footer-logo">BOOST<span>AMI</span></div>
             <p>Il tuo brand, senza sbatti.</p>
 
             <div class="footer-links">
-                <a href="#">Home</a>
-                <a href="#">Come funziona</a>
-                <a href="#">Prezzi</a>
-                <a href="#">Portfolio</a>
+                <a href="#hero">Home</a>
+                <a href="#how-it-works">Come funziona</a>
+                <a href="#pricing">Prezzi</a>
+                <a href="#portfolio">Portfolio</a>
                 <a href="mailto:info@boostami.online">Contatti</a>
                 <a href="#">Termini e condizioni</a>
             </div>
             <div class="social-icons" style="margin-bottom: 20px;">
-                <a href="https://www.instagram.com/boostami.online" target="_blank" style="margin: 0 10px; color: var(--pure-white); text-decoration: none;">Instagram</a>
-                <a href="https://www.facebook.com/boostami.online" target="_blank" style="margin: 0 10px; color: var(--pure-white); text-decoration: none;">Facebook</a>
-                <a href="https://t.me/boostami" target="_blank" style="margin: 0 10px; color: var(--pure-white); text-decoration: none;">Telegram</a>
+                <a href="https://www.facebook.com/share/15ivkicFcp/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.facebook.com/share/15ivkicFcp/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://t.me/boostami" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
             </div>
 
             <div class="copyright mt-20">
@@ -878,8 +1357,8 @@
             <h2>Richiedi il tuo Brand Kit</h2>
             <form id="briefForm" class="popup-form">
                 <div class="form-group">
-                    <label for="fullName">Nome e Cognome *</label>
-                    <input type="text" id="fullName" name="fullName" required>
+                    <label for="contactName">Nome del Contatto *</label>
+                    <input type="text" id="contactName" name="contactName" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email *</label>
@@ -904,6 +1383,10 @@
                         <option value="Ristorante">Ristorante</option>
                         <option value="Altro">Altro</option>
                     </select>
+                </div>
+                <div class="form-group" id="otherBusinessTypeGroup" style="display: none;">
+                    <label for="otherBusinessType">Specifica il tipo di attività *</label>
+                    <input type="text" id="otherBusinessType" name="otherBusinessType">
                 </div>
                 <div class="form-group">
                     <label>Canali social attivi *</label>
@@ -940,26 +1423,15 @@
         </div>
     </div>
 
+    <div class="whatsapp-widget">
+        <a href="https://wa.me/39XXXXXXXXXX" target="_blank" aria-label="Contattaci su WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            // Countdown animation
-            const countdownElement = document.createElement('div');
-            countdownElement.innerHTML = `
-                <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #C371FF; z-index: 1000;">
-                    <div style="color: #FF69D3; font-size: 24px; font-weight: bold;" id="countdown-days">5</div>
-                    <div style="color: #C371FF; text-transform: uppercase; letter-spacing: 3px; font-size: 12px;">Giorni</div>
-                </div>
-            `;
-            document.body.appendChild(countdownElement);
-
-            let days = 5;
-            setInterval(() => {
-                days = days > 1 ? days - 1 : 5;
-                document.getElementById('countdown-days').textContent = days;
-            }, 5000);
-
-            // Smooth scroll for anchor links
+            // Smooth scroll for anchor links (also for navbar)
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -969,9 +1441,9 @@
                 });
             });
 
-            // Animation on scroll
+            // Animation on scroll for features and steps
             const animateOnScroll = () => {
-                const elements = document.querySelectorAll('.feature-card, .step');
+                const elements = document.querySelectorAll('.feature-card, .step, .portfolio-item, .testimonial-card');
                 elements.forEach(el => {
                     const elPosition = el.getBoundingClientRect().top;
                     const screenPosition = window.innerHeight / 1.3;
@@ -983,8 +1455,8 @@
                 });
             };
 
-            // Set initial state
-            document.querySelectorAll('.feature-card, .step').forEach(el => {
+            // Set initial state for animated elements
+            document.querySelectorAll('.feature-card, .step, .portfolio-item, .testimonial-card').forEach(el => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(20px)';
                 el.style.transition = 'all 0.6s ease';
@@ -992,6 +1464,62 @@
 
             window.addEventListener('scroll', animateOnScroll);
             window.addEventListener('load', animateOnScroll);
+
+            // FAQ functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    // Close other open FAQs
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    item.classList.toggle('active');
+                });
+            });
+
+            // Animated Counters
+            const counterItems = document.querySelectorAll('.counter-item');
+
+            const animateCounter = (entry) => {
+                if (entry.isIntersecting) {
+                    const counterElement = entry.target;
+                    const target = parseInt(counterElement.dataset.target);
+                    const numberElement = counterElement.querySelector('.number');
+                    let currentCount = 0;
+                    const duration = 2000; // 2 seconds
+                    const increment = target / (duration / 10); // Adjust 10ms for smoother animation
+
+                    const timer = setInterval(() => {
+                        currentCount += increment;
+                        if (currentCount < target) {
+                            numberElement.textContent = Math.ceil(currentCount);
+                        } else {
+                            numberElement.textContent = target;
+                            clearInterval(timer);
+                        }
+                    }, 10);
+                    counterElement.classList.add('animated');
+                    observer.unobserve(counterElement); // Stop observing once animated
+                }
+            };
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5 // Trigger when 50% of the item is visible
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(animateCounter);
+            }, observerOptions);
+
+            counterItems.forEach(item => {
+                observer.observe(item);
+            });
 
 
             // LOGICA DEL MODULO POPUP
@@ -1002,6 +1530,9 @@
             const privacyConsentCheckbox = document.getElementById('privacyConsent');
             const submitBriefBtn = document.getElementById('submitBriefBtn');
             const formMessage = document.getElementById('form-message');
+            const businessTypeSelect = document.getElementById('businessType');
+            const otherBusinessTypeGroup = document.getElementById('otherBusinessTypeGroup');
+            const otherBusinessTypeInput = document.getElementById('otherBusinessType');
 
             let selectedPackage = ''; // To store which package button was clicked
 
@@ -1019,6 +1550,9 @@
                     submitBriefBtn.disabled = true; // Disable button until privacy is checked
                     // Remove error highlighting
                     briefForm.querySelectorAll('input, select, textarea').forEach(el => el.classList.remove('error'));
+                    // Hide "other business type" field
+                    otherBusinessTypeGroup.style.display = 'none';
+                    otherBusinessTypeInput.removeAttribute('required');
                 });
             });
 
@@ -1038,6 +1572,19 @@
             privacyConsentCheckbox.addEventListener('change', () => {
                 submitBriefBtn.disabled = !privacyConsentCheckbox.checked;
             });
+
+            // Show/hide "other business type" field
+            businessTypeSelect.addEventListener('change', () => {
+                if (businessTypeSelect.value === 'Altro') {
+                    otherBusinessTypeGroup.style.display = 'block';
+                    otherBusinessTypeInput.setAttribute('required', 'required');
+                } else {
+                    otherBusinessTypeGroup.style.display = 'none';
+                    otherBusinessTypeInput.removeAttribute('required');
+                    otherBusinessTypeInput.value = ''; // Clear value if hidden
+                }
+            });
+
 
             // Form submission handling
             briefForm.addEventListener('submit', function(e) {
@@ -1073,7 +1620,7 @@
 
                 // If "Nessuno" is checked, no other social channel should be checked.
                 // If "Nessuno" is NOT checked, at least one other social channel MUST be checked.
-                if (noneCheckbox.checked) {
+                if (noneCheckbox && noneCheckbox.checked) {
                     // If "Nessuno" is checked, ensure no other social channel is checked.
                     const otherSocialsChecked = Array.from(socialChannelsCheckboxes).some(cb => cb.checked && cb.value !== 'Nessuno');
                     if (otherSocialsChecked) {
@@ -1117,7 +1664,7 @@
                 emailBody += `Canali social attivi: ${selectedChannels || 'Nessuno selezionato'}\n`;
 
                 // Get client name for email subject
-                const clientName = formData.get('fullName') || 'Cliente Sconosciuto';
+                const clientName = formData.get('contactName') || 'Cliente Sconosciuto';
                 const emailSubject = `Nuova richiesta Boostami – ${clientName}`;
 
                 // Simulate email sending (in a real scenario, this would be an AJAX call to a backend script)
@@ -1137,6 +1684,9 @@
                 setTimeout(() => {
                     briefPopup.style.display = 'none';
                     briefForm.reset(); // Reset the form after closing
+                    // Re-hide "other business type" field and remove required attribute after reset
+                    otherBusinessTypeGroup.style.display = 'none';
+                    otherBusinessTypeInput.removeAttribute('required');
                 }, 3000); // Close after 3 seconds
             });
         });
