@@ -1,18 +1,23 @@
 backend:
-  name: github  # Cambia da git-gateway a github
-  repo: demasiadowear/boostami-site  # Assicurati che sia il nome corretto del repo
+  name: github
+  repo: demasiadowear/boostami-site
   branch: main
-  auth_type: implicit  # Aggiungi questa linea
+  auth_type: implicit
+  # Aggiungi queste righe:
+  site_url: https://boostami.online  # Obbligatorio per Vercel
+  base_url: https://api.github.com  # Specifica l'API GitHub
   commit_messages:
     create: "Crea {{collection}} '{{slug}}'"
     update: "Aggiorna {{collection}} '{{slug}}'"
     delete: "Elimina {{collection}} '{{slug}}'"
-    uploadMedia: "Carica media '{{path}}'"
-    deleteMedia: "Elimina media '{{path}}'"
-    
-media_folder: "assets/uploads"
-public_folder: "/assets/uploads"
+    uploadMedia: "[CMS] Carica media '{{path}}'"
+    deleteMedia: "[CMS] Elimina media '{{path}}'"
 
+# Aggiungi questa sezione per abilitare l'editorial workflow (opzionale ma consigliato)
+publish_mode: editorial_workflow  # Crea PR invece di push diretti
+
+media_folder: "content/uploads"  # Modificato da assets/uploads per coerenza
+public_folder: "/content/uploads"
 collections:
   - name: "hero"
     label: "Sezione Hero"
