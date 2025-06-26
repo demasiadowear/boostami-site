@@ -1,0 +1,67 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "hero"
+    label: "Sezione Hero"
+    files:
+      - file: "content/hero.md"
+        label: "Contenuto Hero"
+        name: "hero"
+        fields:
+          - { label: "Titolo", name: "title", widget: "string" }
+          - { label: "Sottotitolo", name: "subtitle", widget: "string" }
+
+  - name: "pricing"
+    label: "Pacchetti e Prezzi"
+    folder: "content/pricing"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nome Pacchetto", name: "name", widget: "string" }
+      - { label: "Prezzo", name: "price", widget: "string" }
+      - { label: "Descrizione", name: "description", widget: "text" }
+
+  - name: "portfolio"
+    label: "Portfolio"
+    folder: "content/portfolio"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titolo Progetto", name: "title", widget: "string" }
+      - { label: "Descrizione", name: "description", widget: "text" }
+      - { label: "Immagine", name: "image", widget: "image" }
+
+  - name: "testimonials"
+    label: "Testimonianze"
+    folder: "content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nome", name: "name", widget: "string" }
+      - { label: "Ruolo", name: "role", widget: "string" }
+      - { label: "Testimonianza", name: "quote", widget: "text" }
+      - { label: "Avatar", name: "avatar", widget: "image" }
+
+  - name: "faq"
+    label: "Domande Frequenti"
+    folder: "content/faq"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Domanda", name: "question", widget: "string" }
+      - { label: "Risposta", name: "answer", widget: "text" }
+
+  - name: "popup"
+    label: "Popup Contatti"
+    files:
+      - file: "content/popup.md"
+        label: "Contenuti Popup"
+        name: "popup"
+        fields:
+          - { label: "Placeholder Nome", name: "placeholder_name", widget: "string" }
+          - { label: "Placeholder Email", name: "placeholder_email", widget: "string" }
