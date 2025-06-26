@@ -3,35 +3,41 @@
 <head>
   <meta charset="utf-8">
   <title>Boostami Admin</title>
-  <!-- Carica prima lo script -->
-  <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+  <!-- Carica la versione UFFICIALE da jsDelivr (non unpkg) -->
+  <script src="https://cdn.jsdelivr.net/npm/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
+  <!-- Fallback: Se fallisce il primo script -->
+  <script>
+    window.CMS_MANUAL_INIT = true; // Previene errori di caricamento
+  </script>
 </head>
 <body>
-  <!-- Aggiungi un loader visivo -->
-  <div id="cms-status" style="padding: 20px; font-family: sans-serif;">
-    <h2>Stato CMS:</h2>
-    <p>Caricamento in corso...</p>
-  </div>
-
+  <div id="cms-root" style="min-height: 100vh;"></div>
+  
   <script>
-    // Attendi che la pagina sia completamente caricata
-    document.addEventListener('DOMContentLoaded', function() {
+    // Controllo a 3 livelli
+    if (window.CMS) {
+      initCMS();
+    } else {
+      document.addEventListener('DOMContentLoaded', initCMS);
+      setTimeout(initCMS, 500); // Backup timeout
+    }
+
+    function initCMS() {
       try {
-        CMS.init({ 
-          config: "/admin/config.yml"
+        CMS.init({
+          config: "/admin/config.yml",
+          load_config_url: "/admin/config.yml" // Forza il percorso assoluto
         });
-        document.getElementById('cms-status').innerHTML = `
-          <h2 style="color: green;">✅ CMS pronto!</h2>
-          <p>Ora puoi effettuare il login</p>
-        `;
-      } catch (error) {
-        document.getElementById('cms-status').innerHTML = `
-          <h2 style="color: red;">❌ Errore</h2>
-          <p>${error.message}</p>
-          <p>Controlla la connessione o aggiorna la pagina</p>
-        `;
+        console.log("✅ CMS inizializzato con successo!");
+      } catch (err) {
+        document.getElementById('cms-root').innerHTML = `
+          <div style="color:red; padding: 20px;">
+            <h2>ERRORE CRITICO</h2>
+            <p>${err.message}</p>
+            <p>Percorso config.yml: <a href="/admin/config.yml" target="_blank">/admin/config.yml</a></p>
+          </div>`;
       }
-    });
+    }
   </script>
 </body>
 </html>
