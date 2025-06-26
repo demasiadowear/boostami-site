@@ -2,21 +2,36 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>DEBUG CMS</title>
+  <title>Boostami Admin</title>
+  <!-- Carica prima lo script -->
   <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
 </head>
-<body style="background: black; color: white; padding: 20px;">
-  <h1>Stato CMS:</h1>
-  <div id="status">Caricamento...</div>
-  
+<body>
+  <!-- Aggiungi un loader visivo -->
+  <div id="cms-status" style="padding: 20px; font-family: sans-serif;">
+    <h2>Stato CMS:</h2>
+    <p>Caricamento in corso...</p>
+  </div>
+
   <script>
-    try {
-      CMS.init({ config: "/admin/config.yml" });
-      document.getElementById('status').textContent = "✅ CMS caricato!";
-    } catch (err) {
-      document.getElementById('status').innerHTML = 
-        `❌ ERRORE: <span style="color:red">${err.message}</span>`;
-    }
+    // Attendi che la pagina sia completamente caricata
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        CMS.init({ 
+          config: "/admin/config.yml"
+        });
+        document.getElementById('cms-status').innerHTML = `
+          <h2 style="color: green;">✅ CMS pronto!</h2>
+          <p>Ora puoi effettuare il login</p>
+        `;
+      } catch (error) {
+        document.getElementById('cms-status').innerHTML = `
+          <h2 style="color: red;">❌ Errore</h2>
+          <p>${error.message}</p>
+          <p>Controlla la connessione o aggiorna la pagina</p>
+        `;
+      }
+    });
   </script>
 </body>
 </html>
