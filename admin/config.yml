@@ -1,50 +1,65 @@
 backend:
   name: git-gateway
   branch: main
+  commit_messages:
+    create: "Create {{collection}} '{{slug}}'"
+    update: "Update {{collection}} '{{slug}}'"
+    delete: "Delete {{collection}} '{{slug}}'"
+    uploadMedia: "Upload '{{path}}'"
+    deleteMedia: "Delete '{{path}}'"
 
-media_folder: "assets/uploads"  # Allineato alla tua struttura
-public_folder: "/assets/uploads"  # Allineato alla tua struttura
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
 
-media_library:  # Aggiungi questa sezione
+media_library:
   name: uploadcare
   config:
     publicKey: "demopublickey"
+
 collections:
   - name: "prezzi"
     label: "Pacchetti"
     folder: "content/prezzi"
     create: true
     slug: "{{fields.name|slugify}}"
-        extension: "md"
+    extension: "md"
     format: "frontmatter"
     fields:
       - { label: "Nome", name: "name", widget: "string" }
       - { label: "Prezzo", name: "price", widget: "string" }
       - { label: "Descrizione", name: "description", widget: "text" }
 
-  - name: "servizi"  # Nome cambiato da 'portfolio'
+  - name: "servizi"
     label: "Servizi"
     folder: "content/servizi"
     create: true
-    slug: "{{slug}}"
+    slug: "{{fields.title|slugify}}"
+    extension: "md"
+    format: "frontmatter"
     fields:
       - { label: "Titolo", name: "title", widget: "string" }
       - { label: "Descrizione", name: "description", widget: "text" }
       - { label: "Icona", name: "icon", widget: "image" }
 
-  - name: "testimonianze"  # Nome cambiato da 'testimonials'
+  - name: "testimonianze"
     label: "Testimonianze"
     folder: "content/testimonianze"
     create: true
-    slug: "{{slug}}"
+    slug: "{{fields.name|slugify}}"
+    extension: "md"
+    format: "frontmatter"
     fields:
       - { label: "Nome", name: "name", widget: "string" }
       - { label: "Ruolo", name: "role", widget: "string" }
       - { label: "Testimonianza", name: "quote", widget: "text" }
+      - { label: "Avatar", name: "avatar", widget: "image" }
 
   - name: "hero"
     label: "Hero Section"
     file: "content/hero.md"
+    extension: "md"
+    format: "frontmatter"
     fields:
       - { label: "Titolo", name: "title", widget: "string" }
       - { label: "Sottotitolo", name: "subtitle", widget: "text" }
+      - { label: "Immagine di sfondo", name: "background", widget: "image" }
