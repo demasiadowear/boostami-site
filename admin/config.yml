@@ -3,78 +3,26 @@ backend:
   repo: demasiadowear/boostami-site
   branch: main
   auth_type: implicit
-  # Aggiungi queste righe:
-  site_url: https://boostami.online  # Obbligatorio per Vercel
-  base_url: https://api.github.com  # Specifica l'API GitHub
+  base_url: https://api.github.com
+  site_url: https://boostami.online
   commit_messages:
-    create: "Crea {{collection}} '{{slug}}'"
-    update: "Aggiorna {{collection}} '{{slug}}'"
-    delete: "Elimina {{collection}} '{{slug}}'"
-    uploadMedia: "[CMS] Carica media '{{path}}'"
-    deleteMedia: "[CMS] Elimina media '{{path}}'"
+    create: "Create {{collection}} '{{slug}}'"
+    update: "Update {{collection}} '{{slug}}'"
+    delete: "Delete {{collection}} '{{slug}}'"
+    uploadMedia: "Upload '{{path}}'"
+    deleteMedia: "Delete '{{path}}'"
 
-# Aggiungi questa sezione per abilitare l'editorial workflow (opzionale ma consigliato)
-publish_mode: editorial_workflow  # Crea PR invece di push diretti
+publish_mode: editorial_workflow
+media_folder: "static/uploads"
+public_folder: "/uploads"
 
-media_folder: "content/uploads"  # Modificato da assets/uploads per coerenza
-public_folder: "/content/uploads"
 collections:
-  - name: "hero"
-    label: "Sezione Hero"
+  - name: "pages"
+    label: "Pagine"
     files:
-      - file: "content/hero.md"
-        label: "Contenuto Hero"
-        name: "hero"
+      - file: "content/pages/home.md"
+        label: "Homepage"
+        name: "homepage"
         fields:
-          - { label: "Titolo", name: "title", widget: "string" }
-          - { label: "Sottotitolo", name: "subtitle", widget: "string" }
-
-  - name: "pricing"
-    label: "Pacchetti e Prezzi"
-    folder: "content/pricing"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Nome Pacchetto", name: "name", widget: "string" }
-      - { label: "Prezzo", name: "price", widget: "string" }
-      - { label: "Descrizione", name: "description", widget: "text" }
-
-  - name: "portfolio"
-    label: "Portfolio"
-    folder: "content/portfolio"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Titolo Progetto", name: "title", widget: "string" }
-      - { label: "Descrizione", name: "description", widget: "text" }
-      - { label: "Immagine", name: "image", widget: "image" }
-
-  - name: "testimonials"
-    label: "Testimonianze"
-    folder: "content/testimonials"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Nome", name: "name", widget: "string" }
-      - { label: "Ruolo", name: "role", widget: "string" }
-      - { label: "Testimonianza", name: "quote", widget: "text" }
-      - { label: "Avatar", name: "avatar", widget: "image" }
-
-  - name: "faq"
-    label: "Domande Frequenti"
-    folder: "content/faq"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Domanda", name: "question", widget: "string" }
-      - { label: "Risposta", name: "answer", widget: "text" }
-
-  - name: "popup"
-    label: "Popup Contatti"
-    files:
-      - file: "content/popup.md"
-        label: "Contenuti Popup"
-        name: "popup"
-        fields:
-          - { label: "Placeholder Nome", name: "placeholder_name", widget: "string" }
-          - { label: "Placeholder Email", name: "placeholder_email", widget: "string" }
+          - {label: "Titolo", name: "title", widget: "string"}
+          - {label: "Contenuto", name: "body", widget: "markdown"}
