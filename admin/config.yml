@@ -9,13 +9,14 @@ media_library:  # Aggiungi questa sezione
   name: uploadcare
   config:
     publicKey: "demopublickey"
-
 collections:
-  - name: "prezzi"  # Nome cambiato da 'pricing'
+  - name: "prezzi"
     label: "Pacchetti"
     folder: "content/prezzi"
     create: true
-    slug: "{{slug}}"
+    slug: "{{fields.name|slugify}}"
+        extension: "md"
+    format: "frontmatter"
     fields:
       - { label: "Nome", name: "name", widget: "string" }
       - { label: "Prezzo", name: "price", widget: "string" }
