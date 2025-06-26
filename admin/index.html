@@ -1,43 +1,69 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
   <meta charset="utf-8">
-  <title>Boostami Admin</title>
-  <!-- Carica la versione UFFICIALE da jsDelivr (non unpkg) -->
-  <script src="https://cdn.jsdelivr.net/npm/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
-  <!-- Fallback: Se fallisce il primo script -->
-  <script>
-    window.CMS_MANUAL_INIT = true; // Previene errori di caricamento
-  </script>
-</head>
-<body>
-  <div id="cms-root" style="min-height: 100vh;"></div>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boostami CMS</title>
   
+  <!-- Caricamento sicuro della libreria -->
   <script>
-    // Controllo a 3 livelli
-    if (window.CMS) {
-      initCMS();
-    } else {
-      document.addEventListener('DOMContentLoaded', initCMS);
-      setTimeout(initCMS, 500); // Backup timeout
+    // Fallback se il CDN principale fallisce
+    function loadCMS() {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/netlify-cms@2.10.192/dist/netlify-cms.js';
+      script.integrity = 'sha384-abcdefghijk1234567890'; // Sostituisci con hash corretto
+      script.crossOrigin = 'anonymous';
+      script.onload = initCMS;
+      script.onerror = () => {
+        console.error('Failed to load CMS from primary CDN, trying backup...');
+        loadBackupCMS();
+      };
+      document.head.appendChild(script);
+    }
+
+    function loadBackupCMS() {
+      const backupScript = document.createElement('script');
+      backupScript.src = 'https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js';
+      backupScript.onload = initCMS;
+      backupScript.onerror = showError;
+      document.head.appendChild(backupScript);
     }
 
     function initCMS() {
       try {
         CMS.init({
           config: "/admin/config.yml",
-          load_config_url: "/admin/config.yml" // Forza il percorso assoluto
+          load_config_url: "/admin/config.yml"
         });
-        console.log("✅ CMS inizializzato con successo!");
+        document.getElementById('cms-status').innerHTML = '✅ CMS pronto!';
       } catch (err) {
-        document.getElementById('cms-root').innerHTML = `
-          <div style="color:red; padding: 20px;">
-            <h2>ERRORE CRITICO</h2>
-            <p>${err.message}</p>
-            <p>Percorso config.yml: <a href="/admin/config.yml" target="_blank">/admin/config.yml</a></p>
-          </div>`;
+        showError(err);
       }
     }
+
+    function showError(err) {
+      document.getElementById('cms-status').innerHTML = `
+        <div style="color:red;padding:20px;">
+          <h2>ERRORE</h2>
+          <p>${err?.message || 'Impossibile caricare il CMS'}</p>
+          <p>Verifica:</p>
+          <ul>
+            <li><a href="/admin/config.yml" target="_blank">Config.yml accessibile?</a></li>
+            <li>Connessione internet attiva</li>
+            <li>Ad-blocker disabilitato</li>
+          </ul>
+        </div>`;
+    }
+
+    // Avvia il caricamento
+    window.addEventListener('DOMContentLoaded', loadCMS);
   </script>
+</head>
+<body>
+  <div id="cms-root"></div>
+  <div id="cms-status" style="padding:20px;font-family:sans-serif;">
+    Caricamento CMS in corso...
+  </div>
 </body>
 </html>
