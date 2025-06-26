@@ -5,12 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Boostami Admin</title>
   <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 20px; }
+    #ncms-root { margin-top: 20px; }
+  </style>
 </head>
 <body>
+  <div id="ncms-root"></div>
   <script>
     CMS.init({
       config: "/admin/config.yml"
     });
+    CMS.registerPreviewStyle("/admin/main.css");
   </script>
 </body>
 </html>
