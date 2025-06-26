@@ -1,24 +1,35 @@
 backend:
   name: git-gateway
   branch: main
+  commit_messages:
+    create: "Create {{collection}} '{{slug}}'"
+    update: "Update {{collection}} '{{slug}}'"
+    delete: "Delete {{collection}} '{{slug}}'"
+    uploadMedia: "Upload '{{path}}'"
+    deleteMedia: "Delete '{{path}}'"
 
-media_folder: "admin/assets/uploads"  # Modificato
-public_folder: "/admin/assets/uploads"  # Modificato
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+media_library:
+  name: uploadcare
+  config:
+    publicKey: "your-public-key"
 
 collections:
   - name: "hero"
     label: "Sezione Hero"
     files:
-      - file: "admin/content/hero.md"  # Percorso completo
+      - file: "content/hero.md"
         label: "Contenuto Hero"
         name: "hero"
         fields:
           - { label: "Titolo", name: "title", widget: "string" }
           - { label: "Sottotitolo", name: "subtitle", widget: "string" }
 
-  - name: "prezzi"  # Rinominato da pricing
+  - name: "prezzi"
     label: "Pacchetti e Prezzi"
-    folder: "admin/content/prezzi"  # Percorso completo
+    folder: "content/prezzi"
     create: true
     slug: "{{slug}}"
     fields:
@@ -26,9 +37,9 @@ collections:
       - { label: "Prezzo", name: "price", widget: "string" }
       - { label: "Descrizione", name: "description", widget: "text" }
 
-  - name: "servizi"  # Rinominato da portfolio
+  - name: "servizi"
     label: "Servizi"
-    folder: "admin/content/servizi"  # Percorso completo
+    folder: "content/servizi"
     create: true
     slug: "{{slug}}"
     fields:
@@ -36,9 +47,9 @@ collections:
       - { label: "Descrizione", name: "description", widget: "text" }
       - { label: "Immagine", name: "image", widget: "image" }
 
-  - name: "testimonianze"  # Rinominato da testimonials
+  - name: "testimonianze"
     label: "Testimonianze"
-    folder: "admin/content/testimonianze"  # Percorso completo
+    folder: "content/testimonianze"
     create: true
     slug: "{{slug}}"
     fields:
@@ -47,4 +58,12 @@ collections:
       - { label: "Testimonianza", name: "quote", widget: "text" }
       - { label: "Avatar", name: "avatar", widget: "image" }
 
-  # Rimuovi o aggiusta le sezioni non esistenti (faq, popup)
+  - name: "popup"
+    label: "Popup Contatti"
+    files:
+      - file: "content/popup.md"
+        label: "Contenuti Popup"
+        name: "popup"
+        fields:
+          - { label: "Placeholder Nome", name: "placeholder_name", widget: "string" }
+          - { label: "Placeholder Email", name: "placeholder_email", widget: "string" }
