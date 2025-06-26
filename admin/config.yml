@@ -1,30 +1,50 @@
 backend:
-  name: github
-  repo: demasiadowear/boostami-site
+  name: git-gateway
   branch: main
-  auth_type: implicit
-  site_url: https://boostami.online
-  base_url: https://api.github.com
 
-# Aggiungi queste sezioni OBBLIGATORIE
-media_folder: "static/uploads"  # Cartella dove salvare i media
-public_folder: "/uploads"       # Percorso pubblico per i media
-media_library:                  # Configurazione libreria media
-  name: uploadcare
-  config:
-    publicKey: demopublickey
+media_folder: "admin/assets/uploads"  # Modificato
+public_folder: "/admin/assets/uploads"  # Modificato
 
 collections:
-  - name: "pages"
-    label: "Pages"
-    label_singular: "Page"
-    folder: "content/pages"
+  - name: "hero"
+    label: "Sezione Hero"
+    files:
+      - file: "admin/content/hero.md"  # Percorso completo
+        label: "Contenuto Hero"
+        name: "hero"
+        fields:
+          - { label: "Titolo", name: "title", widget: "string" }
+          - { label: "Sottotitolo", name: "subtitle", widget: "string" }
+
+  - name: "prezzi"  # Rinominato da pricing
+    label: "Pacchetti e Prezzi"
+    folder: "admin/content/prezzi"  # Percorso completo
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - { label: "Nome Pacchetto", name: "name", widget: "string" }
+      - { label: "Prezzo", name: "price", widget: "string" }
+      - { label: "Descrizione", name: "description", widget: "text" }
 
-# Configurazione minima funzionante
-display_url: https://boostami.online
-locale: "it"
+  - name: "servizi"  # Rinominato da portfolio
+    label: "Servizi"
+    folder: "admin/content/servizi"  # Percorso completo
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titolo Servizio", name: "title", widget: "string" }
+      - { label: "Descrizione", name: "description", widget: "text" }
+      - { label: "Immagine", name: "image", widget: "image" }
+
+  - name: "testimonianze"  # Rinominato da testimonials
+    label: "Testimonianze"
+    folder: "admin/content/testimonianze"  # Percorso completo
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nome", name: "name", widget: "string" }
+      - { label: "Ruolo", name: "role", widget: "string" }
+      - { label: "Testimonianza", name: "quote", widget: "text" }
+      - { label: "Avatar", name: "avatar", widget: "image" }
+
+  # Rimuovi o aggiusta le sezioni non esistenti (faq, popup)
