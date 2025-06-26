@@ -1,53 +1,37 @@
 backend:
   name: git-gateway
   branch: main
-  commit_messages:
-    create: "Create {{collection}} '{{slug}}'"
-    update: "Update {{collection}} '{{slug}}'"
-    delete: "Delete {{collection}} '{{slug}}'"
-    uploadMedia: "Upload '{{path}}'"
-    deleteMedia: "Delete '{{path}}'"
 
-media_folder: "assets/uploads"
-public_folder: "/assets/uploads"
+media_folder: "assets/upload"  # Allineato alla tua struttura
+public_folder: "/assets/upload"  # Allineato alla tua struttura
 
-media_library:
+media_library:  # Aggiungi questa sezione
   name: uploadcare
   config:
-    publicKey: "your-public-key"
+    publicKey: "demopublickey"
 
 collections:
-  - name: "hero"
-    label: "Sezione Hero"
-    files:
-      - file: "content/hero.md"
-        label: "Contenuto Hero"
-        name: "hero"
-        fields:
-          - { label: "Titolo", name: "title", widget: "string" }
-          - { label: "Sottotitolo", name: "subtitle", widget: "string" }
-
-  - name: "prezzi"
-    label: "Pacchetti e Prezzi"
+  - name: "prezzi"  # Nome cambiato da 'pricing'
+    label: "Pacchetti"
     folder: "content/prezzi"
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Nome Pacchetto", name: "name", widget: "string" }
+      - { label: "Nome", name: "name", widget: "string" }
       - { label: "Prezzo", name: "price", widget: "string" }
       - { label: "Descrizione", name: "description", widget: "text" }
 
-  - name: "servizi"
+  - name: "servizi"  # Nome cambiato da 'portfolio'
     label: "Servizi"
     folder: "content/servizi"
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Titolo Servizio", name: "title", widget: "string" }
+      - { label: "Titolo", name: "title", widget: "string" }
       - { label: "Descrizione", name: "description", widget: "text" }
-      - { label: "Immagine", name: "image", widget: "image" }
+      - { label: "Icona", name: "icon", widget: "image" }
 
-  - name: "testimonianze"
+  - name: "testimonianze"  # Nome cambiato da 'testimonials'
     label: "Testimonianze"
     folder: "content/testimonianze"
     create: true
@@ -56,14 +40,10 @@ collections:
       - { label: "Nome", name: "name", widget: "string" }
       - { label: "Ruolo", name: "role", widget: "string" }
       - { label: "Testimonianza", name: "quote", widget: "text" }
-      - { label: "Avatar", name: "avatar", widget: "image" }
 
-  - name: "popup"
-    label: "Popup Contatti"
-    files:
-      - file: "content/popup.md"
-        label: "Contenuti Popup"
-        name: "popup"
-        fields:
-          - { label: "Placeholder Nome", name: "placeholder_name", widget: "string" }
-          - { label: "Placeholder Email", name: "placeholder_email", widget: "string" }
+  - name: "hero"
+    label: "Hero Section"
+    file: "content/hero.md"
+    fields:
+      - { label: "Titolo", name: "title", widget: "string" }
+      - { label: "Sottotitolo", name: "subtitle", widget: "text" }
