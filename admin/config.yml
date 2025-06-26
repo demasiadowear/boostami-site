@@ -1,7 +1,15 @@
 backend:
-  name: git-gateway
+  name: github  # Cambia da git-gateway a github
+  repo: demasiadowear/boostami-site  # Assicurati che sia il nome corretto del repo
   branch: main
-
+  auth_type: implicit  # Aggiungi questa linea
+  commit_messages:
+    create: "Crea {{collection}} '{{slug}}'"
+    update: "Aggiorna {{collection}} '{{slug}}'"
+    delete: "Elimina {{collection}} '{{slug}}'"
+    uploadMedia: "Carica media '{{path}}'"
+    deleteMedia: "Elimina media '{{path}}'"
+    
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
