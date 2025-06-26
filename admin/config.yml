@@ -3,26 +3,28 @@ backend:
   repo: demasiadowear/boostami-site
   branch: main
   auth_type: implicit
-  base_url: https://api.github.com
   site_url: https://boostami.online
-  commit_messages:
-    create: "Create {{collection}} '{{slug}}'"
-    update: "Update {{collection}} '{{slug}}'"
-    delete: "Delete {{collection}} '{{slug}}'"
-    uploadMedia: "Upload '{{path}}'"
-    deleteMedia: "Delete '{{path}}'"
+  base_url: https://api.github.com
 
-publish_mode: editorial_workflow
-media_folder: "static/uploads"
-public_folder: "/uploads"
+# Aggiungi queste sezioni OBBLIGATORIE
+media_folder: "static/uploads"  # Cartella dove salvare i media
+public_folder: "/uploads"       # Percorso pubblico per i media
+media_library:                  # Configurazione libreria media
+  name: uploadcare
+  config:
+    publicKey: demopublickey
 
 collections:
   - name: "pages"
-    label: "Pagine"
-    files:
-      - file: "content/pages/home.md"
-        label: "Homepage"
-        name: "homepage"
-        fields:
-          - {label: "Titolo", name: "title", widget: "string"}
-          - {label: "Contenuto", name: "body", widget: "markdown"}
+    label: "Pages"
+    label_singular: "Page"
+    folder: "content/pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+# Configurazione minima funzionante
+display_url: https://boostami.online
+locale: "it"
