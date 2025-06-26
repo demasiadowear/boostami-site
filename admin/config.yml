@@ -2,8 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "assets/upload"  # Allineato alla tua struttura
-public_folder: "/assets/upload"  # Allineato alla tua struttura
+media_folder: "assets/uploads"  # Allineato alla tua struttura
+public_folder: "/assets/uploads"  # Allineato alla tua struttura
 
 media_library:  # Aggiungi questa sezione
   name: uploadcare
