@@ -1,9 +1,4 @@
 
-## 🛠 Configurazione di vercel.json
-
-Crea questo file nella **root del progetto**:
-
-```json
 {
   "rewrites": [
     {
