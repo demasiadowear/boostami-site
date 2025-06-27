@@ -1,39 +1,38 @@
-# Configurazione con cartelle esistenti
 backend:
   name: test-repo
 
-media_folder: "assets/uploads"
-public_folder: "/assets/uploads"
+media_folder: assets/uploads
+public_folder: /assets/uploads
 
 collections:
-  - name: "prezzi"
-    label: "Prezzi"
-    folder: "content/prezzi"
+  - name: prezzi
+    label: Prezzi
+    folder: content/prezzi
     create: true
     slug: "{{slug}}"
     fields:
-      - label: "Titolo"
-        name: "title"
-        widget: "string"
-      - label: "Descrizione"
-        name: "description"
-        widget: "text"
-      - label: "Contenuto"
-        name: "body"
-        widget: "markdown"
+      - label: Titolo
+        name: title
+        widget: string
+      - label: Descrizione
+        name: description
+        widget: text
+      - label: Contenuto
+        name: body
+        widget: markdown
         
-  - name: "servizi"
-    label: "Servizi" 
-    folder: "content/servizi"
+  - name: servizi
+    label: Servizi
+    folder: content/servizi
     create: true
     slug: "{{slug}}"
     fields:
-      - label: "Titolo"
-        name: "title"
-        widget: "string"
-      - label: "Descrizione"
-        name: "description"
-        widget: "text"
-      - label: "Contenuto"
-        name: "body"
-        widget: "markdown"
+      - label: Titolo
+        name: title
+        widget: string
+      - label: Descrizione
+        name: description
+        widget: text
+      - label: Contenuto
+        name: body
+        widget: markdown
