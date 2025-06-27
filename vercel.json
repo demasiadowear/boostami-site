@@ -1,20 +1,19 @@
-
 {
-  "rewrites": [
-    {
-      "source": "/admin/(.*)",
-      "destination": "/admin/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/admin/config.yml",
       "headers": [
         {
           "key": "Content-Type",
-          "value": "text/yaml"
+          "value": "application/x-yaml"
         }
       ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/admin/index.html"
     }
   ]
 }
