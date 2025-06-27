@@ -1,65 +1,57 @@
 backend:
   name: git-gateway
   branch: main
-  commit_messages:
-    create: "Create {{collection}} '{{slug}}'"
-    update: "Update {{collection}} '{{slug}}'"
-    delete: "Delete {{collection}} '{{slug}}'"
-    uploadMedia: "Upload '{{path}}'"
-    deleteMedia: "Delete '{{path}}'"
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
-media_library:
-  name: uploadcare
-  config:
-    publicKey: "demopublickey"
-
 collections:
   - name: "prezzi"
-    label: "Pacchetti"
+    label: "Prezzi"
     folder: "content/prezzi"
     create: true
-    slug: "{{fields.name|slugify}}"
-    extension: "md"
-    format: "frontmatter"
+    slug: "{{slug}}"
     fields:
-      - { label: "Nome", name: "name", widget: "string" }
-      - { label: "Prezzo", name: "price", widget: "string" }
-      - { label: "Descrizione", name: "description", widget: "text" }
+      - {label: "Titolo", name: "title", widget: "string"}
+      - {label: "Descrizione", name: "description", widget: "text"}
+      - {label: "Prezzo", name: "price", widget: "number"}
+      - {label: "Contenuto", name: "body", widget: "markdown"}
 
   - name: "servizi"
     label: "Servizi"
     folder: "content/servizi"
     create: true
-    slug: "{{fields.title|slugify}}"
-    extension: "md"
-    format: "frontmatter"
+    slug: "{{slug}}"
     fields:
-      - { label: "Titolo", name: "title", widget: "string" }
-      - { label: "Descrizione", name: "description", widget: "text" }
-      - { label: "Icona", name: "icon", widget: "image" }
+      - {label: "Titolo", name: "title", widget: "string"}
+      - {label: "Descrizione", name: "description", widget: "text"}
+      - {label: "Contenuto", name: "body", widget: "markdown"}
 
   - name: "testimonianze"
     label: "Testimonianze"
     folder: "content/testimonianze"
     create: true
-    slug: "{{fields.name|slugify}}"
-    extension: "md"
-    format: "frontmatter"
+    slug: "{{slug}}"
     fields:
-      - { label: "Nome", name: "name", widget: "string" }
-      - { label: "Ruolo", name: "role", widget: "string" }
-      - { label: "Testimonianza", name: "quote", widget: "text" }
-      - { label: "Avatar", name: "avatar", widget: "image" }
+      - {label: "Nome", name: "name", widget: "string"}
+      - {label: "Azienda", name: "company", widget: "string"}
+      - {label: "Testimonianza", name: "body", widget: "markdown"}
 
-  - name: "hero"
-    label: "Hero Section"
-    file: "content/hero.md"
-    extension: "md"
-    format: "frontmatter"
-    fields:
-      - { label: "Titolo", name: "title", widget: "string" }
-      - { label: "Sottotitolo", name: "subtitle", widget: "text" }
-      - { label: "Immagine di sfondo", name: "background", widget: "image" }
+  - name: "pages"
+    label: "Pagine"
+    files:
+      - label: "Hero Section"
+        name: "hero"
+        file: "hero.md"
+        fields:
+          - {label: "Titolo", name: "title", widget: "string"}
+          - {label: "Sottotitolo", name: "subtitle", widget: "string"}
+          - {label: "Contenuto", name: "body", widget: "markdown"}
+      
+      - label: "Popup"
+        name: "popup"
+        file: "popup.md"
+        fields:
+          - {label: "Titolo", name: "title", widget: "string"}
+          - {label: "Contenuto", name: "body", widget: "markdown"}
+          - {label: "Attivo", name: "active", widget: "boolean", default: false}
