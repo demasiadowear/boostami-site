@@ -1,38 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Admin</title>
-  <!-- CARICAMENTO SICURO DEL CMS -->
-  <script>
-    function loadCMS() {
-      const script = document.createElement('script');
-      script.src = 'https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js';
-      script.integrity = 'sha384-abc123...';
-      script.crossOrigin = 'anonymous';
-      script.onload = initCMS;
-      script.onerror = () => {
-        document.body.innerHTML = '<h1>Errore: Script non caricato</h1>';
-      };
-      document.head.appendChild(script);
-    }
-
-    function initCMS() {
-      try {
-        CMS.init({
-          config: window.location.hostname === 'localhost' 
-            ? '/admin/config.yml' 
-            : 'https://tuosito.com/admin/config.yml'
-        });
-      } catch (e) {
-        document.body.innerHTML = `<h1>Errore CMS: ${e.message}</h1>`;
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', loadCMS);
-  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Manager</title>
 </head>
 <body>
-  <div id="cms-root"></div>
+  <!-- Include the script that builds the page and powers Decap CMS -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
