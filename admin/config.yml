@@ -1,57 +1,15 @@
+# Configurazione minima per testare
 backend:
-  name: git-gateway
-  branch: main
+  name: test-repo
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
 collections:
-  - name: "prezzi"
-    label: "Prezzi"
-    folder: "content/prezzi"
+  - name: "test"
+    label: "Test"
+    folder: "content/test"
     create: true
-    slug: "{{slug}}"
     fields:
-      - {label: "Titolo", name: "title", widget: "string"}
-      - {label: "Descrizione", name: "description", widget: "text"}
-      - {label: "Prezzo", name: "price", widget: "number"}
-      - {label: "Contenuto", name: "body", widget: "markdown"}
-
-  - name: "servizi"
-    label: "Servizi"
-    folder: "content/servizi"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Titolo", name: "title", widget: "string"}
-      - {label: "Descrizione", name: "description", widget: "text"}
-      - {label: "Contenuto", name: "body", widget: "markdown"}
-
-  - name: "testimonianze"
-    label: "Testimonianze"
-    folder: "content/testimonianze"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Nome", name: "name", widget: "string"}
-      - {label: "Azienda", name: "company", widget: "string"}
-      - {label: "Testimonianza", name: "body", widget: "markdown"}
-
-  - name: "pages"
-    label: "Pagine"
-    files:
-      - label: "Hero Section"
-        name: "hero"
-        file: "hero.md"
-        fields:
-          - {label: "Titolo", name: "title", widget: "string"}
-          - {label: "Sottotitolo", name: "subtitle", widget: "string"}
-          - {label: "Contenuto", name: "body", widget: "markdown"}
-      
-      - label: "Popup"
-        name: "popup"
-        file: "popup.md"
-        fields:
-          - {label: "Titolo", name: "title", widget: "string"}
-          - {label: "Contenuto", name: "body", widget: "markdown"}
-          - {label: "Attivo", name: "active", widget: "boolean", default: false}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
