@@ -1,7 +1,7 @@
 {
-  "buildCommand": "yarn build",
-  "installCommand": "yarn install",
-  "devCommand": "yarn dev",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install --legacy-peer-deps",
+  "devCommand": "npm run dev",
   "framework": "vite",
   "rewrites": [
     { "source": "/admin", "destination": "/index.html" },
