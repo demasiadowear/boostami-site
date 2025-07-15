@@ -1,3 +1,4 @@
+// 1. NUOVO ContentContext.jsx - Sostituisci completamente il file esistente
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import defaultContent from '../data/content.json';
 
@@ -15,6 +16,12 @@ export const ContentProvider = ({ children }) => {
   const [content, setContent] = useState(defaultContent);
   const [isLoading, setIsLoading] = useState(true);
   const [lastSaved, setLastSaved] = useState(null);
+  const [isPublishing, setIsPublishing] = useState(false);
+
+  // Configurazione GitHub - DA CONFIGURARE NELLE ENVIRONMENT VARIABLES
+  const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
+  const GITHUB_REPO = 'demasiadowear/boostami-site';
+  const GITHUB_BRANCH = 'main';
 
   // Carica contenuti dal localStorage all'avvio
   useEffect(() => {
@@ -32,7 +39,6 @@ export const ContentProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Errore nel caricamento dei contenuti:', error);
-      // In caso di errore, usa i contenuti di default
       setContent(defaultContent);
     } finally {
       setIsLoading(false);
@@ -59,6 +65,93 @@ export const ContentProvider = ({ children }) => {
     } catch (error) {
       console.error('Errore nel salvataggio:', error);
       return { success: false, message: 'Errore nel salvataggio dei contenuti.' };
+    }
+  };
+
+  // NUOVA FUNZIONE: Pubblica su GitHub e triggera rebuild
+  const publishContent = async () => {
+    if (!GITHUB_TOKEN) {
+      return { 
+        success: false, 
+        message: 'Token GitHub non configurato. Controlla le variabili d\'ambiente.' 
+      };
+    }
+
+    setIsPublishing(true);
+    
+    try {
+      // 1. Ottieni il SHA del file corrente
+      const fileResponse = await fetch(
+        `https://api.github.com/repos/${GITHUB_REPO}/contents/data/content.json?ref=${GITHUB_BRANCH}`,
+        {
+          headers: {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        }
+      );
+
+      if (!fileResponse.ok) {
+        throw new Error(`Errore nel recupero del file: ${fileResponse.status}`);
+      }
+
+      const fileData = await fileResponse.json();
+      const currentSha = fileData.sha;
+
+      // 2. Prepara il nuovo contenuto
+      const newContent = JSON.stringify(content, null, 2);
+      const encodedContent = btoa(unescape(encodeURIComponent(newContent)));
+
+      // 3. Aggiorna il file su GitHub
+      const updateResponse = await fetch(
+        `https://api.github.com/repos/${GITHUB_REPO}/contents/data/content.json`,
+        {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: `Aggiornamento contenuti CMS - ${new Date().toISOString()}`,
+            content: encodedContent,
+            sha: currentSha,
+            branch: GITHUB_BRANCH
+          })
+        }
+      );
+
+      if (!updateResponse.ok) {
+        throw new Error(`Errore nell'aggiornamento: ${updateResponse.status}`);
+      }
+
+      // 4. Salva nel localStorage e aggiorna timestamp
+      const saveResult = saveContent();
+      
+      // 5. Triggera rebuild di Vercel (opzionale - Vercel dovrebbe rilevare automaticamente)
+      if (import.meta.env.VITE_VERCEL_WEBHOOK) {
+        try {
+          await fetch(import.meta.env.VITE_VERCEL_WEBHOOK, {
+            method: 'POST'
+          });
+        } catch (webhookError) {
+          console.warn('Webhook Vercel non disponibile, ma il deploy avverrà automaticamente');
+        }
+      }
+
+      return { 
+        success: true, 
+        message: 'Contenuti pubblicati con successo! Il sito verrà aggiornato in 1-2 minuti.' 
+      };
+
+    } catch (error) {
+      console.error('Errore nella pubblicazione:', error);
+      return { 
+        success: false, 
+        message: `Errore nella pubblicazione: ${error.message}` 
+      };
+    } finally {
+      setIsPublishing(false);
     }
   };
 
@@ -93,10 +186,8 @@ export const ContentProvider = ({ children }) => {
           try {
             const importedContent = JSON.parse(e.target.result);
             
-            // Validazione base della struttura
             if (typeof importedContent === 'object' && importedContent !== null) {
               setContent(importedContent);
-              // Salva automaticamente dopo l'import
               localStorage.setItem('boostami-content', JSON.stringify(importedContent));
               const now = new Date();
               localStorage.setItem('boostami-last-saved', now.toISOString());
@@ -157,11 +248,13 @@ export const ContentProvider = ({ children }) => {
     setContent,
     updateSection,
     saveContent,
+    publishContent, // NUOVA FUNZIONE
     exportContent,
     importContent,
     resetContent,
     getSaveStatus,
     isLoading,
+    isPublishing, // NUOVO STATO
     lastSaved
   };
 
@@ -183,3 +276,99 @@ export const ContentProvider = ({ children }) => {
   );
 };
 
+// 2. COMPONENTE PublishButton.jsx - Crea nuovo file in /components/ui/
+import React, { useState } from 'react';
+import { useContent } from '../../contexts/ContentContext';
+
+const PublishButton = () => {
+  const { publishContent, isPublishing, getSaveStatus } = useContent();
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // 'success' o 'error'
+
+  const handlePublish = async () => {
+    setMessage('');
+    setMessageType('');
+
+    const result = await publishContent();
+    
+    setMessage(result.message);
+    setMessageType(result.success ? 'success' : 'error');
+
+    // Nascondi il messaggio dopo 5 secondi
+    setTimeout(() => {
+      setMessage('');
+      setMessageType('');
+    }, 5000);
+  };
+
+  const { hasUnsavedChanges } = getSaveStatus();
+
+  return (
+    <div className="space-y-4">
+      <button
+        onClick={handlePublish}
+        disabled={isPublishing}
+        className={`
+          w-full px-6 py-3 rounded-lg font-medium transition-all duration-200
+          ${isPublishing 
+            ? 'bg-gray-400 cursor-not-allowed' 
+            : 'bg-green-600 hover:bg-green-700 transform hover:scale-105'
+          }
+          text-white shadow-lg
+        `}
+      >
+        {isPublishing ? (
+          <div className="flex items-center justify-center space-x-2">
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+            <span>Pubblicando...</span>
+          </div>
+        ) : (
+          '🚀 Pubblica Sul Sito'
+        )}
+      </button>
+
+      {hasUnsavedChanges && (
+        <div className="text-amber-600 text-sm font-medium text-center">
+          ⚠️ Hai modifiche non salvate localmente
+        </div>
+      )}
+
+      {message && (
+        <div className={`
+          p-3 rounded-lg text-sm font-medium text-center
+          ${messageType === 'success' 
+            ? 'bg-green-100 text-green-800 border border-green-200' 
+            : 'bg-red-100 text-red-800 border border-red-200'
+          }
+        `}>
+          {message}
+        </div>
+      )}
+
+      <div className="text-xs text-gray-500 text-center">
+        Questo aggiornerà il sito live in 1-2 minuti
+      </div>
+    </div>
+  );
+};
+
+export default PublishButton;
+
+// 3. AGGIORNAMENTO AdminPanel.jsx - Aggiungi il PublishButton
+// Cerca nel tuo AdminPanel.jsx esistente e aggiungi questo import in alto:
+import PublishButton from './PublishButton';
+
+// Poi aggiungi il componente dove vuoi che appaia (esempio dopo i pulsanti esistenti):
+/*
+<div className="mb-6">
+  <PublishButton />
+</div>
+*/
+
+// 4. CONFIGURAZIONE ENVIRONMENT VARIABLES
+// Aggiungi queste variabili in Vercel Settings > Environment Variables:
+
+/*
+VITE_GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+VITE_VERCEL_WEBHOOK=https://api.vercel.com/v1/integrations/deploy/xxxxx (opzionale)
+*/
