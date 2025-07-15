@@ -1,7 +1,10 @@
 {
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install",
+  "devCommand": "pnpm dev",
+  "framework": "vite",
   "rewrites": [
     { "source": "/admin", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
-
