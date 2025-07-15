@@ -14,9 +14,9 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Credenziali - IN PRODUZIONE USA ENVIRONMENT VARIABLES
+  // Credenziali - DA ENVIRONMENT VARIABLES
   const ADMIN_USERNAME = import.meta.env.VITE_ADMIN_USERNAME || 'admin';
-  const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'boostami2024';
+  const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'AdminBoost!123';
 
   useEffect(() => {
     // Verifica se l'utente è già autenticato
