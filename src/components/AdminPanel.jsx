@@ -1,5 +1,4 @@
-import PublishButton from './PublishButton';
-*/import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -8,12 +7,15 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { ArrowLeft, Settings, FileText, Image, DollarSign, Users, Save, Download, Upload, RotateCcw, CheckCircle, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useContent } from '../contexts/ContentContext';
+import { useAuth } from '../contexts/AuthContext';
 import Editor from './Editor';
+import PublishButton from './PublishButton';
 
 const AdminPanel = () => {
   const [activeSection, setActiveSection] = useState('hero');
   const [notification, setNotification] = useState(null);
   const { content, updateSection, saveContent, exportContent, importContent, resetContent, getSaveStatus } = useContent();
+  const { logout } = useAuth();
 
   const sections = [
     { id: 'site', label: 'Impostazioni Sito', icon: Settings },
@@ -60,6 +62,12 @@ const AdminPanel = () => {
     }
   };
 
+  const handleLogout = () => {
+    if (window.confirm('Sei sicuro di voler effettuare il logout?')) {
+      logout();
+    }
+  };
+
   const saveStatus = getSaveStatus();
 
   return (
@@ -90,7 +98,7 @@ const AdminPanel = () => {
                 Torna al sito
               </Link>
               <div className="h-6 w-px bg-gray-300"></div>
-              <h1 className="text-xl font-bold text-gray-900">Pannello Admin - Boostami</h1>
+              <h1 className="text-xl font-bold text-gray-900">🚀 Pannello Admin - Boostami</h1>
             </div>
             
             <div className="flex items-center space-x-2">
@@ -110,12 +118,28 @@ const AdminPanel = () => {
                 <RotateCcw className="h-4 w-4 mr-2" />
                 Reset
               </Button>
+              <Button variant="outline" size="sm" onClick={handleLogout} className="bg-red-50 text-red-600 hover:bg-red-100">
+                Logout
+              </Button>
             </div>
           </div>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Pulsante Pubblica - Prominente */}
+        <div className="mb-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">🚀 Pubblicazione</CardTitle>
+              <CardDescription>Pubblica le modifiche sul sito live</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <PublishButton />
+            </CardContent>
+          </Card>
+        </div>
+
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Sidebar */}
           <div className="lg:col-span-1">
@@ -169,53 +193,7 @@ const AdminPanel = () => {
               </CardContent>
             </Card>
           </div>
-import React from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import { useContent } from '../../contexts/ContentContext';
-import PublishButton from './PublishButton';
 
-const AdminPanel = () => {
-  const { logout } = useAuth();
-  const { content, updateSection, saveContent } = useContent();
-
-  const handleLogout = () => {
-    if (confirm('Sei sicuro di voler effettuare il logout?')) {
-      logout();
-    }
-  };
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header con logout */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <h1 className="text-2xl font-bold text-gray-900">
-              🚀 Boostami - Admin Panel
-            </h1>
-            <button
-              onClick={handleLogout}
-              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Contenuto principale */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          <PublishButton />
-        </div>
-
-        {/* Il resto del tuo AdminPanel esistente */}
-        {/* ... */}
-      </div>
-    </div>
-  );
-};
-
-export default AdminPanel;
           {/* Main Content */}
           <div className="lg:col-span-3">
             <Card>
@@ -243,4 +221,3 @@ export default AdminPanel;
 };
 
 export default AdminPanel;
-
