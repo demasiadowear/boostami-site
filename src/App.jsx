@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ContentProvider } from './contexts/ContentContext';
-import { AuthProvider } from './contexts/AuthContext'; // NUOVO
-import ProtectedRoute from './components/ui/ProtectedRoute'; // NUOVO
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ui/ProtectedRoute';
 import Home from './components/Home';
-import AdminPanel from './components/ui/AdminPanel';
+import AdminPanel from './components/AdminPanel'; // ← CORRETTO: senza /ui/
 
 function App() {
   return (
-    <AuthProvider> {/* NUOVO WRAPPER */}
+    <AuthProvider>
       <ContentProvider>
         <Router>
           <Routes>
@@ -16,7 +16,7 @@ function App() {
             <Route 
               path="/admin" 
               element={
-                <ProtectedRoute> {/* PROTEZIONE */}
+                <ProtectedRoute>
                   <AdminPanel />
                 </ProtectedRoute>
               } 
