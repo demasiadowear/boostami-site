@@ -95,7 +95,7 @@ const Home = () => {
           <div className="mb-8 animate-bounce">
             <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-none">
               <span className="text-white">BOOST</span>
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 AMI
               </span>
             </h1>
@@ -103,7 +103,7 @@ const Home = () => {
 
           {/* Typewriter Subtitle */}
           <div className="text-lg md:text-2xl lg:text-4xl font-light mb-6 h-12 md:h-16">
-            <span className="border-r-2 border-blue-400 pr-1">
+            <span className="border-r-2 border-pink-500 pr-1">
               {typedText}
             </span>
             {typedText.length < content.hero.title.length && (
@@ -130,7 +130,7 @@ const Home = () => {
           <div id="stats-section" className="grid grid-cols-3 gap-4 max-w-2xl mx-auto px-4">
             {content.about.stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-2xl md:text-4xl font-black bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <div className="text-2xl md:text-4xl font-black bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
                   <StatCounter end={stat.number.replace(/[^\d]/g, '')} suffix={stat.number.replace(/\d/g, '')} />
                 </div>
                 <div className="text-xs md:text-sm font-medium opacity-80">
@@ -156,7 +156,7 @@ const Home = () => {
           <div className="text-center mb-12 md:mb-20">
             <h2 className="text-3xl md:text-5xl lg:text-7xl font-black mb-6">
               I Nostri{' '}
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 SUPERPOWERS
               </span>
             </h2>
@@ -171,13 +171,13 @@ const Home = () => {
               <div
                 key={service.id}
                 className={`
-                  bg-gradient-to-br from-purple-900/50 to-blue-900/50 
-                  backdrop-blur-sm border border-white/10 
+                  bg-gradient-to-br from-pink-900/50 via-purple-900/50 to-blue-900/50 
+                  backdrop-blur-sm border border-pink-500/20 
                   p-6 md:p-8 rounded-3xl 
                   hover:scale-105 hover:-translate-y-2 
                   transition-all duration-500 ease-out
-                  hover:shadow-2xl hover:shadow-purple-500/20
-                  ${index === 1 ? 'lg:scale-110 shadow-xl shadow-purple-500/30' : ''}
+                  hover:shadow-2xl hover:shadow-pink-500/30
+                  ${index === 1 ? 'lg:scale-110 shadow-xl shadow-purple-500/40' : ''}
                 `}
               >
                 {/* Badge per servizio popolare */}
@@ -195,7 +195,7 @@ const Home = () => {
                 </div>
 
                 {/* Service Title */}
-                <h3 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
                   {service.title}
                 </h3>
 
@@ -246,7 +246,7 @@ const Home = () => {
             <div>
               <h2 className="text-3xl md:text-5xl lg:text-7xl font-black mb-6 text-white">
                 {content.about.title}<br />
-                <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
                   I VISIONARI
                 </span>
               </h2>
@@ -254,7 +254,7 @@ const Home = () => {
               <div className="text-lg md:text-xl text-white mb-6 md:mb-8 leading-relaxed">
                 <p className="mb-4">
                   Boostami è un team di <strong>professionisti visionari</strong> che trasforma 
-                  le aziende in <span className="text-yellow-300 font-semibold">macchine di successo</span>.
+                  le aziende in <span className="text-pink-400 font-semibold">macchine di successo</span>.
                 </p>
                 <p>
                   {content.about.content}
@@ -294,7 +294,7 @@ const Home = () => {
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-5xl lg:text-7xl font-black mb-6">
               Pronto a{' '}
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 DOMINARE
               </span>
               <br />il tuo mercato?
@@ -306,7 +306,7 @@ const Home = () => {
             </p>
             
             <div className="space-y-4 md:space-y-6">
-              <button className="w-full sm:w-auto px-8 md:px-16 py-4 md:py-6 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-bold text-xl md:text-2xl hover:scale-105 transform transition-all duration-300 shadow-xl">
+              <button className="w-full sm:w-auto px-8 md:px-16 py-4 md:py-6 bg-gradient-to-r from-pink-500 via-purple-600 to-blue-600 rounded-full font-bold text-xl md:text-2xl hover:scale-105 transform transition-all duration-300 shadow-xl">
                 🚀 INIZIA LA TUA TRASFORMAZIONE
               </button>
               <p className="text-xs md:text-sm text-gray-400">
@@ -357,7 +357,7 @@ const Home = () => {
           <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-8">
             <div>
               <h3 className="text-xl md:text-2xl font-bold text-white mb-4">
-                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
                   BOOSTAMI
                 </span>
               </h3>
