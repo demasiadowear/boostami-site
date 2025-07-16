@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { useContent } from '../contexts/ContentContext';
 import { useAuth } from '../contexts/AuthContext';
 import Editor from './Editor';
-import PublishButton from './PublishButton';
+import PublishButton from './ui/PublishButton';
 
 const AdminPanel = () => {
   const [activeSection, setActiveSection] = useState('hero');
