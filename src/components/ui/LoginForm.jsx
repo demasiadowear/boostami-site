@@ -74,10 +74,6 @@ const LoginForm = () => {
             {isLoading ? 'Accesso...' : 'Accedi'}
           </button>
         </form>
-
-        <div className="mt-6 text-center text-xs text-gray-500">
-          Credenziali di default: admin / AdminBoost!123
-        </div>
       </div>
     </div>
   );
