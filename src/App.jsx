@@ -5,7 +5,6 @@ import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ui/ProtectedRoute';
 import Home from './components/Home';
 import AdminPanel from './components/AdminPanel';
-
 function App() {
   return (
     <AuthProvider>
