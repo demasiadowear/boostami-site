@@ -17,18 +17,22 @@ export default function Analyzer({ onNavigate }) {
     setOcrProgress('Inizializzazione OCR...');
 
     try {
-      const worker = await Tesseract.createWorker('ita', 1, {
-  workerPath: 'https://unpkg.com/tesseract.js@v5.0.5/dist/worker.min.js',
-  langPath: 'https://tessdata.projectnaptha.com/4.0.0',
-  corePath: 'https://unpkg.com/tesseract.js-core@v5.0.2/tesseract-core.wasm.js',
-});
-        logger: m => {
-          if (m.status === 'recognizing text') {
-            setOcrProgress(`Lettura OCR: ${Math.round(m.progress * 100)}%`);
+        // createWorker expects a single options object; logger must be inside it
+        const worker = await Tesseract.createWorker({
+          workerPath: 'https://unpkg.com/tesseract.js@v5.0.5/dist/worker.min.js',
+          langPath: 'https://tessdata.projectnaptha.com/4.0.0',
+          corePath: 'https://unpkg.com/tesseract.js-core@v5.0.2/tesseract-core.wasm.js',
+          logger: m => {
+            if (m.status === 'recognizing text') {
+              setOcrProgress(`Lettura OCR: ${Math.round(m.progress * 100)}%`);
+            }
           }
-        }
-      });
+        });
 
+        // initialization sequence as per tesseract.js docs
+        await worker.load();
+        await worker.loadLanguage('ita');
+        await worker.initialize('ita');
       const { data: { text } } = await worker.recognize(file);
       await worker.terminate();
 
