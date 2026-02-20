@@ -18,21 +18,27 @@ export default function Analyzer({ onNavigate }) {
 
     try {
         // createWorker expects a single options object; logger must be inside it
+        // Create worker without passing a function (functions can't be cloned).
         const worker = await Tesseract.createWorker({
           workerPath: 'https://unpkg.com/tesseract.js@v5.0.5/dist/worker.min.js',
           langPath: 'https://tessdata.projectnaptha.com/4.0.0',
-          corePath: 'https://unpkg.com/tesseract.js-core@v5.0.2/tesseract-core.wasm.js',
-          logger: m => {
-            if (m.status === 'recognizing text') {
-              setOcrProgress(`Lettura OCR: ${Math.round(m.progress * 100)}%`);
-            }
-          }
+          corePath: 'https://unpkg.com/tesseract.js-core@v5.0.2/tesseract-core.wasm.js'
         });
 
         // initialization sequence as per tesseract.js docs
         await worker.load();
         await worker.loadLanguage('ita');
         await worker.initialize('ita');
+
+        // attach our own listener to the underlying Web Worker to update progress
+        if (worker.worker && worker.worker.onmessage === null) {
+          worker.worker.onmessage = (e) => {
+            const m = e.data;
+            if (m && m.status === 'recognizing text') {
+              setOcrProgress(`Lettura OCR: ${Math.round(m.progress * 100)}%`);
+            }
+          };
+        }
       const { data: { text } } = await worker.recognize(file);
       await worker.terminate();
 
