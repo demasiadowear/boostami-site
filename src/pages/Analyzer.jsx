@@ -12,10 +12,14 @@ export default function Analyzer({ onNavigate }) {
   const [matches, setMatches] = useState([{ home: '', away: '', competition: '', time: '', odds: '' }])
   const [output, setOutput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [extracting, setExtracting] = useState(false)
   const [tab, setTab] = useState('input')
   const [copied, setCopied] = useState(false)
   const [sources, setSources] = useState(0)
+  const [dragOver, setDragOver] = useState(false)
+  const [model, setModel] = useState('')
   const outputRef = useRef(null)
+  const fileInputRef = useRef(null)
 
   useEffect(() => {
     if (outputRef.current) outputRef.current.scrollTop = outputRef.current.scrollHeight
@@ -35,10 +39,49 @@ export default function Analyzer({ onNavigate }) {
 
   const validMatches = matches.filter(m => m.home.trim() && m.away.trim() && m.competition.trim())
 
+  // Extract matches from screenshot
+  const handleScreenshot = async (file) => {
+    if (!file || !file.type.startsWith('image/')) return
+    setExtracting(true)
+
+    try {
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(reader.result.split(',')[1])
+        reader.onerror = reject
+        reader.readAsDataURL(file)
+      })
+
+      const res = await fetch('/api/extract', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageBase64: base64, mimeType: file.type })
+      })
+      const data = await res.json()
+
+      if (data.matches && data.matches.length > 0) {
+        setMatches(data.matches)
+      } else {
+        alert('Nessuna partita trovata nello screenshot. Prova con un\'immagine più chiara.')
+      }
+    } catch (err) {
+      alert('Errore estrazione: ' + err.message)
+    }
+    setExtracting(false)
+  }
+
+  const handleDrop = (e) => {
+    e.preventDefault()
+    setDragOver(false)
+    const file = e.dataTransfer.files[0]
+    if (file) handleScreenshot(file)
+  }
+
   const runAnalysis = async () => {
     if (!validMatches.length || loading) return
     setLoading(true)
     setSources(0)
+    setModel('')
     setTab('output')
     setOutput('⏳ Ricerca dati in corso con Google Search...\n')
 
@@ -54,6 +97,7 @@ export default function Analyzer({ onNavigate }) {
         setOutput(`❌ Errore: ${data.error}`)
       } else {
         setSources(data.sources || 0)
+        setModel(data.model || '')
         setOutput(data.output || '⚠️ Nessun output generato.')
       }
     } catch (err) {
@@ -74,7 +118,7 @@ export default function Analyzer({ onNavigate }) {
     border: `1px solid ${BORDER}`,
     borderRadius: '6px', color: TEXT,
     fontSize: '0.83rem', fontFamily: "'DM Mono', 'Courier New', monospace",
-    outline: 'none', transition: 'border-color 0.2s'
+    outline: 'none'
   }
 
   const card = {
@@ -89,8 +133,7 @@ export default function Analyzer({ onNavigate }) {
     borderRadius: '6px', cursor: 'pointer',
     fontSize: '0.78rem', color: active ? BG : TEXT,
     fontWeight: active ? '700' : '400',
-    fontFamily: "'Space Grotesk', sans-serif",
-    transition: 'all 0.2s'
+    fontFamily: "'Space Grotesk', sans-serif"
   })
 
   const btnGreen = {
@@ -99,20 +142,12 @@ export default function Analyzer({ onNavigate }) {
     color: loading ? MUTED : BG,
     fontWeight: '800', cursor: loading ? 'not-allowed' : 'pointer',
     fontSize: '0.9rem', width: '100%',
-    fontFamily: "'Space Grotesk', sans-serif",
-    transition: 'all 0.2s'
+    fontFamily: "'Space Grotesk', sans-serif"
   }
 
   return (
     <div style={{ background: BG, minHeight: '100vh', color: TEXT, fontFamily: "'Space Grotesk', 'DM Sans', sans-serif" }}>
-
-      {/* Background grid */}
-      <div style={{
-        position: 'fixed', inset: 0, zIndex: 0,
-        backgroundImage: `linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px),
-                          linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px)`,
-        backgroundSize: '40px 40px'
-      }} />
+      <div style={{ position: 'fixed', inset: 0, zIndex: 0, backgroundImage: `linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
 
       <div style={{ position: 'relative', zIndex: 10, maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
 
@@ -120,28 +155,15 @@ export default function Analyzer({ onNavigate }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', paddingBottom: '16px', borderBottom: `1px solid ${BORDER}` }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <button onClick={() => onNavigate('home')} style={{ background: 'none', border: 'none', color: MUTED, cursor: 'pointer', fontSize: '1.2rem' }}>←</button>
-            <div>
-              <div style={{ fontWeight: '800', fontSize: '1.1rem', letterSpacing: '-0.02em' }}>
-                BOOST<span style={{ color: GREEN }}>AMI</span>
-                <span style={{ color: MUTED, fontWeight: '400', fontSize: '0.75rem', marginLeft: '8px' }}>GEM Soccer v2</span>
-              </div>
+            <div style={{ fontWeight: '800', fontSize: '1.1rem', letterSpacing: '-0.02em' }}>
+              BOOST<span style={{ color: GREEN }}>AMI</span>
+              <span style={{ color: MUTED, fontWeight: '400', fontSize: '0.75rem', marginLeft: '8px' }}>GEM Soccer v2</span>
             </div>
           </div>
           <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-            {loading && (
-              <span style={{ color: GREEN, fontSize: '0.72rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: GREEN, animation: 'pulse 1s infinite' }} />
-                Ricerca live...
-              </span>
-            )}
-            {sources > 0 && !loading && (
-              <span style={{ background: 'rgba(16,185,129,0.1)', border: `1px solid ${BORDER}`, padding: '3px 8px', borderRadius: '4px', fontSize: '0.65rem', color: GREEN }}>
-                🔍 {sources} fonti
-              </span>
-            )}
-            <span style={{ background: 'rgba(16,185,129,0.08)', border: `1px solid ${BORDER}`, padding: '3px 10px', borderRadius: '4px', fontSize: '0.65rem', color: GREEN }}>
-              🌐 Google Search
-            </span>
+            {loading && <span style={{ color: GREEN, fontSize: '0.72rem' }}>🔍 live...</span>}
+            {sources > 0 && !loading && <span style={{ background: 'rgba(16,185,129,0.1)', border: `1px solid ${BORDER}`, padding: '3px 8px', borderRadius: '4px', fontSize: '0.65rem', color: GREEN }}>🔍 {sources} fonti</span>}
+            {model && <span style={{ background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.2)', padding: '3px 8px', borderRadius: '4px', fontSize: '0.62rem', color: CYAN }}>{model.split('-').slice(0,3).join('-')}</span>}
           </div>
         </div>
 
@@ -158,17 +180,56 @@ export default function Analyzer({ onNavigate }) {
         {/* INPUT TAB */}
         {tab === 'input' && (
           <div>
+            {/* Screenshot Upload */}
+            <div
+              onDrop={handleDrop}
+              onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
+              onDragLeave={() => setDragOver(false)}
+              onClick={() => fileInputRef.current?.click()}
+              style={{
+                border: `2px dashed ${dragOver ? GREEN : BORDER}`,
+                borderRadius: '10px', padding: '20px',
+                textAlign: 'center', cursor: 'pointer', marginBottom: '16px',
+                background: dragOver ? 'rgba(16,185,129,0.05)' : 'rgba(255,255,255,0.01)',
+                transition: 'all 0.2s'
+              }}
+            >
+              <input ref={fileInputRef} type="file" accept="image/*" style={{ display: 'none' }}
+                onChange={e => handleScreenshot(e.target.files[0])} />
+              {extracting ? (
+                <div style={{ color: GREEN, fontSize: '0.85rem' }}>
+                  <span style={{ display: 'inline-block', marginRight: '8px' }}>🔍</span>
+                  Estrazione partite dallo screenshot...
+                </div>
+              ) : (
+                <div>
+                  <div style={{ fontSize: '1.5rem', marginBottom: '6px' }}>📸</div>
+                  <div style={{ color: TEXT, fontWeight: '600', fontSize: '0.85rem', marginBottom: '4px' }}>
+                    Carica screenshot del bookmaker
+                  </div>
+                  <div style={{ color: MUTED, fontSize: '0.73rem' }}>
+                    Trascina qui o clicca — le partite vengono estratte automaticamente
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Divider */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+              <div style={{ flex: 1, height: '1px', background: BORDER }} />
+              <span style={{ color: MUTED, fontSize: '0.72rem' }}>oppure inserisci manualmente</span>
+              <div style={{ flex: 1, height: '1px', background: BORDER }} />
+            </div>
+
+            {/* Match forms */}
             {matches.map((m, idx) => (
               <div key={idx} style={card}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                  <span style={{ color: GREEN, fontWeight: '700', fontSize: '0.82rem', letterSpacing: '0.05em' }}>
-                    ⚽ MATCH #{idx + 1}
-                  </span>
+                  <span style={{ color: GREEN, fontWeight: '700', fontSize: '0.82rem', letterSpacing: '0.05em' }}>⚽ MATCH #{idx + 1}</span>
                   {matches.length > 1 && (
                     <button onClick={() => removeMatch(idx)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '1rem' }}>✕</button>
                   )}
                 </div>
-
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                   <div>
                     <label style={{ fontSize: '0.63rem', color: MUTED, display: 'block', marginBottom: '4px', letterSpacing: '0.08em' }}>SQUADRA CASA *</label>
@@ -188,13 +249,9 @@ export default function Analyzer({ onNavigate }) {
                   </div>
                   <div style={{ gridColumn: 'span 2' }}>
                     <label style={{ fontSize: '0.63rem', color: MUTED, display: 'block', marginBottom: '4px', letterSpacing: '0.08em' }}>
-                      QUOTE BOOKMAKER <span style={{ color: '#334155' }}>(opzionale — migliora il calcolo Edge)</span>
+                      QUOTE <span style={{ color: '#334155' }}>(opzionale)</span>
                     </label>
-                    <input style={inp}
-                      placeholder="1=1.85, X=3.50, 2=4.20, O2.5=1.75, GG=1.65"
-                      value={m.odds}
-                      onChange={e => updateMatch(idx, 'odds', e.target.value)}
-                    />
+                    <input style={inp} placeholder="1=1.85, X=3.50, 2=4.20, O2.5=1.75, GG=1.65" value={m.odds} onChange={e => updateMatch(idx, 'odds', e.target.value)} />
                   </div>
                 </div>
               </div>
@@ -206,28 +263,13 @@ export default function Analyzer({ onNavigate }) {
               </button>
             )}
 
-            {/* Info box */}
-            <div style={{ ...card, borderColor: 'rgba(16,185,129,0.2)', marginBottom: '16px' }}>
-              <div style={{ fontSize: '0.7rem', color: MUTED, lineHeight: '1.9' }}>
-                <div style={{ color: GREEN, fontWeight: '700', marginBottom: '6px', fontSize: '0.75rem' }}>⚙️ COSA ANALIZZA AUTOMATICAMENTE</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px' }}>
-                  <div>→ Formazioni ufficiali e infortuni</div>
-                  <div>→ Arbitro designato + statistiche</div>
-                  <div>→ xG ultimi 5 match + H2H</div>
-                  <div>→ Schedule (Fixture Congestion check)</div>
-                  <div>→ Patch Knockout, Rest, Travel CL</div>
-                  <div>→ Player Props con Dual-Line CV</div>
-                </div>
-              </div>
-            </div>
-
             <button onClick={runAnalysis} disabled={loading || !validMatches.length} style={btnGreen}>
               {loading ? '🔍 Analisi in corso...' : `🔍 ANALIZZA${validMatches.length > 1 ? ` ${validMatches.length} MATCH` : ''}`}
             </button>
 
             {validMatches.length === 0 && (
               <div style={{ textAlign: 'center', color: MUTED, fontSize: '0.75rem', marginTop: '8px' }}>
-                Compila almeno Casa + Trasferta + Competizione per procedere
+                Carica uno screenshot o compila manualmente Casa + Trasferta + Competizione
               </div>
             )}
           </div>
@@ -250,8 +292,8 @@ export default function Analyzer({ onNavigate }) {
 
               {!output ? (
                 <div style={{ textAlign: 'center', padding: '60px 20px', color: MUTED }}>
-                  <div style={{ fontSize: '3rem', marginBottom: '12px' }}>⚽</div>
-                  <div style={{ fontSize: '0.85rem' }}>Nessuna analisi ancora</div>
+                  <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>⚽</div>
+                  <div>Nessuna analisi ancora</div>
                   <button onClick={() => setTab('input')} style={{ marginTop: '16px', background: 'none', border: `1px solid ${BORDER}`, color: MUTED, padding: '8px 16px', borderRadius: '6px', cursor: 'pointer', fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.8rem' }}>
                     ← Inserisci match
                   </button>
@@ -273,18 +315,14 @@ export default function Analyzer({ onNavigate }) {
 
             {!loading && output && (
               <div style={{ display: 'flex', gap: '8px' }}>
-                <button onClick={() => setTab('input')} style={{ ...btnGreen, background: CARD, color: GREEN, border: `1px solid ${BORDER}`, flex: 1 }}>
-                  ← Modifica
-                </button>
+                <button onClick={() => setTab('input')} style={{ ...btnGreen, background: CARD, color: GREEN, border: `1px solid ${BORDER}`, flex: 1 }}>← Modifica</button>
                 <a href="https://t.me/boostami" target="_blank" rel="noreferrer" style={{
                   flex: 1, padding: '13px', borderRadius: '8px',
                   background: 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.3)',
                   color: CYAN, fontWeight: '700', fontSize: '0.9rem',
                   textDecoration: 'none', textAlign: 'center',
                   fontFamily: "'Space Grotesk', sans-serif"
-                }}>
-                  📢 Condividi su Telegram
-                </a>
+                }}>📢 Condividi su Telegram</a>
               </div>
             )}
           </div>

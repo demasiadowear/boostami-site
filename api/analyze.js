@@ -90,45 +90,44 @@ export default async function handler(req, res) {
 
   const userPrompt = `Analizza con Google Search (formazioni, arbitro, xG, H2H, schedule, infortuni):\n\n${matchLines}${matches.length > 1 ? '\n\nAggiungi RIEPILOGO GIORNATA con TOP 5 VALUE e BEST BET alla fine.' : ''}`;
 
-  try {
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: GEM_PROMPT }] },
-          contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
-          tools: [{ googleSearch: {} }],
-          generationConfig: {
-            temperature: 0.1,
-            maxOutputTokens: 8192,
-          }
-        })
+  const models = ['gemini-2.5-flash-preview-04-17', 'gemini-2.0-flash-001', 'gemini-1.5-flash'];
+
+  for (const model of models) {
+    try {
+      const geminiRes = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: GEM_PROMPT }] },
+            contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+            tools: [{ googleSearch: {} }],
+            generationConfig: { temperature: 0.1, maxOutputTokens: 8192 }
+          })
+        }
+      );
+
+      const data = await geminiRes.json();
+
+      if (data.error) {
+        const msg = data.error.message || '';
+        if (msg.includes('no longer available') || msg.includes('not found')) continue;
+        return res.status(500).json({ error: msg });
       }
-    );
 
-    const data = await geminiRes.json();
+      const text = data.candidates?.[0]?.content?.parts
+        ?.filter(p => p.text)?.map(p => p.text)?.join('\n') || '';
+      const sources = data.candidates?.[0]?.groundingMetadata?.groundingChunks?.length || 0;
 
-    if (data.error) {
-      return res.status(500).json({ error: data.error.message });
+      return res.status(200).json({ output: text, sources, model });
+
+    } catch (err) {
+      if (model === models[models.length - 1]) {
+        return res.status(500).json({ error: err.message });
+      }
     }
-
-    const text = data.candidates?.[0]?.content?.parts
-      ?.filter(p => p.text)
-      ?.map(p => p.text)
-      ?.join('\n') || '';
-
-    const searchQueries = data.candidates?.[0]?.groundingMetadata?.searchEntryPoint?.renderedContent || '';
-    const sources = data.candidates?.[0]?.groundingMetadata?.groundingChunks?.length || 0;
-
-    return res.status(200).json({
-      output: text,
-      sources,
-      model: 'gemini-2.0-flash'
-    });
-
-  } catch (err) {
-    return res.status(500).json({ error: `Errore: ${err.message}` });
   }
+
+  return res.status(500).json({ error: 'Nessun modello Gemini disponibile.' });
 }
