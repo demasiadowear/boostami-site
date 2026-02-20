@@ -1,344 +1,93 @@
-import { useState, useRef, useEffect } from 'react'
-
-const GREEN = '#10b981'
-const CYAN = '#06b6d4'
-const BG = '#050810'
-const CARD = '#0d1424'
-const BORDER = 'rgba(16,185,129,0.15)'
-const TEXT = '#f0f4ff'
-const MUTED = '#475569'
+import { useState } from 'react';
+import { Upload, Plus, Copy, Send, ArrowLeft } from 'lucide-react';
 
 export default function Analyzer({ onNavigate }) {
-  const [matches, setMatches] = useState([{ home: '', away: '', competition: '', time: '', odds: '' }])
-  const [output, setOutput] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [extracting, setExtracting] = useState(false)
-  const [tab, setTab] = useState('input')
-  const [copied, setCopied] = useState(false)
-  const [sources, setSources] = useState(0)
-  const [dragOver, setDragOver] = useState(false)
-  const [model, setModel] = useState('')
-  const outputRef = useRef(null)
-  const fileInputRef = useRef(null)
+  const [matches, setMatches] = useState([{ home: '', away: '', competition: '', time: '', odds: '' }]);
+  const [output, setOutput] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (outputRef.current) outputRef.current.scrollTop = outputRef.current.scrollHeight
-  }, [output])
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setLoading(true);
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      try {
+        const res = await fetch('/api/extract', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageBase64: reader.result })
+        });
+        const data = await res.json();
+        if (data && data.length > 0) setMatches(data);
+      } catch (err) { alert("Errore lettura immagine"); }
+      setLoading(false);
+    };
+    reader.readAsDataURL(file);
+  };
 
-  const addMatch = () => {
-    if (matches.length < 8) setMatches([...matches, { home: '', away: '', competition: '', time: '', odds: '' }])
-  }
-
-  const removeMatch = (i) => setMatches(matches.filter((_, idx) => idx !== i))
-
-  const updateMatch = (i, field, val) => {
-    const updated = [...matches]
-    updated[i][field] = val
-    setMatches(updated)
-  }
-
-  const validMatches = matches.filter(m => m.home.trim() && m.away.trim() && m.competition.trim())
-
-  // Extract matches from screenshot
-  const handleScreenshot = async (file) => {
-    if (!file || !file.type.startsWith('image/')) return
-    setExtracting(true)
-
-    try {
-      const base64 = await new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = () => resolve(reader.result.split(',')[1])
-        reader.onerror = reject
-        reader.readAsDataURL(file)
-      })
-
-      const res = await fetch('/api/extract', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageBase64: base64, mimeType: file.type })
-      })
-      const data = await res.json()
-
-      if (data.matches && data.matches.length > 0) {
-        setMatches(data.matches)
-      } else {
-        alert('Nessuna partita trovata nello screenshot. Prova con un\'immagine più chiara.')
-      }
-    } catch (err) {
-      alert('Errore estrazione: ' + err.message)
-    }
-    setExtracting(false)
-  }
-
-  const handleDrop = (e) => {
-    e.preventDefault()
-    setDragOver(false)
-    const file = e.dataTransfer.files[0]
-    if (file) handleScreenshot(file)
-  }
-
-  const runAnalysis = async () => {
-    if (!validMatches.length || loading) return
-    setLoading(true)
-    setSources(0)
-    setModel('')
-    setTab('output')
-    setOutput('⏳ Ricerca dati in corso con Google Search...\n')
-
+  const analyze = async () => {
+    setLoading(true);
     try {
       const res = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ matches: validMatches })
-      })
-      const data = await res.json()
+        body: JSON.stringify({ matches })
+      });
+      const data = await res.json();
+      if (data.output) setOutput(data.output);
+    } catch (err) { alert("Errore durante l'analisi"); }
+    setLoading(false);
+  };
 
-      if (data.error) {
-        setOutput(`❌ Errore: ${data.error}`)
-      } else {
-        setSources(data.sources || 0)
-        setModel(data.model || '')
-        setOutput(data.output || '⚠️ Nessun output generato.')
-      }
-    } catch (err) {
-      setOutput(`❌ Errore connessione: ${err.message}`)
-    }
-    setLoading(false)
-  }
-
-  const copyOutput = () => {
-    navigator.clipboard.writeText(output)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
-  const inp = {
-    width: '100%', padding: '10px 12px',
-    background: 'rgba(255,255,255,0.03)',
-    border: `1px solid ${BORDER}`,
-    borderRadius: '6px', color: TEXT,
-    fontSize: '0.83rem', fontFamily: "'DM Mono', 'Courier New', monospace",
-    outline: 'none'
-  }
-
-  const card = {
-    background: CARD, border: `1px solid ${BORDER}`,
-    borderRadius: '10px', padding: '20px', marginBottom: '12px'
-  }
-
-  const tabBtn = (active) => ({
-    padding: '8px 16px',
-    background: active ? `linear-gradient(135deg, ${GREEN}, ${CYAN})` : 'transparent',
-    border: `1px solid ${active ? 'transparent' : BORDER}`,
-    borderRadius: '6px', cursor: 'pointer',
-    fontSize: '0.78rem', color: active ? BG : TEXT,
-    fontWeight: active ? '700' : '400',
-    fontFamily: "'Space Grotesk', sans-serif"
-  })
-
-  const btnGreen = {
-    padding: '13px', border: 'none', borderRadius: '8px',
-    background: loading ? '#1a2438' : `linear-gradient(135deg, ${GREEN}, ${CYAN})`,
-    color: loading ? MUTED : BG,
-    fontWeight: '800', cursor: loading ? 'not-allowed' : 'pointer',
-    fontSize: '0.9rem', width: '100%',
-    fontFamily: "'Space Grotesk', sans-serif"
-  }
+  const copyToClipboard = () => navigator.clipboard.writeText(output);
 
   return (
-    <div style={{ background: BG, minHeight: '100vh', color: TEXT, fontFamily: "'Space Grotesk', 'DM Sans', sans-serif" }}>
-      <div style={{ position: 'fixed', inset: 0, zIndex: 0, backgroundImage: `linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
+    <div class="min-h-screen p-8 max-w-6xl mx-auto font-sans">
+      <button onClick={onNavigate} class="mb-6 flex items-center gap-2 text-gray-400 hover:text-white"><ArrowLeft size={20}/> Torna alla Home</button>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* INPUT PANEL */}
+        <div class="bg-gray-900/50 p-6 rounded-xl border border-primary/30">
+          <h2 class="text-2xl font-bold mb-4 text-primary">Input Dati</h2>
+          
+          <label class="block border-2 border-dashed border-gray-600 p-8 rounded-xl text-center cursor-pointer hover:border-primary transition-colors mb-6">
+            <input type="file" class="hidden" accept="image/*" onChange={handleFileUpload} />
+            <Upload class="mx-auto mb-2 text-gray-400" size={32} />
+            <p class="text-gray-300">Trascina uno screenshot o clicca qui</p>
+            <p class="text-sm text-gray-500 mt-1">Estrazione automatica via OCR</p>
+          </label>
 
-      <div style={{ position: 'relative', zIndex: 10, maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
-
-        {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', paddingBottom: '16px', borderBottom: `1px solid ${BORDER}` }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <button onClick={() => onNavigate('home')} style={{ background: 'none', border: 'none', color: MUTED, cursor: 'pointer', fontSize: '1.2rem' }}>←</button>
-            <div style={{ fontWeight: '800', fontSize: '1.1rem', letterSpacing: '-0.02em' }}>
-              BOOST<span style={{ color: GREEN }}>AMI</span>
-              <span style={{ color: MUTED, fontWeight: '400', fontSize: '0.75rem', marginLeft: '8px' }}>GEM Soccer v2</span>
-            </div>
+          <div class="space-y-4 mb-6">
+            {matches.map((m, i) => (
+              <div key={i} class="grid grid-cols-2 gap-2 p-4 bg-black/40 rounded-lg border border-gray-800">
+                <input class="bg-transparent border-b border-gray-700 p-1 text-sm outline-none" placeholder="Casa" value={m.home} onChange={e => {const n=[...matches]; n[i].home=e.target.value; setMatches(n)}}/>
+                <input class="bg-transparent border-b border-gray-700 p-1 text-sm outline-none" placeholder="Trasferta" value={m.away} onChange={e => {const n=[...matches]; n[i].away=e.target.value; setMatches(n)}}/>
+                <input class="bg-transparent border-b border-gray-700 p-1 text-sm outline-none col-span-2" placeholder="Competizione" value={m.competition} onChange={e => {const n=[...matches]; n[i].competition=e.target.value; setMatches(n)}}/>
+              </div>
+            ))}
           </div>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-            {loading && <span style={{ color: GREEN, fontSize: '0.72rem' }}>🔍 live...</span>}
-            {sources > 0 && !loading && <span style={{ background: 'rgba(16,185,129,0.1)', border: `1px solid ${BORDER}`, padding: '3px 8px', borderRadius: '4px', fontSize: '0.65rem', color: GREEN }}>🔍 {sources} fonti</span>}
-            {model && <span style={{ background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.2)', padding: '3px 8px', borderRadius: '4px', fontSize: '0.62rem', color: CYAN }}>{model.split('-').slice(0,3).join('-')}</span>}
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-          <button style={tabBtn(tab === 'input')} onClick={() => setTab('input')}>📝 Match</button>
-          <button style={tabBtn(tab === 'output')} onClick={() => setTab('output')}>📊 Analisi</button>
-          <button onClick={() => { setOutput(''); setTab('input'); setMatches([{ home: '', away: '', competition: '', time: '', odds: '' }]) }}
-            style={{ ...tabBtn(false), marginLeft: 'auto', color: '#f59e0b', borderColor: 'rgba(245,158,11,0.3)' }}>
-            🔄 Reset
+          
+          <button onClick={() => setMatches([...matches, {home:'',away:'',competition:'',time:'',odds:''}])} class="text-accent flex items-center gap-1 mb-6 text-sm font-bold"><Plus size={16}/> Aggiungi Match</button>
+          <button onClick={analyze} disabled={loading} class="w-full py-4 rounded-lg bg-gradient-to-r from-primary to-accent text-black font-bold text-lg hover:opacity-90 transition-opacity disabled:opacity-50">
+            {loading ? 'Elaborazione Motore GEM...' : 'ANALIZZA ORA'}
           </button>
         </div>
 
-        {/* INPUT TAB */}
-        {tab === 'input' && (
-          <div>
-            {/* Screenshot Upload */}
-            <div
-              onDrop={handleDrop}
-              onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
-              onDragLeave={() => setDragOver(false)}
-              onClick={() => fileInputRef.current?.click()}
-              style={{
-                border: `2px dashed ${dragOver ? GREEN : BORDER}`,
-                borderRadius: '10px', padding: '20px',
-                textAlign: 'center', cursor: 'pointer', marginBottom: '16px',
-                background: dragOver ? 'rgba(16,185,129,0.05)' : 'rgba(255,255,255,0.01)',
-                transition: 'all 0.2s'
-              }}
-            >
-              <input ref={fileInputRef} type="file" accept="image/*" style={{ display: 'none' }}
-                onChange={e => handleScreenshot(e.target.files[0])} />
-              {extracting ? (
-                <div style={{ color: GREEN, fontSize: '0.85rem' }}>
-                  <span style={{ display: 'inline-block', marginRight: '8px' }}>🔍</span>
-                  Estrazione partite dallo screenshot...
-                </div>
-              ) : (
-                <div>
-                  <div style={{ fontSize: '1.5rem', marginBottom: '6px' }}>📸</div>
-                  <div style={{ color: TEXT, fontWeight: '600', fontSize: '0.85rem', marginBottom: '4px' }}>
-                    Carica screenshot del bookmaker
-                  </div>
-                  <div style={{ color: MUTED, fontSize: '0.73rem' }}>
-                    Trascina qui o clicca — le partite vengono estratte automaticamente
-                  </div>
-                </div>
-              )}
+        {/* OUTPUT PANEL */}
+        <div class="bg-gray-900/50 p-6 rounded-xl border border-accent/30 flex flex-col">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-accent">Output GEM</h2>
+            <div class="flex gap-2">
+              <button onClick={copyToClipboard} class="p-2 bg-gray-800 rounded hover:bg-gray-700" title="Copia"><Copy size={18}/></button>
+              <a href={`https://t.me/share/url?url=${encodeURIComponent(output)}`} target="_blank" rel="noreferrer" class="p-2 bg-blue-600/20 text-blue-400 rounded hover:bg-blue-600/40" title="Telegram"><Send size={18}/></a>
             </div>
-
-            {/* Divider */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-              <div style={{ flex: 1, height: '1px', background: BORDER }} />
-              <span style={{ color: MUTED, fontSize: '0.72rem' }}>oppure inserisci manualmente</span>
-              <div style={{ flex: 1, height: '1px', background: BORDER }} />
-            </div>
-
-            {/* Match forms */}
-            {matches.map((m, idx) => (
-              <div key={idx} style={card}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                  <span style={{ color: GREEN, fontWeight: '700', fontSize: '0.82rem', letterSpacing: '0.05em' }}>⚽ MATCH #{idx + 1}</span>
-                  {matches.length > 1 && (
-                    <button onClick={() => removeMatch(idx)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '1rem' }}>✕</button>
-                  )}
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                  <div>
-                    <label style={{ fontSize: '0.63rem', color: MUTED, display: 'block', marginBottom: '4px', letterSpacing: '0.08em' }}>SQUADRA CASA *</label>
-                    <input style={inp} placeholder="Es: Inter" value={m.home} onChange={e => updateMatch(idx, 'home', e.target.value)} />
-                  </div>
-                  <div>
-                    <label style={{ fontSize: '0.63rem', color: MUTED, display: 'block', marginBottom: '4px', letterSpacing: '0.08em' }}>SQUADRA TRASFERTA *</label>
-                    <input style={inp} placeholder="Es: Milan" value={m.away} onChange={e => updateMatch(idx, 'away', e.target.value)} />
-                  </div>
-                  <div>
-                    <label style={{ fontSize: '0.63rem', color: MUTED, display: 'block', marginBottom: '4px', letterSpacing: '0.08em' }}>COMPETIZIONE *</label>
-                    <input style={inp} placeholder="Es: Serie A" value={m.competition} onChange={e => updateMatch(idx, 'competition', e.target.value)} />
-                  </div>
-                  <div>
-                    <label style={{ fontSize: '0.63rem', color: MUTED, display: 'block', marginBottom: '4px', letterSpacing: '0.08em' }}>ORARIO</label>
-                    <input style={inp} placeholder="21:00" value={m.time} onChange={e => updateMatch(idx, 'time', e.target.value)} />
-                  </div>
-                  <div style={{ gridColumn: 'span 2' }}>
-                    <label style={{ fontSize: '0.63rem', color: MUTED, display: 'block', marginBottom: '4px', letterSpacing: '0.08em' }}>
-                      QUOTE <span style={{ color: '#334155' }}>(opzionale)</span>
-                    </label>
-                    <input style={inp} placeholder="1=1.85, X=3.50, 2=4.20, O2.5=1.75, GG=1.65" value={m.odds} onChange={e => updateMatch(idx, 'odds', e.target.value)} />
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {matches.length < 8 && (
-              <button onClick={addMatch} style={{ ...btnGreen, background: 'rgba(16,185,129,0.08)', color: GREEN, border: `1px solid ${BORDER}`, marginBottom: '12px' }}>
-                + Aggiungi Match
-              </button>
-            )}
-
-            <button onClick={runAnalysis} disabled={loading || !validMatches.length} style={btnGreen}>
-              {loading ? '🔍 Analisi in corso...' : `🔍 ANALIZZA${validMatches.length > 1 ? ` ${validMatches.length} MATCH` : ''}`}
-            </button>
-
-            {validMatches.length === 0 && (
-              <div style={{ textAlign: 'center', color: MUTED, fontSize: '0.75rem', marginTop: '8px' }}>
-                Carica uno screenshot o compila manualmente Casa + Trasferta + Competizione
-              </div>
-            )}
           </div>
-        )}
-
-        {/* OUTPUT TAB */}
-        {tab === 'output' && (
-          <div>
-            <div style={card}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <span style={{ fontSize: '0.7rem', color: MUTED, fontFamily: "'DM Mono', monospace" }}>GEM_OUTPUT.md</span>
-                <button onClick={copyOutput} disabled={!output || loading} style={{
-                  background: 'rgba(16,185,129,0.1)', border: `1px solid ${BORDER}`,
-                  color: GREEN, padding: '5px 12px', borderRadius: '4px',
-                  cursor: 'pointer', fontSize: '0.72rem', fontFamily: "'Space Grotesk', sans-serif"
-                }}>
-                  {copied ? '✅ Copiato!' : '📋 Copia'}
-                </button>
-              </div>
-
-              {!output ? (
-                <div style={{ textAlign: 'center', padding: '60px 20px', color: MUTED }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>⚽</div>
-                  <div>Nessuna analisi ancora</div>
-                  <button onClick={() => setTab('input')} style={{ marginTop: '16px', background: 'none', border: `1px solid ${BORDER}`, color: MUTED, padding: '8px 16px', borderRadius: '6px', cursor: 'pointer', fontFamily: "'Space Grotesk', sans-serif", fontSize: '0.8rem' }}>
-                    ← Inserisci match
-                  </button>
-                </div>
-              ) : (
-                <div ref={outputRef} style={{
-                  background: '#020509', border: `1px solid ${BORDER}`,
-                  borderRadius: '6px', padding: '16px',
-                  fontSize: '0.76rem', whiteSpace: 'pre-wrap',
-                  maxHeight: '600px', overflowY: 'auto',
-                  lineHeight: '1.7', fontFamily: "'DM Mono', 'Courier New', monospace",
-                  color: TEXT
-                }}>
-                  {output}
-                  {loading && <span style={{ color: GREEN }}>▌</span>}
-                </div>
-              )}
-            </div>
-
-            {!loading && output && (
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <button onClick={() => setTab('input')} style={{ ...btnGreen, background: CARD, color: GREEN, border: `1px solid ${BORDER}`, flex: 1 }}>← Modifica</button>
-                <a href="https://t.me/boostami" target="_blank" rel="noreferrer" style={{
-                  flex: 1, padding: '13px', borderRadius: '8px',
-                  background: 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.3)',
-                  color: CYAN, fontWeight: '700', fontSize: '0.9rem',
-                  textDecoration: 'none', textAlign: 'center',
-                  fontFamily: "'Space Grotesk', sans-serif"
-                }}>📢 Condividi su Telegram</a>
-              </div>
-            )}
+          <div class="flex-1 bg-black/60 rounded-lg p-4 font-mono text-sm text-gray-300 overflow-y-auto whitespace-pre-wrap border border-gray-800 h-[600px]">
+            {output || 'L\'analisi formattata apparirà qui...'}
           </div>
-        )}
+        </div>
       </div>
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&family=DM+Mono&display=swap');
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        input::placeholder { color: #334155; }
-        input:focus { border-color: rgba(16,185,129,0.4) !important; }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(16,185,129,0.3); border-radius: 2px; }
-      `}</style>
     </div>
-  )
+  );
 }
