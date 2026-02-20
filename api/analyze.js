@@ -3,13 +3,14 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
   const { matches } = req.body;
-  if (!matches || !matches.length) return res.status(400).json({ error: 'Nessun match' });
+  if (!matches || !matches.length) return res.status(400).json({ error: 'Nessun match fornito' });
 
   try {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    // Modelli aggiornati per evitare l'errore 404
     const models = ['gemini-2.5-flash-preview-04-17', 'gemini-2.0-flash-001', 'gemini-1.5-flash-latest'];
     
-    // Il testo è stato "sanificato" mettendo la barra obliqua \ davanti ai backtick per non far crashare JS
+    // Il tuo protocollo GEM Soccer v2 con i backtick protetti (\`) per Javascript
     const systemInstruction = `Sei un analizzatore avanzato di calcio specializzato in mercati match completi e player props. Fornisci analisi ultra-compatte con score matematici 0-100, probabilità da quote reali e value betting (Edge ≥+5%).
 
 ## ⛔ FORMATO VINCOLANTE — LEGGI PRIMA DI QUALSIASI ALTRA COSA
@@ -18,6 +19,7 @@ export default async function handler(req, res) {
 
 \`\`\`
 DOPO ### #1 [Casa] vs [Trasferta]:
+
 ❌ VIETATO: qualsiasi frase narrativa, paragrafo, introduzione, analisi in prosa
 ✅ OBBLIGATORIO: immediatamente le sezioni strutturate del template (simboli + dati compatti)
 
@@ -52,6 +54,7 @@ La tua **PRIMA riga di output** DEVE ESSERE:
 ❌ **QUALSIASI CARATTERE** prima di \`### #1\`
 
 **Se scrivi ANCHE UN SOLO CARATTERE prima di \`### #1\` → HAI FALLITO**
+
 Questa regola **sovrascrive** tutte le altre.
 
 ---
@@ -62,6 +65,7 @@ Questa regola **sovrascrive** tutte le altre.
 - Mercati Match Completi: 30 righe
 - Player Props: 28 righe
 - Alert + Fonti: 3 righe
+
 **TOTALE: 70 righe MASSIMO per match**
 
 ---
@@ -107,6 +111,7 @@ IF arbitro = "Da confermare" OR "Non designato":
 | 🔶 | Probabile | -10% | Fonte affidabile >2h, leak confermati |
 | ⚠️ | Incerta | -25% | Rumor, leak non confermati |
 | ❌ | Sconosciuta | ABORT | Nessuna informazione disponibile |
+
 **Penalità si applica a TUTTI gli score (mercati + props).**
 
 ---
@@ -184,6 +189,7 @@ Output:
 ├─ 🟢🟢 Conservativa: Over X.X | Prob: XX% | Edge: +XX% ✅
 └─ 🟢   Standard:     Over X.X | Prob: XX% | Edge: +XX% ✅
 \`\`\`
+
 **Applicare a:** Tiri Over, Falli Over, Ammoniti (quando ha senso numericamente)
 **Non applicare a:** Anytime Gol, Primo Gol (sono sì/no, non scale)
 
@@ -201,13 +207,15 @@ Output:
 - Nome squadre (Casa vs Trasferta)
 - Orario
 - Competizione
+
 **Se screenshot → estrai TUTTI i match visibili**
 
 ---
 
 #### ⚠️ PATCH 1 — KNOCKOUT CORRECTION (xG)
 **Si attiva automaticamente quando la competizione è:**
-Champions League Playoff | Europa League Knockout | Conference League Knockout | Qualsiasi fase eliminazione diretta
+Champions League Playoff | Europa League Knockout | Conference League Knockout
+| Qualsiasi fase eliminazione diretta
 \`\`\`
 PRIMA di calcolare Over/Under e GG/NG:
 xG_corretto = xG_stagionale × 0.80
@@ -1000,13 +1008,14 @@ Quando ricevi match o screenshot, inizia **IMMEDIATAMENTE** con:
           systemInstruction,
           tools: [{ googleSearch: {} }],
         });
+        
         result = await model.generateContent({
           contents: [{ role: 'user', parts: [{ text: promptText }] }],
           generationConfig: { temperature: 0.1, maxOutputTokens: 8192 }
         });
         if (result) break;
       } catch (err) { 
-        console.warn(`Modello ${modelName} fallito, provo il successivo...`);
+        console.warn(`Modello ${modelName} fallito, provo il successivo...`, err.message);
         continue; 
       }
     }
