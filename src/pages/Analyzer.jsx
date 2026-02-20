@@ -8,22 +8,31 @@ export default function Analyzer({ onNavigate }) {
   const [loading, setLoading] = useState(false);
   const [ocrProgress, setOcrProgress] = useState('');
 
-  const handleFileUpload = async (e) => {
+ const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
     
     setLoading(true);
-    setOcrProgress('Lettura immagine in corso (OCR locale)...');
+    setOcrProgress('Inizializzazione OCR...');
 
     try {
-      // 1. Estrazione testo locale (Bypassa i limiti di Vercel!)
-      const { data: { text } } = await Tesseract.recognize(file, 'ita', {
+      // 1. Inizializzazione con CDN espliciti per evitare errori ita.special-words
+      const worker = await Tesseract.createWorker('ita', 1, {
+        workerPath: 'https://cdn.jsdelivr.net/npm/tesseract.js@v5.0.5/dist/worker.min.js',
+        langPath: 'https://tessdata.projectnaptha.com/4.0.0',
+        corePath: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@v5.0.2/tesseract-core.wasm.js',
         logger: m => {
           if (m.status === 'recognizing text') {
             setOcrProgress(`Lettura OCR: ${Math.round(m.progress * 100)}%`);
           }
         }
       });
+
+      setOcrProgress('Lettura immagine...');
+      const { data: { text } } = await worker.recognize(file);
+      
+      // Chiudi il worker dopo l'uso per liberare memoria
+      await worker.terminate();
 
       setOcrProgress('Strutturazione dati con IA...');
 
@@ -35,9 +44,14 @@ export default function Analyzer({ onNavigate }) {
       });
       
       const data = await res.json();
-      if (data && data.length > 0) setMatches(data);
+      if (data && data.length > 0) {
+        setMatches(data);
+      } else {
+        throw new Error("Dati non trovati nello screenshot");
+      }
       
     } catch (err) { 
+      console.error(err);
       alert("Errore durante l'estrazione: " + err.message); 
     } finally {
       setLoading(false);
