@@ -18,9 +18,10 @@ export default function Analyzer({ onNavigate }) {
 
     try {
       const worker = await Tesseract.createWorker('ita', 1, {
-        workerPath: 'https://unpkg.com/tesseract.js@v5.0.5/dist/worker.min.js',
-        langPath: 'https://tessdata.projectnaptha.com/4.0.0',
-        corePath: 'https://unpkg.com/tesseract.js-core@v5.0.2/tesseract-core.wasm.js',
+  workerPath: 'https://unpkg.com/tesseract.js@v5.0.5/dist/worker.min.js',
+  langPath: 'https://tessdata.projectnaptha.com/4.0.0',
+  corePath: 'https://unpkg.com/tesseract.js-core@v5.0.2/tesseract-core.wasm.js',
+});
         logger: m => {
           if (m.status === 'recognizing text') {
             setOcrProgress(`Lettura OCR: ${Math.round(m.progress * 100)}%`);
