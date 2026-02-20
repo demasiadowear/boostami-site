@@ -8,7 +8,8 @@ export default async function handler(req, res) {
     if (!rawText) return res.status(400).json({ error: 'Nessun testo OCR fornito' });
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    // FIX: Aggiunto "-latest" per risolvere l'errore 404 di Google
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
 
     const prompt = `Ecco il testo grezzo estratto tramite OCR da uno screenshot di un bookmaker:
     ---
