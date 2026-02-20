@@ -31,13 +31,19 @@ export default function Analyzer({ onNavigate }) {
         await worker.initialize('ita');
 
         // attach our own listener to the underlying Web Worker to update progress
-        if (worker.worker && worker.worker.onmessage === null) {
-          worker.worker.onmessage = (e) => {
-            const m = e.data;
-            if (m && m.status === 'recognizing text') {
-              setOcrProgress(`Lettura OCR: ${Math.round(m.progress * 100)}%`);
+        // use addEventListener so we don't overwrite the worker's internal handler
+        if (worker.worker) {
+          worker.worker.addEventListener('message', (e) => {
+            try {
+              const m = e.data;
+              // some messages are arrays or other structures; guard against them
+              if (m && typeof m === 'object' && m.status === 'recognizing text') {
+                setOcrProgress(`Lettura OCR: ${Math.round(m.progress * 100)}%`);
+              }
+            } catch (err) {
+              // ignore any parsing errors from unexpected message formats
             }
-          };
+          });
         }
       const { data: { text } } = await worker.recognize(file);
       await worker.terminate();
