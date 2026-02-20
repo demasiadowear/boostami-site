@@ -17,36 +17,32 @@ export default function Analyzer({ onNavigate }) {
     setOcrProgress('Inizializzazione OCR...');
 
     try {
-        // createWorker expects a single options object; logger must be inside it
-        // Create worker without passing a function (functions can't be cloned).
-        const worker = await Tesseract.createWorker({
+        // use v7-style worker creation: specify language directly and omit
+        // manual loadLanguage/initialize calls (they were removed in v5+)
+        const worker = await Tesseract.createWorker('ita', 1, {
           workerPath: 'https://unpkg.com/tesseract.js@v5.0.5/dist/worker.min.js',
           langPath: 'https://tessdata.projectnaptha.com/4.0.0',
           corePath: 'https://unpkg.com/tesseract.js-core@v5.0.2/tesseract-core.wasm.js'
         });
 
-        // initialization sequence as per tesseract.js docs
         await worker.load();
-        await worker.loadLanguage('ita');
-        await worker.initialize('ita');
 
-        // attach our own listener to the underlying Web Worker to update progress
-        // use addEventListener so we don't overwrite the worker's internal handler
-        if (worker.worker) {
-          worker.worker.addEventListener('message', (e) => {
-            try {
-              const m = e.data;
-              // some messages are arrays or other structures; guard against them
-              if (m && typeof m === 'object' && m.status === 'recognizing text') {
-                setOcrProgress(`Lettura OCR: ${Math.round(m.progress * 100)}%`);
-              }
-            } catch (err) {
-              // ignore any parsing errors from unexpected message formats
+        // convert File to blob URL – passing a File object directly has
+        // sometimes resulted in `x.map is not a function` inside the
+        // tesseract worker, because it treats the argument as an array.
+        const imgUrl = URL.createObjectURL(file);
+
+        setOcrProgress('Lettura OCR...');
+        const { data: { text } } = await worker.recognize(imgUrl, {
+          logger: (m) => {
+            if (m.status === 'recognizing text') {
+              setOcrProgress(`Lettura OCR: ${Math.round(m.progress * 100)}%`);
             }
-          });
-        }
-      const { data: { text } } = await worker.recognize(file);
-      await worker.terminate();
+          }
+        });
+        URL.revokeObjectURL(imgUrl);
+
+        await worker.terminate();
 
       setOcrProgress('Strutturazione dati...');
 
