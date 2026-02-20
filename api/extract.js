@@ -1,5 +1,3 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
@@ -7,23 +5,33 @@ export default async function handler(req, res) {
     const { rawText } = req.body;
     if (!rawText) return res.status(400).json({ error: 'Nessun testo OCR fornito' });
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    // FIX: Aggiunto "-latest" per risolvere l'errore 404 di Google
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
+    const apiKey = process.env.GEMINI_API_KEY;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
 
-    const prompt = `Ecco il testo grezzo estratto tramite OCR da uno screenshot di un bookmaker:
-    ---
-    ${rawText}
-    ---
-    Il tuo compito è trovare tutte le partite di calcio in questo testo confuso.
-    Devi restituire SOLO ed ESCLUSIVAMENTE un array JSON, senza nessun testo prima o dopo.
-    Struttura richiesta: [{"home": "Casa", "away": "Trasferta", "competition": "Competizione", "time": "Orario", "odds": "Quote se presenti"}]`;
+    const payload = {
+      contents: [{
+        parts: [{
+          text: "Ecco il testo grezzo estratto tramite OCR da uno screenshot di un bookmaker:\n---\n" + rawText + "\n---\nIl tuo compito è trovare tutte le partite di calcio in questo testo confuso.\nDevi restituire SOLO ed ESCLUSIVAMENTE un array JSON, senza nessun testo prima o dopo.\nStruttura richiesta: [{\"home\": \"Casa\", \"away\": \"Trasferta\", \"competition\": \"Competizione\", \"time\": \"Orario\", \"odds\": \"Quote se presenti\"}]"
+        }]
+      }]
+    };
 
-    const result = await model.generateContent(prompt);
-    let text = result.response.text();
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
 
-    const match = text.match(/\[.*\]/s);
-    if (!match) throw new Error("Gemini non ha restituito un JSON valido.");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error("Errore API: " + errorData);
+    }
+
+    const data = await response.json();
+    const textContent = data.candidates[0].content.parts[0].text;
+
+    const match = textContent.match(/\[.*\]/s);
+    if (!match) throw new Error("Il JSON non è stato trovato nella risposta.");
 
     res.status(200).json(JSON.parse(match[0]));
 
