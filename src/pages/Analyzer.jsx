@@ -17,29 +17,24 @@ export default function Analyzer({ onNavigate }) {
     setOcrProgress('Inizializzazione OCR...');
 
     try {
-        // use v7-style worker creation: specify language directly and omit
-        // manual loadLanguage/initialize calls (they were removed in v5+)
+        // Tesseract.js v5: logger va passato a createWorker, non a recognize()
+        // worker.load() è stato rimosso in v5 - createWorker già inizializza tutto
         const worker = await Tesseract.createWorker('ita', 1, {
           workerPath: 'https://unpkg.com/tesseract.js@v5.0.5/dist/worker.min.js',
           langPath: 'https://tessdata.projectnaptha.com/4.0.0',
-          corePath: 'https://unpkg.com/tesseract.js-core@v5.0.2/tesseract-core.wasm.js'
-        });
-
-        await worker.load();
-
-        // convert File to blob URL – passing a File object directly has
-        // sometimes resulted in `x.map is not a function` inside the
-        // tesseract worker, because it treats the argument as an array.
-        const imgUrl = URL.createObjectURL(file);
-
-        setOcrProgress('Lettura OCR...');
-        const { data: { text } } = await worker.recognize(imgUrl, {
+          corePath: 'https://unpkg.com/tesseract.js-core@v5.0.2/tesseract-core.wasm.js',
           logger: (m) => {
             if (m.status === 'recognizing text') {
               setOcrProgress(`Lettura OCR: ${Math.round(m.progress * 100)}%`);
             }
           }
         });
+
+        // convert File to blob URL to avoid `x.map is not a function` inside worker
+        const imgUrl = URL.createObjectURL(file);
+
+        setOcrProgress('Lettura OCR...');
+        const { data: { text } } = await worker.recognize(imgUrl);
         URL.revokeObjectURL(imgUrl);
 
         await worker.terminate();
@@ -60,7 +55,7 @@ export default function Analyzer({ onNavigate }) {
       }
     } catch (err) {
       console.error("Errore:", err);
-      alert("Errore estrazione: " + err.message);
+      alert("Errore estrazione: " + (err?.message || String(err) || 'Errore sconosciuto'));
     } finally {
       setLoading(false);
       setOcrProgress('');
