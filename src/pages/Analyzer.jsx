@@ -18,11 +18,12 @@ export default function Analyzer({ onNavigate }) {
 
     try {
         // Tesseract.js v5: logger va passato a createWorker, non a recognize()
-        // worker.load() è stato rimosso in v5 - createWorker già inizializza tutto
+        // corePath = DIRECTORY (non file) - Tesseract sceglie il WASM corretto
+        // jsDelivr ha CORS affidabile per Web Worker; unpkg.com fallisce con importScripts
         const worker = await Tesseract.createWorker('ita', 1, {
-          workerPath: 'https://unpkg.com/tesseract.js@v5.0.5/dist/worker.min.js',
+          workerPath: 'https://cdn.jsdelivr.net/npm/tesseract.js@5.0.5/dist/worker.min.js',
           langPath: 'https://tessdata.projectnaptha.com/4.0.0',
-          corePath: 'https://unpkg.com/tesseract.js-core@v5.0.2/tesseract-core.wasm.js',
+          corePath: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.0.2/',
           logger: (m) => {
             if (m.status === 'recognizing text') {
               setOcrProgress(`Lettura OCR: ${Math.round(m.progress * 100)}%`);
