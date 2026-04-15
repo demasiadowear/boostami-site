@@ -1,3 +1,7 @@
 node_modules
 dist
 .env
+.claude/
+.next/
+next-env.d.ts
+tsconfig.tsbuildinfo
