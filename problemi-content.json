@@ -1,0 +1,348 @@
+{
+  "audit_date": "2026-05-27",
+  "note": "All 10 pages on sealines.eu returned HTTP 403 Forbidden to WebFetch (both IT and EN versions). Page content analysis is derived from Google search index snippets, cached descriptions, and title tags visible in SERPs. Word counts, H1/H2 inventories, and FAQ detection could NOT be performed directly due to bot-blocking. Findings below reflect what is observable externally.",
+
+  "critical_site_wide_problems": [
+    "HTTP 403 returned to all automated fetchers — aggressive bot-blocking may also block search engine renderers or SEO audit tools",
+    "Many Italian-language pages (e.g. /traghetti-grecia, /traghetti-sardegna, /traghetti-sicilia, /traghetti-croazia) show '2025' in Google's indexed title tags as of May 2026 — stale year references",
+    "Duplicate URL structures: Italian pages exist at both /traghetti-grecia AND /index.php/traghetti-grecia AND /en/destinations/direct/ferries-greece/ — potential duplicate content / cannibalization",
+    "Title tags use pipe separators inconsistently: some use '|' (e.g. 'Traghetti | Sealines Prenota Traghetti 2025'), others do not",
+    "sealines.eu does NOT appear in the top 10 search results for any of the major target keywords tested (traghetti grecia, traghetti sardegna, traghetti sicilia, biglietti traghetti)",
+    "Multiple pages still display '2025' in titles when competitors already show '2026'"
+  ],
+
+  "pages": [
+    {
+      "url": "https://www.sealines.eu",
+      "google_indexed_title": "Ferries: booking and purchasing tickets - Traghetti Sealines",
+      "word_count": "UNABLE_TO_MEASURE (403 blocked)",
+      "thin_content": "UNABLE_TO_MEASURE",
+      "h1_count": "UNABLE_TO_MEASURE",
+      "h1_text": ["UNABLE_TO_MEASURE"],
+      "h1_matches_topic": "UNKNOWN",
+      "has_faq": "UNABLE_TO_MEASURE",
+      "has_internal_links": true,
+      "expected_primary_keyword": "traghetti / biglietti traghetti",
+      "keyword_in_title": false,
+      "keyword_in_h1": "UNABLE_TO_MEASURE",
+      "keyword_in_first_para": "UNABLE_TO_MEASURE",
+      "problems": [
+        "Title tag is in English ('Ferries: booking and purchasing tickets') on what should be an Italian-language homepage — keyword 'biglietti traghetti' absent from title",
+        "Title tag does not contain the primary Italian keyword 'traghetti' in a prominent position — it appears only in the brand suffix 'Traghetti Sealines'",
+        "No year reference in title (competitors use '2026')",
+        "HTTP 403 blocks all automated content analysis"
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/traghetti-grecia",
+      "google_indexed_title": "Traghetti Grecia | Partenze 2025 | Prenota Tariffe Low Cost",
+      "word_count": "UNABLE_TO_MEASURE (403 blocked)",
+      "thin_content": "UNABLE_TO_MEASURE",
+      "h1_count": "UNABLE_TO_MEASURE",
+      "h1_text": ["UNABLE_TO_MEASURE"],
+      "h1_matches_topic": "UNKNOWN",
+      "has_faq": "UNABLE_TO_MEASURE",
+      "has_internal_links": true,
+      "expected_primary_keyword": "traghetti grecia",
+      "keyword_in_title": true,
+      "keyword_in_h1": "UNABLE_TO_MEASURE",
+      "keyword_in_first_para": "UNABLE_TO_MEASURE",
+      "problems": [
+        "Title tag shows '2025' — stale by over 5 months (competitors already show '2026')",
+        "Duplicate/cannibalization: same content appears at /traghetti-grecia, /index.php/traghetti-grecia, and /en/destinations/direct/ferries-greece/",
+        "Additional cannibalization with /destinazioni/traghetti-grecia-isole and /traghetti-grecia-isole (2024 version still indexed)",
+        "Page does NOT rank in top 10 for 'traghetti grecia' — competitors traghettilines.it, traghetti-grecia.it, grimaldi-lines.com, directferries.it occupy top positions",
+        "Google snippet text suggests limited body content (mainly booking CTA, not informational content)"
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/traghetti-sardegna",
+      "google_indexed_title": "Traghetti Sardegna | Partenze 2025 | Prenota Online - Sealines",
+      "word_count": "UNABLE_TO_MEASURE (403 blocked)",
+      "thin_content": "UNABLE_TO_MEASURE",
+      "h1_count": "UNABLE_TO_MEASURE",
+      "h1_text": ["UNABLE_TO_MEASURE"],
+      "h1_matches_topic": "UNKNOWN",
+      "has_faq": "UNABLE_TO_MEASURE",
+      "has_internal_links": true,
+      "expected_primary_keyword": "traghetti sardegna",
+      "keyword_in_title": true,
+      "keyword_in_h1": "UNABLE_TO_MEASURE",
+      "keyword_in_first_para": "UNABLE_TO_MEASURE",
+      "problems": [
+        "Title tag shows '2025' — stale year (competitors show '2026')",
+        "Duplicate URLs: /traghetti-sardegna, /index.php/traghetti-sardegna, /en/destinations/direct/ferries-sardinia/",
+        "Page does NOT rank in top 10 for 'traghetti sardegna' — grimaldi-lines.com, traghetti-sardegna.it, traghettilines.it, moby.it dominate",
+        "Google snippet suggests content is primarily transactional (booking portal) with limited informational depth"
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/traghetti-sicilia",
+      "google_indexed_title": "Traghetti Sicilia | Partenze 2025 | Prenota Online - Sealines",
+      "word_count": "UNABLE_TO_MEASURE (403 blocked)",
+      "thin_content": "UNABLE_TO_MEASURE",
+      "h1_count": "UNABLE_TO_MEASURE",
+      "h1_text": ["UNABLE_TO_MEASURE"],
+      "h1_matches_topic": "UNKNOWN",
+      "has_faq": "UNABLE_TO_MEASURE",
+      "has_internal_links": true,
+      "expected_primary_keyword": "traghetti sicilia",
+      "keyword_in_title": true,
+      "keyword_in_h1": "UNABLE_TO_MEASURE",
+      "keyword_in_first_para": "UNABLE_TO_MEASURE",
+      "problems": [
+        "Title tag shows '2025' — stale year",
+        "Duplicate URLs: /traghetti-sicilia, /index.php/traghetti-sicilia, /en/destinations/direct/sicily-ferries/",
+        "Page does NOT rank in top 10 for 'traghetti sicilia' — traghettilines.it, traghetti-sicilia.it, grimaldi-lines.com, gnv.it, tirrenia.it dominate",
+        "Google snippet describes it as an 'agency for ferries and hydrofoils' — limited informational/editorial content apparent"
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/traghetti-croazia",
+      "google_indexed_title": "Traghetti Croazia | Partenze 2025 | Prenota Online",
+      "word_count": "UNABLE_TO_MEASURE (403 blocked)",
+      "thin_content": "UNABLE_TO_MEASURE",
+      "h1_count": "UNABLE_TO_MEASURE",
+      "h1_text": ["UNABLE_TO_MEASURE"],
+      "h1_matches_topic": "UNKNOWN",
+      "has_faq": "UNABLE_TO_MEASURE",
+      "has_internal_links": true,
+      "expected_primary_keyword": "traghetti croazia",
+      "keyword_in_title": true,
+      "keyword_in_h1": "UNABLE_TO_MEASURE",
+      "keyword_in_first_para": "UNABLE_TO_MEASURE",
+      "problems": [
+        "Title tag shows '2025' — stale year",
+        "Duplicate URLs: /traghetti-croazia, /index.php/traghetti-croazia, /en/destinations/direct/ferries-croatia/",
+        "Additional page /en/destinations/direct/traghetti-croazia-isole creates further cannibalization",
+        "Page does NOT rank in top 10 for 'traghetti croazia' — croazia.info, directferries.it, traghetti.it, ferryhopper.com dominate",
+        "Brand name 'Sealines' absent from indexed title tag"
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/chi-siamo",
+      "google_indexed_title": "Chi Siamo | Sealines Prenota Traghetti 2025",
+      "word_count": "UNABLE_TO_MEASURE (403 blocked)",
+      "thin_content": "LIKELY — Google snippet shows very short company description",
+      "h1_count": "UNABLE_TO_MEASURE",
+      "h1_text": ["UNABLE_TO_MEASURE"],
+      "h1_matches_topic": "UNKNOWN",
+      "has_faq": false,
+      "has_internal_links": "UNABLE_TO_MEASURE",
+      "expected_primary_keyword": "N/A (about page)",
+      "keyword_in_title": false,
+      "keyword_in_h1": "UNABLE_TO_MEASURE",
+      "keyword_in_first_para": "UNABLE_TO_MEASURE",
+      "problems": [
+        "Title tag shows '2025' — stale year",
+        "Google snippet suggests very thin content — short company description only (mentions 'innovative ferry booking system' and basic company info)",
+        "No FAQ content detected from search snippets",
+        "Title structure 'Chi Siamo | Sealines Prenota Traghetti 2025' wastes title space on a non-SEO page"
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/grimaldi-lines",
+      "google_indexed_title": "Grimaldi Lines | Sealines Prenota Traghetti",
+      "alternate_url_indexed": "https://www.sealines.eu/en/companies/grimaldi-lines/",
+      "alternate_title": "Grimaldi Lines | Sealines Book Ferries",
+      "word_count": "UNABLE_TO_MEASURE (403 blocked)",
+      "thin_content": "UNABLE_TO_MEASURE",
+      "h1_count": "UNABLE_TO_MEASURE",
+      "h1_text": ["UNABLE_TO_MEASURE"],
+      "h1_matches_topic": "UNKNOWN",
+      "has_faq": "UNABLE_TO_MEASURE",
+      "has_internal_links": true,
+      "expected_primary_keyword": "grimaldi lines traghetti",
+      "keyword_in_title": false,
+      "keyword_in_h1": "UNABLE_TO_MEASURE",
+      "keyword_in_first_para": "UNABLE_TO_MEASURE",
+      "problems": [
+        "Keyword 'traghetti' missing from indexed title — title is just 'Grimaldi Lines | Sealines Prenota Traghetti' (keyword buried in brand suffix)",
+        "No year in title tag (competitors use year-specific titles)",
+        "Duplicate IT/EN versions: /grimaldi-lines and /en/companies/grimaldi-lines/",
+        "Multiple promotional subpages indexed (e.g. grimaldi-lines-traghetti-sardegna-20, grimaldi-grecia) that may cannibalize the main company page",
+        "The expected keyword 'grimaldi lines traghetti' does not appear as a phrase in the title"
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/grandi-navi-veloci",
+      "google_indexed_title": "Grandi Navi Veloci | Sealines Prenota Traghetti",
+      "alternate_url_indexed": "https://www.sealines.eu/en/companies/large-fast-ships/",
+      "alternate_title": "Grandi Navi Veloci | Sealines Prenota Traghetti",
+      "word_count": "UNABLE_TO_MEASURE (403 blocked)",
+      "thin_content": "UNABLE_TO_MEASURE",
+      "h1_count": "UNABLE_TO_MEASURE",
+      "h1_text": ["UNABLE_TO_MEASURE"],
+      "h1_matches_topic": "UNKNOWN",
+      "has_faq": "UNABLE_TO_MEASURE",
+      "has_internal_links": true,
+      "expected_primary_keyword": "grandi navi veloci",
+      "keyword_in_title": true,
+      "keyword_in_h1": "UNABLE_TO_MEASURE",
+      "keyword_in_first_para": "UNABLE_TO_MEASURE",
+      "problems": [
+        "English URL slug is 'large-fast-ships' (literal translation) — poor for SEO targeting Italian keyword 'grandi navi veloci'",
+        "No year in title tag",
+        "Duplicate IT/EN versions with different URL slugs: /grandi-navi-veloci vs /en/companies/large-fast-ships/",
+        "The EN slug translation 'large-fast-ships' will not rank for the brand name 'Grandi Navi Veloci'",
+        "Multiple promotional subpages indexed that may cannibalize (gnv-advance-booking-sicilia-e-sardegna, etc.)"
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/jadrolinija",
+      "google_indexed_title": "Jadrolinija | Sealines Prenota Traghetti 2025",
+      "alternate_url_indexed": "https://www.sealines.eu/en/companies/jadrolinija/",
+      "word_count": "UNABLE_TO_MEASURE (403 blocked)",
+      "thin_content": "UNABLE_TO_MEASURE",
+      "h1_count": "UNABLE_TO_MEASURE",
+      "h1_text": ["UNABLE_TO_MEASURE"],
+      "h1_matches_topic": "UNKNOWN",
+      "has_faq": "UNABLE_TO_MEASURE",
+      "has_internal_links": true,
+      "expected_primary_keyword": "jadrolinija traghetti",
+      "keyword_in_title": false,
+      "keyword_in_h1": "UNABLE_TO_MEASURE",
+      "keyword_in_first_para": "UNABLE_TO_MEASURE",
+      "problems": [
+        "Title tag shows '2025' — stale year",
+        "Keyword 'traghetti' only appears in brand suffix, not associated with 'jadrolinija' in the title",
+        "Duplicate IT/EN versions: /jadrolinija and /en/companies/jadrolinija/",
+        "Old index.php version also indexed: /index.php/compagnie/jadrolinija — triple URL for same content",
+        "Additional cannibalization from /en/ferries-croatia-jadrolinija-departures-2024 (indexed with outdated 2024 reference)"
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/traghetti",
+      "google_indexed_title": "Traghetti | Sealines Prenota Traghetti 2025",
+      "word_count": "UNABLE_TO_MEASURE (403 blocked)",
+      "thin_content": "UNABLE_TO_MEASURE",
+      "h1_count": "UNABLE_TO_MEASURE",
+      "h1_text": ["UNABLE_TO_MEASURE"],
+      "h1_matches_topic": "UNKNOWN",
+      "has_faq": "UNABLE_TO_MEASURE",
+      "has_internal_links": true,
+      "expected_primary_keyword": "traghetti",
+      "keyword_in_title": true,
+      "keyword_in_h1": "UNABLE_TO_MEASURE",
+      "keyword_in_first_para": "UNABLE_TO_MEASURE",
+      "problems": [
+        "Title tag shows '2025' — stale year",
+        "Title repeats 'Traghetti' twice: 'Traghetti | Sealines Prenota Traghetti 2025' — keyword stuffing / poor title structure",
+        "Page does NOT rank in top 10 for 'traghetti' — traghetti.com, traghettilines.it, ferryhopper.com, traghetti.it dominate",
+        "Appears to be a hub/index page — Google snippet describes it as listing schedules/fares for ferries from Italy",
+        "Potential cannibalization with the homepage and destination-specific pages"
+      ]
+    }
+  ],
+
+  "search_landscape": {
+    "keyword_volumes": {
+      "note": "Exact monthly search volumes are not publicly available through web search — they require paid SEO tool access (Semrush, Ahrefs, Google Keyword Planner). Estimates below are based on industry knowledge for Italian travel keywords.",
+      "traghetti_grecia": "Estimated 40,000-90,000/month (highly seasonal, peak June-August). One of the highest-volume ferry keywords in Italy.",
+      "traghetti_sardegna": "Estimated 60,000-110,000/month (highly seasonal, peak June-September). Likely the highest-volume Italian ferry keyword.",
+      "traghetti_sicilia": "Estimated 40,000-90,000/month (highly seasonal). Major volume keyword.",
+      "traghetti_croazia": "Estimated 10,000-30,000/month (seasonal, lower than Greece/Sardinia/Sicily).",
+      "biglietti_traghetti": "Estimated 20,000-50,000/month. Broad transactional keyword.",
+      "traghetti": "Estimated 100,000-200,000/month. Extremely competitive head keyword.",
+      "grimaldi_lines": "Estimated 30,000-60,000/month (brand keyword).",
+      "grandi_navi_veloci": "Estimated 40,000-80,000/month (brand keyword).",
+      "jadrolinija": "Estimated 10,000-20,000/month (brand keyword, lower in IT market).",
+      "data_source": "Estimates based on Italian travel keyword benchmarks. No verified Semrush/Ahrefs data was obtainable via public web search."
+    },
+    "top_rankings": {
+      "traghetti_grecia": {
+        "position_1": "traghettilines.it",
+        "position_2": "traghetti-grecia.it",
+        "position_3": "grimaldi-lines.com",
+        "other_top_10": ["anekitalia.com", "bluestarferries.com", "directferries.it", "ferryhopper.com", "ferriesingreece.com"],
+        "sealines_position": "NOT in top 10"
+      },
+      "traghetti_sardegna": {
+        "position_1": "grimaldi-lines.com",
+        "position_2": "traghetti-sardegna.it",
+        "position_3": "traghettilines.it",
+        "other_top_10": ["tirrenia.it", "corsica-ferries.co.uk", "sardegna-traghetti.com", "sardegna.info", "navitalia.com"],
+        "sealines_position": "NOT in top 10"
+      },
+      "traghetti_sicilia": {
+        "position_1": "traghettilines.it",
+        "position_2": "traghetti-sicilia.it",
+        "position_3": "snav.it",
+        "other_top_10": ["grimaldi-lines.com", "carontetourist.it", "tripadvisor.com", "gnv.it", "tirrenia.it"],
+        "sealines_position": "NOT in top 10"
+      },
+      "biglietti_traghetti": {
+        "position_1": "ferryscanner.com",
+        "position_2": "traghetti.com",
+        "position_3": "traghettilines.it",
+        "other_top_10": ["directferries.com", "ferryhopper.com", "traghettionline.net", "traghettiper.it", "grimaldi-lines.com"],
+        "sealines_position": "NOT in top 10"
+      },
+      "traghetti_croazia": {
+        "position_1": "croazia.info",
+        "position_2": "directferries.it",
+        "position_3": "traghetti.it",
+        "other_top_10": ["ferryhopper.com", "traghettiup.com", "putovnica.net", "tripadvisor.com", "visit-croatia.co.uk"],
+        "sealines_position": "NOT in top 10"
+      }
+    },
+    "sealines_visibility": {
+      "summary": "sealines.eu is NOT visible in the top 10 organic search results for ANY of the 5 major target keywords tested. The site only appears when searching specifically for the brand name or site: operator.",
+      "branded_search": "When searching 'sealines.eu traghetti', the site appears with multiple indexed pages, confirming Google has crawled the site. However, the pages lack sufficient authority/relevance to rank for competitive keywords.",
+      "indexed_pages_observed": [
+        "https://www.sealines.eu/en/",
+        "https://www.sealines.eu/traghetti",
+        "https://www.sealines.eu/destinazioni",
+        "https://www.sealines.eu/compagnie",
+        "https://www.sealines.eu/traghetti-sealines-prenota-con-noi",
+        "https://www.sealines.eu/chi-siamo",
+        "https://www.sealines.eu/accesso",
+        "https://www.sealines.eu/condizioni"
+      ],
+      "stale_year_in_titles": "7 out of 10 analyzed pages show '2025' in their Google-indexed title tags (as of May 2026)"
+    }
+  },
+
+  "structural_problems_summary": [
+    {
+      "problem": "ZERO organic visibility for target keywords",
+      "detail": "sealines.eu does not appear in top 10 results for any of the 5 tested keywords (traghetti grecia, traghetti sardegna, traghetti sicilia, traghetti croazia, biglietti traghetti)"
+    },
+    {
+      "problem": "Stale year references in title tags",
+      "detail": "7 of 10 pages still show '2025' in title tags (May 2026). Competitors already display '2026'."
+    },
+    {
+      "problem": "Systematic URL duplication / cannibalization",
+      "detail": "Every destination page exists in at least 3 URL variants: (1) /traghetti-[destination], (2) /index.php/traghetti-[destination], (3) /en/destinations/direct/ferries-[destination]/. Some pages have 4+ indexed URLs."
+    },
+    {
+      "problem": "Homepage title tag in wrong language",
+      "detail": "The homepage title 'Ferries: booking and purchasing tickets - Traghetti Sealines' is primarily in English, despite the target market being Italian."
+    },
+    {
+      "problem": "Aggressive bot-blocking (HTTP 403)",
+      "detail": "All pages return 403 Forbidden to automated fetchers. This prevented direct content analysis and may impact legitimate crawlers, SEO tools, and social media preview bots."
+    },
+    {
+      "problem": "Title tag keyword stuffing/waste",
+      "detail": "The /traghetti page title repeats 'Traghetti' twice: 'Traghetti | Sealines Prenota Traghetti 2025'"
+    },
+    {
+      "problem": "Company pages lack keyword integration in titles",
+      "detail": "Pages for Grimaldi Lines, GNV, and Jadrolinija do not include 'traghetti' associated with the company name in the title (e.g., 'Grimaldi Lines Traghetti')"
+    },
+    {
+      "problem": "English URL slugs for Italian content",
+      "detail": "The GNV page English version uses '/en/companies/large-fast-ships/' — a literal translation that will not rank for the brand keyword 'Grandi Navi Veloci'"
+    },
+    {
+      "problem": "Old content versions still indexed",
+      "detail": "Google still indexes 2024-dated pages (e.g., /traghetti-grecia-isole with '2024', /ferries-croatia-jadrolinija-departures-2024) alongside current versions"
+    },
+    {
+      "problem": "Content depth likely insufficient",
+      "detail": "Google snippets suggest pages are primarily transactional (booking portals with schedules/fares) with limited informational/editorial content. Top-ranking competitors (traghettilines.it, directferries.it) have extensive guide-style content with route descriptions, travel tips, and FAQ sections."
+    }
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "nota_metodologica": "La quota giornaliera gratuita della PageSpeed Insights API di Google era esaurita globalmente (project_number:583797351490). I dati TTFB e risorse sono stati misurati direttamente tramite un proxy Vercel serverless (regione iad1, US-East). I punteggi sintetici Lighthouse (Performance score, LCP, CLS, TBT, FCP, Speed Index) non sono disponibili in questa sessione. Le misurazioni TTFB da US-East sono penalizzanti rispetto a utenti europei; il TTFB reale da Europa sara' probabilmente migliore, ma il cold-start di 1391ms resta indicativo di un problema server-side.",
+  "homepage_mobile": {
+    "score": null,
+    "score_nota": "Non disponibile - quota PSI API esaurita",
+    "problems": [
+      {
+        "metric": "TTFB",
+        "threshold": "800ms",
+        "measured_values_ms": [
+          1391,
+          594,
+          591
+        ],
+        "measured_avg_ms": 859,
+        "cold_start_ms": 1391,
+        "warm_ms": 592,
+        "nota": "Cold start 1391ms (>800ms). Media 859ms (>800ms). Misurato da US-East; da Europa sara' probabilmente inferiore ma il cold start resta problematico"
+      },
+      {
+        "metric": "HTML_SIZE",
+        "measured_uncompressed_bytes": 171808,
+        "measured_uncompressed_kb": 167.8,
+        "measured_transfer_gzip_bytes": 24059,
+        "measured_transfer_gzip_kb": 23.5,
+        "nota": "HTML di 167.8KB non compresso (23.5KB gzip). Contiene 140 immagini inline SVG data-uri che gonfiano il document"
+      },
+      {
+        "metric": "RENDER_BLOCKING_SCRIPTS",
+        "count": 3,
+        "total_size_bytes": 67644,
+        "total_size_kb": 66.1,
+        "resources": [
+          {
+            "url": "https://embeds.iubenda.com/widgets/664678c5-0679-4279-a095-9ac6523bc9fb.js",
+            "size_bytes": 57741,
+            "size_kb": 56.4,
+            "async": false,
+            "defer": false
+          },
+          {
+            "url": "https://static.zdassets.com/ekr/snippet.js",
+            "size_bytes": 9693,
+            "size_kb": 9.5,
+            "async": false,
+            "defer": false
+          },
+          {
+            "url": "https://cdn.iubenda.com/cons/iubenda_cons.js",
+            "size_bytes": 210,
+            "size_kb": 0.2,
+            "async": false,
+            "defer": false
+          }
+        ]
+      },
+      {
+        "metric": "IMAGES_NO_LAZY_LOADING",
+        "images_total": 142,
+        "images_eager": 142,
+        "images_lazy": 0,
+        "nota": "Nessuna immagine usa loading=lazy. 140 sono SVG data-uri inline, 2 sono esterne senza dimensioni esplicite"
+      },
+      {
+        "metric": "NO_RESOURCE_PRELOADS",
+        "preloads_count": 0,
+        "nota": "Nessun <link rel=preload> per risorse critiche (font, CSS, hero image)"
+      },
+      {
+        "metric": "NO_PRECONNECT",
+        "preconnects_count": 0,
+        "third_party_domains": [
+          "embeds.iubenda.com",
+          "static.zdassets.com",
+          "cdn.iubenda.com",
+          "www.googletagmanager.com"
+        ],
+        "nota": "Nessun <link rel=preconnect> per i 4 domini third-party"
+      },
+      {
+        "metric": "NO_CACHE_CONTROL_HEADER",
+        "cache_control": null,
+        "nota": "Nessun header Cache-Control sulla risposta HTML"
+      },
+      {
+        "metric": "INLINE_CSS_VOLUME",
+        "total_bytes": 11317,
+        "total_kb": 11.1,
+        "blocks_count": 9,
+        "nota": "11.1KB di CSS inline in 9 blocchi <style> nel document"
+      },
+      {
+        "metric": "INLINE_JS_VOLUME",
+        "total_bytes": 9470,
+        "total_kb": 9.2,
+        "blocks_count": 13,
+        "nota": "9.2KB di JavaScript inline in 13 blocchi <script> nel document"
+      },
+      {
+        "metric": "THIRD_PARTY_IFRAME",
+        "url": "https://www.googletagmanager.com/ns.html?id=GTM-THKDTCX",
+        "nota": "GTM caricato via noscript iframe"
+      }
+    ]
+  },
+  "homepage_desktop": {
+    "score": null,
+    "score_nota": "Non disponibile - quota PSI API esaurita. Stesse problematiche della versione mobile (stessa pagina server-rendered)",
+    "problems": [
+      {
+        "metric": "TTFB",
+        "threshold": "800ms",
+        "measured_values_ms": [
+          1391,
+          594,
+          591
+        ],
+        "measured_avg_ms": 859,
+        "cold_start_ms": 1391,
+        "nota": "Stessi valori della versione mobile - stessa pagina server"
+      },
+      {
+        "metric": "HTML_SIZE",
+        "measured_uncompressed_kb": 167.8,
+        "measured_transfer_gzip_kb": 23.5
+      },
+      {
+        "metric": "RENDER_BLOCKING_SCRIPTS",
+        "count": 3,
+        "total_size_kb": 66.1,
+        "nota": "Identico a mobile"
+      },
+      {
+        "metric": "IMAGES_NO_LAZY_LOADING",
+        "images_total": 142,
+        "images_lazy": 0
+      },
+      {
+        "metric": "NO_RESOURCE_PRELOADS",
+        "preloads_count": 0
+      },
+      {
+        "metric": "NO_PRECONNECT",
+        "preconnects_count": 0
+      },
+      {
+        "metric": "NO_CACHE_CONTROL_HEADER",
+        "cache_control": null
+      }
+    ]
+  },
+  "traghetti_grecia_mobile": {
+    "score": null,
+    "score_nota": "Non disponibile - quota PSI API esaurita",
+    "problems": [
+      {
+        "metric": "TTFB",
+        "threshold": "800ms",
+        "measured_values_ms": [
+          1117,
+          917,
+          910
+        ],
+        "measured_avg_ms": 981,
+        "cold_start_ms": 1117,
+        "warm_ms": 913,
+        "nota": "Tutte le misurazioni superano 800ms. Media 981ms. Anche il warm TTFB (913ms) supera la soglia"
+      },
+      {
+        "metric": "HTML_SIZE",
+        "measured_uncompressed_bytes": 134999,
+        "measured_uncompressed_kb": 131.8,
+        "measured_transfer_gzip_bytes": 31624,
+        "measured_transfer_gzip_kb": 30.9,
+        "nota": "HTML di 131.8KB non compresso (30.9KB gzip). Transfer size piu' grande della homepage (30.9 vs 23.5KB) nonostante HTML piu' piccolo - possibile inefficienza di compressione o contenuto inline"
+      },
+      {
+        "metric": "RENDER_BLOCKING_SCRIPTS",
+        "count": 3,
+        "total_size_bytes": 67644,
+        "total_size_kb": 66.1,
+        "resources": [
+          {
+            "url": "https://embeds.iubenda.com/widgets/664678c5-0679-4279-a095-9ac6523bc9fb.js",
+            "size_bytes": 57741,
+            "size_kb": 56.4,
+            "async": false,
+            "defer": false
+          },
+          {
+            "url": "https://static.zdassets.com/ekr/snippet.js",
+            "size_bytes": 9693,
+            "size_kb": 9.5,
+            "async": false,
+            "defer": false
+          },
+          {
+            "url": "https://cdn.iubenda.com/cons/iubenda_cons.js",
+            "size_bytes": 210,
+            "size_kb": 0.2,
+            "async": false,
+            "defer": false
+          }
+        ]
+      },
+      {
+        "metric": "IMAGES_NO_LAZY_LOADING",
+        "images_total": 24,
+        "images_eager": 24,
+        "images_lazy": 0,
+        "nota": "Nessuna delle 24 immagini usa loading=lazy"
+      },
+      {
+        "metric": "YOUTUBE_IFRAME_EAGER",
+        "url": "https://www.youtube.com/embed/P1SI0v-jFNk",
+        "nota": "Iframe YouTube caricato eagerly nel document principale"
+      },
+      {
+        "metric": "NO_RESOURCE_PRELOADS",
+        "preloads_count": 0
+      },
+      {
+        "metric": "NO_PRECONNECT",
+        "preconnects_count": 0,
+        "third_party_domains": [
+          "embeds.iubenda.com",
+          "static.zdassets.com",
+          "cdn.iubenda.com",
+          "www.googletagmanager.com",
+          "www.youtube.com"
+        ],
+        "nota": "Nessun preconnect per 5 domini third-party"
+      },
+      {
+        "metric": "NO_CACHE_CONTROL_HEADER",
+        "cache_control": null
+      },
+      {
+        "metric": "INLINE_CSS_VOLUME",
+        "total_bytes": 23448,
+        "total_kb": 22.9,
+        "blocks_count": 10,
+        "nota": "22.9KB di CSS inline - il doppio della homepage"
+      },
+      {
+        "metric": "INLINE_JS_VOLUME",
+        "total_bytes": 9920,
+        "total_kb": 9.7,
+        "blocks_count": 13
+      }
+    ]
+  }
+}

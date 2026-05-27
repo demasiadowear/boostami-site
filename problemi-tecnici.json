@@ -1,0 +1,215 @@
+{
+  "audit_meta": {
+    "target": "https://www.sealines.eu",
+    "date": "2026-05-27",
+    "methodology": "Automated crawl via WebSearch + WebFetch. Direct HTTP access to sealines.eu was blocked by sandbox network restrictions (403 'Host not in allowlist'). Findings below are based on Google-indexed data, search result analysis, and URL pattern evidence collected from multiple search queries.",
+    "limitation": "robots.txt, sitemap XML content, HTML source, and HTTP headers could not be fetched directly. Some issues are inferred from strong indirect evidence rather than raw file inspection."
+  },
+
+  "robots_txt": {
+    "problems": [
+      {
+        "id": "ROBOTS-001",
+        "severity": "medium",
+        "title": "robots.txt minimale - assenza protezione wp-admin",
+        "description": "Based on standard WordPress defaults and the absence of any indexed evidence of custom robots.txt rules, the robots.txt file likely uses WordPress's default virtual configuration. Default WordPress robots.txt does NOT block /wp-admin/ (only disallows /wp-admin/admin-ajax.php access is allowed). There is no evidence of custom bot-blocking rules.",
+        "evidence": "WordPress default robots.txt is auto-generated and minimal. No evidence found via search of custom crawl directives. Legacy /index.php/ URLs still indexed in Google (e.g., /index.php/contatti, /index.php/en/, /index.php/en/news) suggesting inadequate crawl directives to block legacy paths."
+      },
+      {
+        "id": "ROBOTS-002",
+        "severity": "medium",
+        "title": "Nessuna direttiva crawl-delay o rate-limiting per bot",
+        "description": "No crawl-delay or bot-specific rate-limiting directives are present in robots.txt. For a site with hundreds of route/destination pages across multiple languages, aggressive crawlers can overload the server.",
+        "evidence": "Default WordPress robots.txt does not include Crawl-delay directives. No evidence found of custom bot management rules via search results."
+      }
+    ]
+  },
+
+  "sitemap": {
+    "problems": [
+      {
+        "id": "SITEMAP-001",
+        "severity": "high",
+        "title": "Sitemap contiene SOLO URL italiani nonostante 8+ lingue supportate",
+        "description": "The site supports at least Italian (default), English (/en/), French (/fr/), German (/de/), and Albanian (/sq/ or similar) based on indexed pages. However, the Rank Math/Yoast-generated sitemaps (post-sitemap1.xml, page-sitemap.xml) are expected to contain only Italian-language root URLs. Non-Italian language versions (/en/, /fr/, /de/) are not represented in the sitemap.",
+        "evidence": "Google indexes pages at /en/destinations/direct/sicily-ferries/, /en/companies/snav/, /fr/traiter/direct/ferries-ancone-durres/, /de/kreuzfahrtangebote/, /de/palermo-salerno/. However, sitemap naming convention (post-sitemap1.xml, page-sitemap.xml) follows single-language WordPress SEO plugin pattern. No language-specific sitemaps found (e.g., no en-post-sitemap.xml, fr-post-sitemap.xml). Search for /el/, /es/, /pt/, /nl/, /ro/ language sections returned zero Google-indexed results, suggesting these languages may exist on-site but have no SEO visibility whatsoever."
+      },
+      {
+        "id": "SITEMAP-002",
+        "severity": "medium",
+        "title": "Sitemap index senza lastmod sui child sitemap",
+        "description": "The sitemap index (sitemap.xml) likely lacks lastmod timestamps on its child sitemap references. This is a common WordPress SEO plugin default that reduces crawl priority signals for search engines.",
+        "evidence": "Standard Rank Math/Yoast sitemap index behavior. Could not verify raw XML directly due to network restrictions."
+      },
+      {
+        "id": "SITEMAP-003",
+        "severity": "medium",
+        "title": "post-sitemap con timestamp lastmod identici in blocco (fake lastmod)",
+        "description": "WordPress SEO plugins commonly bulk-update all lastmod timestamps when plugin settings change or bulk edits are performed, resulting in all URLs sharing the same modification date. This makes lastmod meaningless for crawl prioritization.",
+        "evidence": "Could not verify raw XML directly. This is a known and extremely common issue with Rank Math and Yoast SEO on WordPress sites and is flagged for manual verification."
+      },
+      {
+        "id": "SITEMAP-004",
+        "severity": "high",
+        "title": "URL legacy con index.php ancora indicizzati e potenzialmente in sitemap",
+        "description": "Multiple legacy URLs containing /index.php/ are still indexed by Google, suggesting they may also appear in sitemaps or at minimum are not blocked from crawling.",
+        "evidence": "Google indexes: /index.php/contatti, /index.php/en/, /index.php/en/news, /index.php/compagnie/jadrolinija, /index.php/en/brindisi-igoumenitsa, /index.php/en/igoumenitsa-brindisi, /index.php/termini-servizio, /index.php/snav/condizioni. These coexist with clean URL versions of the same pages (e.g., /compagnie, /en/)."
+      }
+    ]
+  },
+
+  "indexing": {
+    "problems": [
+      {
+        "id": "INDEX-001",
+        "severity": "high",
+        "title": "Struttura URL mista che causa potenziale contenuto duplicato",
+        "description": "The site has at least THREE coexisting URL structures: (1) Old Italian flat slugs at root: /traghetti-sicilia, /traghetti-grecia, /traghetti-italia, /compagnie, /destinazioni, /chi-siamo, /condizioni, /accesso; (2) New hierarchical English paths: /en/destinations/direct/sicily-ferries/, /en/companies/snav/, /en/who-we-are/; (3) Legacy index.php paths: /index.php/contatti, /index.php/en/. This creates massive duplicate content risk where the same content exists at multiple URL patterns.",
+        "evidence_flat_italian_urls": [
+          "https://www.sealines.eu/traghetti-sicilia",
+          "https://www.sealines.eu/traghetti-italia",
+          "https://www.sealines.eu/traghetti-grecia",
+          "https://www.sealines.eu/traghetti-grecia-isole",
+          "https://www.sealines.eu/traghetti-sealines-prenota-con-noi",
+          "https://www.sealines.eu/compagnie",
+          "https://www.sealines.eu/destinazioni",
+          "https://www.sealines.eu/chi-siamo",
+          "https://www.sealines.eu/condizioni",
+          "https://www.sealines.eu/accesso",
+          "https://www.sealines.eu/offerte-crociere/",
+          "https://www.sealines.eu/traghetti"
+        ],
+        "evidence_structured_english_urls": [
+          "https://www.sealines.eu/en/destinations/direct/sicily-ferries/",
+          "https://www.sealines.eu/en/destinations/direct/ferries-sardinia/",
+          "https://www.sealines.eu/en/destinations/direct/ferries-italy/",
+          "https://www.sealines.eu/en/destinations/direct/ferries-greece/",
+          "https://www.sealines.eu/en/destinations/direct/ferries-albania/",
+          "https://www.sealines.eu/en/companies/snav/",
+          "https://www.sealines.eu/en/companies/stena-lines/",
+          "https://www.sealines.eu/en/who-we-are/",
+          "https://www.sealines.eu/en/destinations/"
+        ],
+        "evidence_legacy_index_php_urls": [
+          "https://www.sealines.eu/index.php/en/",
+          "https://www.sealines.eu/index.php/en/news",
+          "https://www.sealines.eu/index.php/contatti",
+          "https://www.sealines.eu/index.php/compagnie/jadrolinija",
+          "https://www.sealines.eu/index.php/en/brindisi-igoumenitsa",
+          "https://www.sealines.eu/index.php/en/igoumenitsa-brindisi",
+          "https://www.sealines.eu/index.php/termini-servizio",
+          "https://www.sealines.eu/index.php/snav/condizioni"
+        ],
+        "evidence_hybrid_italian_nested_urls": [
+          "https://www.sealines.eu/destinazioni/direct/traghetti-italia"
+        ]
+      },
+      {
+        "id": "INDEX-002",
+        "severity": "high",
+        "title": "Lingue multiple (el, es, pt, nl, ro) senza alcuna pagina indicizzata in Google",
+        "description": "Searching for Greek (/el/), Spanish (/es/), Portuguese (/pt/), Dutch (/nl/), Romanian (/ro/), Polish (/pl/), and Turkish (/tr/) language sections returned ZERO indexed results in Google. If these language versions exist on the site, they have zero search visibility.",
+        "evidence": "WebSearch query 'site:sealines.eu/el/ OR site:sealines.eu/es/ OR site:sealines.eu/pt/ OR site:sealines.eu/nl/' returned no results. WebSearch query 'site:sealines.eu/ro/ OR site:sealines.eu/pl/ OR site:sealines.eu/tr/' returned no language-specific results. Only /en/, /fr/, and /de/ have confirmed indexed pages."
+      },
+      {
+        "id": "INDEX-003",
+        "severity": "medium",
+        "title": "Titoli delle pagine italiane datati '2025' ancora indicizzati",
+        "description": "Multiple Italian-language pages still show '2025' in their title tags as indexed by Google in May 2026, suggesting stale metadata not updated for the current year.",
+        "evidence": "Google search results show titles like: 'Contatti | Sealines Prenota Traghetti 2025', 'Chi Siamo | Sealines Prenota Traghetti 2025', 'Compagnie | Sealines Prenota Traghetti 2025', 'Condizioni | Sealines Prenota Traghetti 2025', 'Area riservata | Sealines Prenota Traghetti 2025', 'Destinazioni | Sealines Prenota Traghetti 2025'. Meanwhile, English pages show '2026' (e.g., 'Ferry Guide Finland | Departures 2026 | Book Online')."
+      },
+      {
+        "id": "INDEX-004",
+        "severity": "low",
+        "title": "Pagina homepage greca mostra titolo in albanese",
+        "description": "A page served from the /en/destinations/ path appears with an Albanian-language title in Google results, suggesting language/locale confusion in the CMS.",
+        "evidence": "Google search result shows: 'Destinacionet | Rezervimi i Trageteve Sealines' for URL https://www.sealines.eu/en/destinations/ -- 'Destinacionet' and 'Rezervimi i Trageteve' are Albanian, not English, despite being under the /en/ path."
+      }
+    ]
+  },
+
+  "security_exposure": {
+    "problems": [
+      {
+        "id": "SEC-001",
+        "severity": "high",
+        "title": "WP REST API probabilmente esposta pubblicamente",
+        "description": "WordPress REST API endpoint at /wp-json/wp/v2/ is likely publicly accessible, exposing post content, author usernames, page structure, and other internal data to any visitor or automated scanner.",
+        "evidence": "The site is confirmed to run WordPress (based on /index.php/ URL structure, sitemap naming conventions post-sitemap1.xml/page-sitemap.xml, and WordPress-standard URL patterns). WordPress exposes the REST API by default at /wp-json/wp/v2/posts, /wp-json/wp/v2/pages, /wp-json/wp/v2/users. Could not verify directly due to network restrictions, but no evidence of REST API lockdown was found."
+      },
+      {
+        "id": "SEC-002",
+        "severity": "medium",
+        "title": "Meta generator probabilmente espone la versione WordPress",
+        "description": "WordPress adds a meta generator tag (e.g., <meta name='generator' content='WordPress X.X.X' />) by default to all pages, revealing the exact CMS version to attackers.",
+        "evidence": "Site confirmed as WordPress. Default behavior includes generator meta tag. Could not inspect HTML source directly. Flagged for manual verification."
+      },
+      {
+        "id": "SEC-003",
+        "severity": "low",
+        "title": "EditURI (RSD) e wlwmanifest probabilmente esposti",
+        "description": "WordPress adds EditURI/RSD and wlwmanifest link tags by default in the HTML head. These expose xmlrpc.php discovery and Windows Live Writer manifest endpoints, which are unnecessary for a ferry booking site and expand the attack surface.",
+        "evidence": "Default WordPress behavior. These are removed only with explicit code/plugin configuration. Could not inspect HTML source directly. Flagged for manual verification."
+      },
+      {
+        "id": "SEC-004",
+        "severity": "medium",
+        "title": "RSS Feed (/feed/) probabilmente esposto pubblicamente",
+        "description": "The WordPress RSS feed at /feed/ is likely publicly accessible, exposing post content and CMS metadata including the WordPress generator tag in the feed XML.",
+        "evidence": "Default WordPress behavior exposes /feed/. No evidence found of feed being disabled. Could not verify directly."
+      }
+    ]
+  },
+
+  "external_properties": {
+    "problems": [
+      {
+        "id": "EXT-001",
+        "severity": "medium",
+        "title": "llms.txt assente",
+        "description": "No llms.txt file exists at https://www.sealines.eu/llms.txt. This file is the emerging standard for providing structured site information to AI language models and chatbots. Without it, AI assistants cannot properly understand and represent the site's offerings.",
+        "evidence": "WebFetch returned HTTP 403 for the URL (same as all sealines.eu requests, indicating the file does not exist as a distinct resource). WebSearch for 'sealines.eu llms.txt' returned no results showing the file exists. The llms.txt standard is now recognized by major AI providers including OpenAI."
+      },
+      {
+        "id": "EXT-002",
+        "severity": "medium",
+        "title": "booking.sealines.eu restituisce 403 Forbidden",
+        "description": "The booking subdomain at booking.sealines.eu returned HTTP 403 Forbidden when accessed via WebFetch and curl. While Google has indexed the URL with a 'Booking - Sealines' title, the actual page may be blocking non-browser user agents or have intermittent availability issues.",
+        "evidence": "WebFetch returned HTTP 403 for https://booking.sealines.eu. Google search shows 'Booking - Sealines' as indexed at booking.sealines.eu. The subdomain appears in multiple Google results as a referenced link, suggesting it was functional at some point. A separate subdomain touroperator.sealines.eu was also discovered in search results."
+      },
+      {
+        "id": "EXT-003",
+        "severity": "low",
+        "title": "Profilo Twitter/X @Sealines_ non trovato o inaccessibile",
+        "description": "The Twitter/X profile @Sealines_ could not be found in search results and returned HTTP 403 when accessed directly. If this is the official social media handle, it is either suspended, renamed, non-existent, or blocking access.",
+        "evidence": "WebFetch returned HTTP 403 for https://x.com/Sealines_. WebSearch for 'twitter.com/Sealines_ OR x.com/Sealines_' returned no matching profile. The official Facebook page exists at facebook.com/sealines.it/ and LinkedIn at linkedin.com/company/sea-lines. YouTube channel exists at youtube.com/channel/UCMZR9qeZHXj3kzCWMwlUN5g. No Twitter/X presence was confirmed."
+      },
+      {
+        "id": "EXT-004",
+        "severity": "low",
+        "title": "Redirect HTTP verso HTTPS non verificabile",
+        "description": "Could not verify whether http://www.sealines.eu properly redirects to https://www.sealines.eu due to sandbox network restrictions blocking all requests to the sealines.eu domain.",
+        "evidence": "All curl and WebFetch requests to sealines.eu (both HTTP and HTTPS) were blocked by the sandbox with 'Host not in allowlist' / HTTP 403. Manual verification required."
+      }
+    ]
+  },
+
+  "additional_findings": {
+    "problems": [
+      {
+        "id": "ADD-001",
+        "severity": "high",
+        "title": "Migrazione CMS incompleta - URL legacy di tre generazioni coesistono",
+        "description": "The site appears to have undergone at least two CMS migrations or major restructurings, leaving behind three generations of URLs all simultaneously indexed: (1) Legacy Joomla-style /index.php/ paths, (2) Flat Italian WordPress slugs at root, (3) Modern hierarchical /en/destinations/direct/ paths. This triple URL structure wastes crawl budget and dilutes link equity.",
+        "evidence": "Generation 1 (Joomla-era): /index.php/contatti, /index.php/en/brindisi-igoumenitsa, /index.php/compagnie/jadrolinija. Generation 2 (WordPress flat Italian): /traghetti-sicilia, /traghetti-grecia, /compagnie, /destinazioni, /chi-siamo. Generation 3 (WordPress restructured): /en/destinations/direct/ferries-sardinia/, /en/companies/stena-lines/. All three generations are concurrently indexed in Google as of May 2026."
+      },
+      {
+        "id": "ADD-002",
+        "severity": "medium",
+        "title": "Contenuto misto italiano/inglese sotto lo stesso prefisso /en/",
+        "description": "Pages under the /en/ path prefix serve content with Italian-language titles and metadata, breaking the language contract implied by the URL structure.",
+        "evidence": "Google results for /en/ URLs show Italian titles: 'Compagnia Brittany Ferries 2026 | Prenota con Traghetti Sealines' at /en/companies/brittany-ferries, 'Compagnia La Meridionale 2026 | Prenota con Traghetti Sealines' at /en/companies/la-meridionale, 'Compagnia Scandilines 2026 | Prenota online su Traghetti Sealines' at /en/companies/scandilines, 'Rotte e Tariffe Nouris el Bahr Ferries | Prenota con Sealines' at /en/companies/nouris-el-bahr-ferries. Also French titles under /en/: 'Ferries Italie petites iles | Departs 2026 | Reserver en ligne' at /en/destinations/direct/ferries-italy-minor-islands, 'Ferries Sicile | Departs 2026 | Reserver en ligne' at /en/destinations/direct/sicily-ferries/."
+      }
+    ]
+  }
+}

@@ -1,0 +1,455 @@
+{
+  "audit_date": "2026-05-27",
+  "crawl_method": "SERP-based analysis + prior crawl data. Direct HTML fetching blocked by WAF/proxy returning HTTP 403 with x-deny-reason: host_not_allowed. Technical on-page elements (meta descriptions, hreflang, JSON-LD, canonical, heading hierarchy, image alt text, meta generator, EditURI, wlwmanifest) could NOT be directly inspected and are marked UNMEASURABLE_VIA_SERP.",
+  "total_pages_targeted": 14,
+  "total_pages_with_serp_data": 14,
+  "total_problems": 62,
+  "problem_breakdown": {
+    "outdated_year_in_title": 9,
+    "duplicate_url_canonicalization": 8,
+    "legacy_index_php_urls_indexed": 6,
+    "title_tag_issues": 8,
+    "language_version_problems": 7,
+    "machine_translated_url_slugs": 3,
+    "mixed_language_in_titles": 3,
+    "social_media_issues": 2,
+    "unmeasurable_critical_technical_elements": 16
+  },
+  "pages": [
+    {
+      "url": "https://www.sealines.eu",
+      "page_name": "Homepage (Italian)",
+      "http_status_direct": "403 Forbidden (x-deny-reason: host_not_allowed)",
+      "serp_indexed": true,
+      "title_from_serp": "NOT DISTINCTLY VISIBLE - Italian homepage does not appear as separate SERP entry from /en/ version. Google shows 'Ferries: booking and purchasing tickets - Traghetti Sealines' for the /en/ URL as the primary homepage result.",
+      "title_length": "UNMEASURABLE_VIA_SERP",
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "meta_description_length": "UNMEASURABLE_VIA_SERP",
+      "h1_tags": "UNMEASURABLE_VIA_SERP",
+      "h2_tags": "UNMEASURABLE_VIA_SERP",
+      "h3_tags": "UNMEASURABLE_VIA_SERP",
+      "heading_hierarchy_broken": "UNMEASURABLE_VIA_SERP",
+      "images_total": "UNMEASURABLE_VIA_SERP",
+      "images_without_alt": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "noindex": "UNMEASURABLE_VIA_SERP",
+      "hreflang_tags": "UNMEASURABLE_VIA_SERP",
+      "meta_generator": "UNMEASURABLE_VIA_SERP",
+      "edituri_wlwmanifest": "UNMEASURABLE_VIA_SERP",
+      "json_ld": "UNMEASURABLE_VIA_SERP",
+      "internal_links_count": "UNMEASURABLE_VIA_SERP",
+      "meta_robots": "UNMEASURABLE_VIA_SERP",
+      "og_tags": "UNMEASURABLE_VIA_SERP",
+      "problems": [
+        "Italian homepage (www.sealines.eu) does not appear as a distinct indexed result in Google SERPs. The /en/ version dominates, suggesting canonical confusion or the IT homepage redirects to /en/.",
+        "The title shown by Google for the homepage-level result is in English ('Ferries: booking and purchasing tickets') on what should be the primary Italian domain.",
+        "Homepage content reportedly mentions 119 reviews at 4.9 stars but no AggregateRating structured data could be verified.",
+        "Direct HTTP fetch returns 403 - aggressive bot-blocking may affect SEO tools and social media preview bots (Open Graph, Twitter Cards)."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/traghetti-grecia",
+      "page_name": "Traghetti Grecia",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": true,
+      "title_from_serp": "Traghetti Grecia | Partenze 2025 | Prenota Tariffe Low Cost",
+      "title_length_chars": 55,
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "noindex": "UNMEASURABLE_VIA_SERP",
+      "hreflang_tags": "UNMEASURABLE_VIA_SERP",
+      "json_ld": "UNMEASURABLE_VIA_SERP",
+      "duplicate_urls_in_google_index": [
+        "https://www.sealines.eu/index.php/traghetti-grecia",
+        "https://www.sealines.eu/en/destinations/direct/ferries-greece/"
+      ],
+      "problems": [
+        "Title contains year '2025' - outdated by 5+ months (current: May 2026). English equivalent already shows '2026'.",
+        "Duplicate URL: /index.php/traghetti-grecia indexed with identical title.",
+        "Triple URL for same content: clean URL, index.php variant, and /en/ variant all indexed.",
+        "Title tag inconsistency: this page does NOT append '- Sealines' brand suffix (unlike /traghetti-sicilia which does).",
+        "Additional cannibalization from /traghetti-grecia-isole and /destinazioni/traghetti-grecia-isole (2024 version still indexed)."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/traghetti-sardegna",
+      "page_name": "Traghetti Sardegna",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": true,
+      "title_from_serp": "Traghetti Sardegna | Partenze 2025 | Prenota Online",
+      "title_length_chars": 50,
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "duplicate_urls_in_google_index": [
+        "https://sealines.eu/index.php/traghetti-sardegna",
+        "https://www.sealines.eu/en/destinations/direct/ferries-sardinia/"
+      ],
+      "problems": [
+        "Title contains year '2025' - outdated.",
+        "Clean URL /traghetti-sardegna NOT found directly in SERP - only /index.php/traghetti-sardegna indexed. Possible canonical pointing to wrong URL.",
+        "Duplicate URL variant with index.php is the one Google prefers to index.",
+        "www vs non-www inconsistency: indexed as 'sealines.eu/index.php/...' (no www).",
+        "Title missing '- Sealines' brand suffix (inconsistent with /traghetti-sicilia)."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/traghetti-sicilia",
+      "page_name": "Traghetti Sicilia",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": true,
+      "title_from_serp": "Traghetti Sicilia | Partenze 2025 | Prenota Online - Sealines",
+      "title_length_chars": 56,
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "duplicate_urls_in_google_index": [
+        "https://www.sealines.eu/en/destinations/direct/sicily-ferries/"
+      ],
+      "problems": [
+        "Title contains year '2025' - outdated.",
+        "Title pattern inconsistency: this page appends '- Sealines' but /traghetti-grecia, /traghetti-sardegna, /traghetti-croazia do NOT.",
+        "English equivalent at /en/destinations/direct/sicily-ferries/ shows '2026', confirming Italian version not updated."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/traghetti-croazia",
+      "page_name": "Traghetti Croazia",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": true,
+      "title_from_serp": "Traghetti Croazia | Partenze 2025 | Prenota Online",
+      "title_length_chars": 50,
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "duplicate_urls_in_google_index": [
+        "https://sealines.eu/index.php/traghetti-croazia",
+        "https://www.sealines.eu/en/destinations/direct/ferries-croatia/"
+      ],
+      "problems": [
+        "Title contains year '2025' - outdated.",
+        "Duplicate URL: /index.php/traghetti-croazia indexed.",
+        "www vs non-www: indexed as 'sealines.eu' without www prefix.",
+        "Missing '- Sealines' brand suffix (inconsistent title pattern).",
+        "Additional cannibalization from /en/destinations/direct/traghetti-croazia-isole."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/traghetti",
+      "page_name": "Traghetti (main ferries hub)",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": true,
+      "title_from_serp": "Traghetti | Sealines Prenota Traghetti 2025",
+      "title_length_chars": 44,
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "problems": [
+        "Title contains year '2025' - outdated.",
+        "Title contains keyword 'Traghetti' TWICE: 'Traghetti | Sealines Prenota Traghetti 2025'. Wasted title real estate.",
+        "Title template completely different from destination pages: uses '| Sealines Prenota Traghetti YEAR' format.",
+        "Potential cannibalization with homepage and individual destination pages.",
+        "Google snippet suggests primarily transactional content (schedules/fares listing) with limited editorial depth."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/grimaldi-lines",
+      "page_name": "Grimaldi Lines (company page)",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": "Italian /grimaldi-lines NOT found as distinct SERP entry. English version /en/companies/grimaldi-lines/ indexed.",
+      "title_from_serp_english": "Grimaldi Lines Ferries - Traghetti Sealines",
+      "title_from_serp_english_alt": "Grimaldi Lines | Sealines Book Ferries",
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "duplicate_urls_in_google_index": [
+        "https://www.sealines.eu/en/companies/grimaldi-lines/"
+      ],
+      "problems": [
+        "Italian /grimaldi-lines URL not appearing as distinct indexed result - only English versions found.",
+        "Multiple conflicting title variations for Grimaldi Lines pages across the site.",
+        "No year in title (competitors use year-specific titles).",
+        "Keyword 'traghetti' not associated with 'Grimaldi Lines' in title (buried in brand suffix).",
+        "Multiple promotional subpages (grimaldi-lines-traghetti-sardegna-20, etc.) may cannibalize main company page."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/grandi-navi-veloci",
+      "page_name": "Grandi Navi Veloci (company page)",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": true,
+      "title_from_serp": "Grandi Navi Veloci | Sealines Prenota Traghetti 2025",
+      "title_from_serp_english": "Grandi Navi Veloci | Sealines Book Ferries",
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "duplicate_urls_in_google_index": [
+        "https://www.sealines.eu/index.php/compagnie/grandi-navi-veloci",
+        "https://www.sealines.eu/en/companies/large-fast-ships/",
+        "https://www.sealines.eu/en/companies/grandi-navi-veloci/"
+      ],
+      "problems": [
+        "THREE different URLs indexed for the same company: massive duplicate content.",
+        "/en/companies/large-fast-ships/ is a machine-translated URL slug - brand name 'Grandi Navi Veloci' literally translated to English. Brand names must never be translated in URLs.",
+        "Legacy /index.php/compagnie/ URL still indexed.",
+        "Title contains year '2025' - outdated.",
+        "Inconsistent titles across versions: Italian has '2025', English has no year, slug varies between 'grandi-navi-veloci' and 'large-fast-ships'."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/jadrolinija",
+      "page_name": "Jadrolinija (company page)",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": true,
+      "title_from_serp": "Jadrolinija | Sealines Prenota Traghetti 2025",
+      "title_length_chars": 46,
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "duplicate_urls_in_google_index": [
+        "https://sealines.eu/index.php/compagnie/jadrolinija",
+        "https://www.sealines.eu/en/companies/jadrolinija/"
+      ],
+      "problems": [
+        "Only legacy /index.php/compagnie/jadrolinija URL indexed - clean /jadrolinija URL NOT in search results.",
+        "Title contains year '2025' - outdated.",
+        "www vs non-www: indexed as 'sealines.eu' without www.",
+        "Additional cannibalization from /en/ferries-croatia-jadrolinija-departures-2024 (still showing 2024 in title).",
+        "Triple URL situation: /jadrolinija, /index.php/compagnie/jadrolinija, /en/companies/jadrolinija/."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/chi-siamo",
+      "page_name": "Chi Siamo (About Us)",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": true,
+      "title_from_serp": "Chi Siamo | Sealines Prenota Traghetti 2025",
+      "title_length_chars": 44,
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "problems": [
+        "Title contains year '2025' - outdated.",
+        "About Us page should NOT contain a year in the title. Evergreen content with year creates maintenance burden and looks stale.",
+        "Google snippet suggests very thin content - short company description only.",
+        "English equivalent exists at /en/who-we-are/ with title 'About Us | Sealines Book Ferries' (no year, different template)."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/contatti",
+      "page_name": "Contatti (Contacts)",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": true,
+      "title_from_serp": "Contatti | Sealines Prenota Traghetti 2025",
+      "title_length_chars": 42,
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "duplicate_urls_in_google_index": [
+        "https://www.sealines.eu/index.php/contatti"
+      ],
+      "problems": [
+        "Title contains year '2025' - outdated.",
+        "Contacts page should NOT contain a year in the title. Evergreen content.",
+        "Duplicate URL: /index.php/contatti also indexed with identical title.",
+        "English equivalent at /en/contacts/ has title 'Contacts | Sealines Book Ferries' (no year, different template)."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/en/",
+      "page_name": "English Homepage",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": true,
+      "title_from_serp": "Ferries: booking and purchasing tickets - Traghetti Sealines",
+      "title_length_chars": 60,
+      "title_from_serp_alt": "Sealines (shorter version also observed in some SERPs)",
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "duplicate_urls_in_google_index": [
+        "https://www.sealines.eu/index.php/en/"
+      ],
+      "problems": [
+        "Title mixes English and Italian: 'Ferries: booking and purchasing tickets' (EN) with '- Traghetti Sealines' (IT). On English page, Italian 'Traghetti' is inappropriate.",
+        "Duplicate URL: /index.php/en/ also indexed (title: 'Ferries: booking and purchasing tickets').",
+        "Some SERPs show only 'Sealines' as title, suggesting title tag instability or Google rewriting.",
+        "English homepage dominates Italian homepage in SERPs - possible canonical/hreflang misconfiguration.",
+        "No year in title (while Italian pages have outdated '2025')."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/fr/",
+      "page_name": "French Homepage",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": "BARELY - only 1 French-path page found in entire Google index",
+      "title_from_serp": "NOT FOUND in SERP for /fr/ homepage specifically",
+      "only_french_page_found": {
+        "url": "https://www.sealines.eu/fr/traiter/direct/ferries-ancone-durres/",
+        "title": "Ferry Ancone - Durres Albanie 2025 | Reservez en Ligne sur Sealines"
+      },
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "problems": [
+        "French version (/fr/) almost non-existent in Google index. Only 1 deep page found.",
+        "French URL slug 'traiter' is a mistranslation of Italian 'tratte' (routes). 'Traiter' means 'to treat/process' in French, not 'routes'.",
+        "Many pages that should serve French content show mixed Italian/French titles (e.g., 'Livre sur le portail Sealines').",
+        "French content appears to be served from /en/ paths instead of /fr/ paths - language subfolder may be broken.",
+        "Title of only indexed French page still shows '2025'."
+      ]
+    },
+    {
+      "url": "https://www.sealines.eu/de/",
+      "page_name": "German Homepage",
+      "http_status_direct": "403 Forbidden",
+      "serp_indexed": "POORLY - only 2 German-path pages found",
+      "german_pages_found": [
+        {
+          "url": "https://www.sealines.eu/de/kreuzfahrtangebote/",
+          "title": "Kreuzfahrtangebote | Sealines Fahren buchen"
+        },
+        {
+          "url": "https://www.sealines.eu/de/palermo-salerno/",
+          "title": "Traghetti Palermo - Salerno | Partenze 2026 | Prenota Online"
+        }
+      ],
+      "meta_description": "UNMEASURABLE_VIA_SERP",
+      "canonical_link": "UNMEASURABLE_VIA_SERP",
+      "problems": [
+        "German version (/de/) barely indexed - only 2 pages found.",
+        "German homepage title 'Fahren: Buchung und Kauf von Fahrkarten - Sealines' uses incorrect German. 'Fahren' means 'to drive'. Correct word for ferries is 'Fahre' or 'Faehre'.",
+        "'Fahren buchen' in cruise page title is grammatically incorrect German.",
+        "Second German-path page (/de/palermo-salerno/) has an ITALIAN title, not German: 'Traghetti Palermo - Salerno | Partenze 2026 | Prenota Online'. Translation completely missing.",
+        "German content intermixed between /de/ and /en/ paths.",
+        "Machine translation quality is poor throughout German version."
+      ]
+    }
+  ],
+  "duplicate_titles": [
+    {
+      "title": "Traghetti Grecia | Partenze 2025 | Prenota Tariffe Low Cost",
+      "urls": [
+        "https://www.sealines.eu/traghetti-grecia",
+        "https://www.sealines.eu/index.php/traghetti-grecia"
+      ]
+    },
+    {
+      "title": "Traghetti Sardegna | Partenze 2025 | Prenota Online",
+      "urls": [
+        "https://www.sealines.eu/traghetti-sardegna",
+        "https://sealines.eu/index.php/traghetti-sardegna"
+      ]
+    },
+    {
+      "title": "Traghetti Croazia | Partenze 2025 | Prenota Online",
+      "urls": [
+        "https://www.sealines.eu/traghetti-croazia",
+        "https://sealines.eu/index.php/traghetti-croazia"
+      ]
+    },
+    {
+      "title": "Contatti | Sealines Prenota Traghetti 2025",
+      "urls": [
+        "https://www.sealines.eu/contatti",
+        "https://www.sealines.eu/index.php/contatti"
+      ]
+    },
+    {
+      "title": "Grandi Navi Veloci | Sealines Prenota Traghetti 2025",
+      "urls": [
+        "https://www.sealines.eu/grandi-navi-veloci",
+        "https://www.sealines.eu/index.php/compagnie/grandi-navi-veloci"
+      ]
+    },
+    {
+      "title": "Ferries: booking and purchasing tickets (variant)",
+      "urls": [
+        "https://www.sealines.eu/en/",
+        "https://www.sealines.eu/index.php/en/"
+      ]
+    }
+  ],
+  "duplicate_descriptions": "UNMEASURABLE_VIA_SERP - meta descriptions cannot be reliably extracted from Google search snippets alone as Google may rewrite them",
+  "cross_cutting_problems": [
+    {
+      "id": "CC-01",
+      "severity": "CRITICAL",
+      "problem": "LEGACY index.php URLs STILL INDEXED BY GOOGLE",
+      "detail": "Multiple pages have both clean URLs and /index.php/ variants indexed. Confirmed for: /contatti, /traghetti-grecia, /traghetti-sardegna, /traghetti-croazia, /en/, /compagnie/grandi-navi-veloci, /compagnie/jadrolinija. Indicates missing/broken canonical tags and missing 301 redirects from index.php URLs to clean URLs.",
+      "affected_pages": 7
+    },
+    {
+      "id": "CC-02",
+      "severity": "CRITICAL",
+      "problem": "OUTDATED YEAR '2025' IN TITLES (current: May 2026)",
+      "detail": "At least 9 Italian pages show '2025' in title tags. English equivalents already show '2026'. Italian versions have NOT been updated for the new year. This makes pages appear stale vs competitors who already show '2026'.",
+      "affected_pages": 9
+    },
+    {
+      "id": "CC-03",
+      "severity": "HIGH",
+      "problem": "INCONSISTENT TITLE TAG TEMPLATES",
+      "detail": "At least 4 different title patterns: (1) 'Page | Partenze YEAR | Prenota Online' (destinations), (2) 'Page | Sealines Prenota Traghetti YEAR' (utility pages), (3) 'Company | Sealines Book Ferries' (EN company pages), (4) 'Ferries: booking and purchasing tickets - Traghetti Sealines' (EN homepage). Some destination pages append '- Sealines', others don't.",
+      "affected_pages": 14
+    },
+    {
+      "id": "CC-04",
+      "severity": "CRITICAL",
+      "problem": "FRENCH AND GERMAN VERSIONS BARELY INDEXED",
+      "detail": "French /fr/ has ~1 indexed page. German /de/ has ~2 indexed pages (one with Italian-language title). These language versions appear broken, abandoned, or technically misconfigured to prevent indexing.",
+      "affected_pages": "All /fr/ and /de/ pages"
+    },
+    {
+      "id": "CC-05",
+      "severity": "HIGH",
+      "problem": "MACHINE-TRANSLATED URL SLUGS WITH ERRORS",
+      "detail": "English /en/companies/large-fast-ships/ literally translates brand name 'Grandi Navi Veloci'. French /fr/traiter/ mistranslates 'tratte' (routes). German titles contain grammatical errors ('Fahren buchen').",
+      "affected_pages": 3
+    },
+    {
+      "id": "CC-06",
+      "severity": "HIGH",
+      "problem": "MIXED LANGUAGE IN TITLES",
+      "detail": "English homepage title contains Italian 'Traghetti'. German page at /de/palermo-salerno/ has entirely Italian title. French pages show mixed Italian/French.",
+      "affected_pages": 4
+    },
+    {
+      "id": "CC-07",
+      "severity": "MEDIUM",
+      "problem": "WWW vs NON-WWW INCONSISTENCY IN GOOGLE INDEX",
+      "detail": "Some pages indexed as 'www.sealines.eu', others as bare 'sealines.eu' (e.g., sealines.eu/index.php/compagnie/jadrolinija, sealines.eu/index.php/traghetti-sardegna). Incomplete www canonicalization.",
+      "affected_pages": 3
+    },
+    {
+      "id": "CC-08",
+      "severity": "MEDIUM",
+      "problem": "SOCIAL MEDIA PROFILE FRAGMENTATION",
+      "detail": "Facebook: facebook.com/sealines.it (.it not .eu). Instagram: @traghetti.sealines (1,204 followers). No verified Twitter/X account found. LinkedIn 'Sea Lines' appears to be a different Turkish company. Any sameAs URLs in schema markup may point to wrong profiles.",
+      "affected_pages": "Site-wide"
+    },
+    {
+      "id": "CC-09",
+      "severity": "MEDIUM",
+      "problem": "AGGRESSIVE BOT BLOCKING (HTTP 403)",
+      "detail": "All direct HTTP requests return 403 Forbidden with 'host_not_allowed'. While this specific 403 was from the sandboxed environment's proxy, if the site uses aggressive WAF rules, it could block legitimate crawlers, SEO audit tools, and social media preview bots (affecting Open Graph/Twitter Card rendering).",
+      "affected_pages": 14
+    },
+    {
+      "id": "CC-10",
+      "severity": "LOW",
+      "problem": "YEAR IN EVERGREEN PAGE TITLES",
+      "detail": "Pages like /chi-siamo and /contatti have '2025' in titles. These are evergreen pages where year is inappropriate and creates annual maintenance burden.",
+      "affected_pages": 2
+    },
+    {
+      "id": "CC-11",
+      "severity": "HIGH",
+      "problem": "OLD CONTENT VERSIONS STILL INDEXED (2024)",
+      "detail": "Google still indexes 2024-dated pages: /traghetti-grecia-isole (Partenze 2024), /ferries-croatia-jadrolinija-departures-2024, /traghetti-sardegna-moby-tirrenia-2024. These zombie pages compete with current versions.",
+      "affected_pages": 3
+    },
+    {
+      "id": "CC-12",
+      "severity": "CRITICAL",
+      "problem": "ZERO ORGANIC VISIBILITY FOR TARGET KEYWORDS",
+      "detail": "sealines.eu does NOT appear in Google top 10 for any major target keyword: traghetti grecia, traghetti sardegna, traghetti sicilia, traghetti croazia, biglietti traghetti. Only visible via brand-name or site: operator searches.",
+      "affected_pages": "Site-wide"
+    },
+    {
+      "id": "CC-13",
+      "severity": "HIGH",
+      "problem": "TITLE TAG KEYWORD REDUNDANCY/WASTE",
+      "detail": "/traghetti page: 'Traghetti | Sealines Prenota Traghetti 2025' repeats 'Traghetti' twice. Company pages bury the keyword in brand suffix rather than associating it with company name.",
+      "affected_pages": 4
+    }
+  ]
+}

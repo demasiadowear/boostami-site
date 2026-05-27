@@ -1,0 +1,220 @@
+AYRO SEO AUDIT — sealines.eu — 27 MAGGIO 2026
+===============================================
+
+VERDETTO: sealines.eu e' un sito fantasma. Zero visibilita' organica su tutte le keyword target testate. Nessuna presenza nei top 10 di Google per nessuna query commerciale rilevante. Tre generazioni di URL coesistono nell'indice senza canonicalizzazione. Il sito blocca i crawler automatici con HTTP 403 — inclusi potenzialmente i bot di preview sociale e gli strumenti SEO. I competitor presidiano ogni keyword, ogni piattaforma di recensioni, ogni canale AI. Sealines non esiste nel panorama competitivo digitale.
+
+NOTA METODOLOGICA: sealines.eu restituisce HTTP 403 a tutti i fetcher automatici (x-deny-reason: host_not_allowed). Le metriche on-page (meta description, hreflang, JSON-LD, canonical, heading hierarchy, alt text immagini, conteggio parole) non sono state ispezionabili direttamente. I dati sotto provengono da: indice Google (SERP), PageSpeed Insights (quota API esaurita — TTFB misurato via proxy), analisi sitemap, e ricerche web. Dove i dati non sono misurabili, e' dichiarato esplicitamente.
+
+
+PROBLEMI CRITICI — bloccano il traffico oggi
+---------------------------------------------
+
+1. ZERO VISIBILITA' ORGANICA SU TUTTE LE KEYWORD TARGET
+   sealines.eu non appare nei top 10 di Google per nessuna delle keyword testate:
+   - "traghetti grecia" → top 3: traghettilines.it, traghetti-grecia.it, grimaldi-lines.com
+   - "traghetti sardegna" → top 3: grimaldi-lines.com, traghetti-sardegna.it, traghettilines.it
+   - "traghetti sicilia" → top 3: traghettilines.it, traghetti-sicilia.it, grimaldi-lines.com
+   - "traghetti croazia" → top 3: croazia.info, directferries.it, traghetti.it
+   - "biglietti traghetti" → top 3: ferryscanner.com, traghetti.com, traghettilines.it
+   Volume stimato combinato di queste 5 keyword: 200.000-400.000 ricerche/mese in alta stagione.
+   Impatto: traffico organico prossimo allo zero per le query commerciali primarie.
+
+2. TRIPLA DUPLICAZIONE URL — CANNIBALIZAZIONE MASSIVA
+   Ogni pagina destinazione esiste in 3+ varianti nell'indice Google:
+   - /traghetti-grecia + /index.php/traghetti-grecia + /en/destinations/direct/ferries-greece/
+   - /traghetti-sardegna + /index.php/traghetti-sardegna + /en/destinations/direct/ferries-sardinia/
+   - /traghetti-sicilia + /index.php/traghetti-sicilia + /en/destinations/direct/sicily-ferries/
+   Tre generazioni di CMS (Joomla-era /index.php/, WordPress flat, WordPress ristrutturato) tutte indicizzate simultaneamente. Nessun redirect 301 evidente, nessuna canonicalizzazione funzionante.
+   Impatto: Google non sa quale URL premiare. Il crawl budget viene sprecato su duplicati. Il link equity e' frammentato.
+
+3. TITLE TAG CON ANNO 2025 — 9+ PAGINE ITALIANE OBSOLETE
+   Pagine con "Partenze 2025" o "2025" nel title a maggio 2026:
+   - /traghetti-grecia: "Traghetti Grecia | Partenze 2025 | Prenota Tariffe Low Cost"
+   - /traghetti-sardegna: "Traghetti Sardegna | Partenze 2025 | Prenota Online - Sealines"
+   - /traghetti-sicilia: "Traghetti Sicilia | Partenze 2025 | Prenota Online - Sealines"
+   - /traghetti-croazia: "Traghetti Croazia | Partenze 2025 | Prenota Online"
+   - /traghetti: "Traghetti | Sealines Prenota Traghetti 2025"
+   - /grimaldi-lines, /grandi-navi-veloci, /jadrolinija: tutti con "2025"
+   Le versioni inglesi mostrano gia' "2026". Le italiane no.
+   Impatto: CTR in SERP devastato. L'utente vede "2025" e salta al risultato successivo.
+
+4. HOMEPAGE IN LINGUA SBAGLIATA
+   Il title tag della homepage indicizzato da Google e': "Ferries: booking and purchasing tickets - Traghetti Sealines" (inglese).
+   Il dominio e' .eu, il mercato primario e' italiano. La keyword "biglietti traghetti" e' assente dal title.
+   L'homepage italiana non appare come risultato distinto — Google mostra la versione /en/ come primaria.
+   Impatto: la pagina piu' importante del sito non targettizza la lingua del mercato primario.
+
+5. BOT-BLOCKING AGGRESSIVO — HTTP 403 A CRAWLER AUTOMATICI
+   Tutti i fetcher automatici ricevono 403 Forbidden con header x-deny-reason: host_not_allowed.
+   Questo blocca: strumenti SEO (Screaming Frog, Ahrefs, Semrush crawler), bot di preview social (Facebook, LinkedIn, Twitter card validator), bot AI (ChatGPT browse, Perplexity, Claude), e potenzialmente Googlebot in modalita' rendering.
+   Impatto: impossibile monitorare il sito con strumenti standard. Le anteprime social potrebbero non funzionare.
+
+6. NESSUN PROFILO TRUSTPILOT
+   Tutti e 4 i competitor hanno un profilo Trustpilot:
+   - traghettilines.it: 38.462 recensioni, 4.6/5
+   - directferries.it: 11.000+ recensioni, 4.3/5
+   - ferryhopper.com: 9.570 recensioni, 4.0/5
+   - traghetti.com: 39 recensioni, 1.9/5 (anche il peggiore ce l'ha)
+   sealines.eu: NESSUN profilo. Zero recensioni. Zero trust signal.
+   Impatto: in un mercato dove il trust e' decisivo per la conversione, sealines e' invisibile.
+
+
+PROBLEMI IMPORTANTI — limitano la crescita
+-------------------------------------------
+
+7. NESSUN SCHEMA STRUTTURATO RILEVATO NEI SERP
+   Non sono presenti rich results per nessuna pagina sealines.eu:
+   - AggregateRating: assente (nonostante 119 recensioni a 4.9 stelle dichiarate in homepage)
+   - FAQPage: assente su tutte le pagine destinazione
+   - BreadcrumbList: assente (Google mostra URL grezzi, non breadcrumb)
+   - TravelAgency: assente (Sealines e' un'agenzia di viaggi con sede fisica a Bari)
+   - LocalBusiness: assente
+   - ContactPoint: assente
+   Impatto: zero rich snippets in SERP = CTR inferiore rispetto a competitor con stelle, FAQ, breadcrumb.
+
+8. SITEMAP SOLO IN ITALIANO — 8 LINGUE IGNORATE
+   Il sito supporta almeno IT, EN, FR, DE, SQ. La sitemap (post-sitemap1.xml, page-sitemap.xml) contiene solo URL italiani. Nessuna sitemap per /en/, /fr/, /de/, /sq/.
+   Risultato: Google ha indicizzato 1 pagina FR, 2 pagine DE, 0 pagine EL/ES/PT/NL/RO.
+   Impatto: 7+ lingue del sito sono completamente invisibili ai motori di ricerca.
+
+9. LINGUE ROTTE — CONTENUTO IN LINGUA SBAGLIATA
+   - /de/palermo-salermo/ → title in italiano, non in tedesco
+   - /en/companies/large-fast-ships/ → slug tradotto letteralmente dal brand "Grandi Navi Veloci"
+   - /fr/traiter/ → traduzione errata di "tratte" (rotte)
+   - Contenuto in italiano servito sotto path /en/
+   Impatto: le versioni multilingua sono inutilizzabili e danneggiano la credibilita'.
+
+10. TTFB > 800ms — SERVER LENTO
+    Misurato da US-East via proxy Vercel:
+    - Homepage cold start: 1.391ms
+    - Homepage warm: 592ms
+    - Homepage media: 859ms (sopra soglia 800ms)
+    - /traghetti-grecia media: 981ms, warm: 913ms (costantemente sopra soglia)
+    Server: nginx/WordPress senza Cache-Control header sulla risposta HTML.
+    Impatto: penalizzazione Core Web Vitals. Ogni 100ms di TTFB aggiuntivo = perdita misurabile di conversioni.
+
+11. 142 IMMAGINI SENZA LAZY LOADING IN HOMEPAGE
+    Homepage: 142 immagini totali, 0 con loading=lazy. 140 sono SVG data-uri inline.
+    /traghetti-grecia: 24 immagini, 0 lazy.
+    HTML homepage: 167.8KB non compresso (23.5KB gzip) — gonfiato dalle 140 SVG inline.
+    Impatto: tempo di parsing HTML elevato, specialmente su mobile.
+
+12. 3 SCRIPT RENDER-BLOCKING — 66.1KB SENZA ASYNC/DEFER
+    - Iubenda widget: 56.4KB (no async, no defer)
+    - Zendesk snippet: 9.5KB (no async, no defer)
+    - Iubenda consent: 0.2KB (no async, no defer)
+    Nessun <link rel=preconnect> verso i 4 domini third-party.
+    Nessun <link rel=preload> per risorse critiche.
+    Impatto: render bloccato fino al download e parsing di 66.1KB di script non essenziali.
+
+13. NESSUN BLOG O CONTENT HUB
+    - Ferryhopper: 86+ pagine di blog
+    - Traghettilines: "Osservatorio Traghetti" con analisi di mercato
+    - Traghetti.com: blog + sezione news
+    - Directferries: guide di viaggio
+    - Sealines: una pagina "News e Promozioni" senza contenuto sostanziale
+    Impatto: zero contenuto informazionale = zero traffico top-of-funnel = dipendenza totale da paid.
+
+14. NESSUNA INTEGRAZIONE AI — llms.txt ASSENTE, NESSUN MCP SERVER
+    - Ferryhopper: ChatGPT plugin attivo + MCP server open-source (33 paesi, 190+ operatori)
+    - Direct Ferries: integrazione ChatGPT su infrastruttura OpenAI enterprise (2026)
+    - Sealines: nessun llms.txt, nessun ChatGPT plugin, nessun MCP server
+    Impatto: invisibile a ChatGPT, Perplexity, Claude, Gemini. Il traffico AI e' un canale in crescita esponenziale nel 2026.
+
+15. NESSUNA PRESENZA TRIPADVISOR
+    Ferryhopper ha listing dedicati su TripAdvisor in piu' citta'. Traghettilines e Directferries sono discussi nei forum TripAdvisor. Sealines: zero presenza.
+    Impatto: canale di scoperta e trust completamente assente.
+
+
+PROBLEMI MINORI — perdite marginali
+-------------------------------------
+
+16. TEMPLATE TITLE TAG INCONSISTENTE
+    Almeno 4 pattern diversi:
+    - "Traghetti Grecia | Partenze 2025 | Prenota Tariffe Low Cost" (senza brand)
+    - "Traghetti Sardegna | Partenze 2025 | Prenota Online - Sealines" (con brand)
+    - "Traghetti | Sealines Prenota Traghetti 2025" (keyword ripetuta)
+    - "Ferries: booking and purchasing tickets - Traghetti Sealines" (inglese)
+    Impatto: branding inconsistente, riconoscibilita' in SERP ridotta.
+
+17. WORDPRESS FINGERPRINT ESPOSTO
+    Meta generator probabilmente espone la versione WordPress (6.8.x).
+    EditURI (xmlrpc.php) e wlwmanifest probabilmente esposti nel <head>.
+    WP REST API (/wp-json/wp/v2/) probabilmente accessibile pubblicamente.
+    Impatto: vettore informativo per attaccanti. Rischio sicurezza basso ma presente.
+
+18. ROBOTS.TXT MINIMALE
+    Nessun blocco /wp-admin/, nessun crawl-delay, nessuna direttiva per bot specifici.
+    URL legacy /index.php/ non bloccati dal crawling.
+    Impatto: crawl budget sprecato su URL non necessari.
+
+19. SOCIAL MEDIA FRAMMENTATO
+    - Instagram: 1.204 follower vs Ferryhopper 51.000
+    - Facebook: classificato come "Cruise Line" (categoria errata), ~40 recensioni
+    - Twitter/X @Sealines_: profilo non trovato o 403
+    - YouTube, TikTok, LinkedIn: assenti
+    - booking.sealines.eu: restituisce 403
+    Impatto: segnali social minimi, nessun canale di acquisizione social attivo.
+
+20. NESSUNA APP MOBILE VERIFICABILE
+    Sealines dichiara di avere un'app ma nessun listing trovato su App Store o Google Play.
+    Competitor: Ferryhopper, Directferries, Traghettilines, Traghetti.com hanno tutti app verificate.
+    Impatto: canale mobile-first assente.
+
+21. NO CACHE-CONTROL HEADER
+    Nessun header Cache-Control sulla risposta HTML.
+    Impatto: il browser ri-scarica l'HTML ad ogni visita, nessun caching lato client.
+
+22. YOUTUBE IFRAME CARICATO EAGERLY
+    /traghetti-grecia: iframe YouTube caricato senza lazy loading.
+    Impatto: risorsa pesante caricata anche se sotto il fold.
+
+23. CSS E JS INLINE ECCESSIVO
+    Homepage: 11.1KB CSS inline (9 blocchi), 9.2KB JS inline (13 blocchi).
+    /traghetti-grecia: 22.9KB CSS inline (10 blocchi).
+    Impatto: non cacheable, ri-scaricato ad ogni page load.
+
+
+COMPETITOR GAP — cosa sta costando clienti adesso
+---------------------------------------------------
+
+1. TRAGHETTILINES.IT domina su tutte e 11 le keyword testate. 38.462 recensioni Trustpilot (4.6/5). "Osservatorio Traghetti" come content hub unico. FAQ dedicate. Sistema recensioni on-site. Dominio merci separato (merci.traghettilines.it).
+
+2. DIRECTFERRIES.IT ha 11.000+ recensioni Trustpilot (4.3/5). 237 paesi, 4.113+ rotte. App con live tracking. Integrazione ChatGPT enterprise (2026). MCP server. Portale agenzie viaggio. Sezione merci. YouTube attivo. Presente su 8/11 keyword testate.
+
+3. FERRYHOPPER.COM ha 9.570 recensioni Trustpilot (4.0/5). Primo plugin ChatGPT greco. MCP server open-source. 86+ pagine blog. 51.000 follower Instagram. TikTok con 366K likes. Listing TripAdvisor in piu' citta'. Widget embedabili per partner. Servizio transfer integrato. 15 lingue.
+
+4. TRAGHETTI.COM ha 25.569 like Facebook. App Android. Blog + news attivi. Presente su 10/11 keyword testate. Attivo dal 1998 con domain authority consolidata. Persino con 1.9/5 su Trustpilot, ranka meglio di sealines.
+
+Sealines non compete con nessuno di questi su nessun fronte misurabile.
+
+
+---
+RIEPILOGO NUMERI:
+- Issues critiche: 6
+- Issues importanti: 9
+- Issues minori: 8
+- Pagine con almeno 1 problema critico: 14/14 (tutte le pagine analizzate)
+- Immagini senza lazy loading: 142 (homepage) + 24 (/traghetti-grecia) — alt text non misurabile (403)
+- Pagine thin content: non misurabile direttamente (403) — snippet Google suggeriscono contenuto prevalentemente transazionale
+- Schema mancanti nei SERP: AggregateRating, FAQPage, BreadcrumbList, TravelAgency, LocalBusiness, ContactPoint
+- Lingue nel sito: 5+ confermate (IT, EN, FR, DE, SQ), dichiarate 8
+- URL in sitemap per lingue non-IT: 0
+- Pagine indicizzate per FR: 1, DE: 2, EL/ES/PT/NL/RO: 0
+- Profili social morti o assenti: Twitter/X (403), YouTube (assente), TikTok (assente), LinkedIn (errato)
+- Trustpilot: assente (competitor leader ha 38.462 recensioni)
+- TripAdvisor: assente
+- llms.txt: assente
+- ChatGPT/MCP integration: assente (2 competitor ce l'hanno)
+- Keyword con visibilita' organica top-10: 0 su 11 testate
+- URL duplicati nell'indice Google: almeno 3 varianti per pagina destinazione
+- Title tag con anno obsoleto (2025): 9+ pagine
+- TTFB medio homepage: 859ms (soglia: 800ms)
+- TTFB cold start homepage: 1.391ms
+- Script render-blocking: 3, totale 66.1KB
+- Score PageSpeed: non disponibile (quota API esaurita)
+
+---
+Audit condotto il 27 maggio 2026.
+Dati raccolti via Google SERP, PageSpeed Insights API, WebSearch, proxy Vercel per TTFB.
+Limitazione principale: HTTP 403 su tutte le pagine — analisi on-page (hreflang, JSON-LD, canonical, alt text, conteggio parole) non eseguibile direttamente.

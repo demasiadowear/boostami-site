@@ -1,0 +1,555 @@
+{
+  "audit_date": "2026-05-27",
+  "subject": "sealines.eu",
+  "methodology": "Competitor gap analysis via WebSearch and WebFetch. WebFetch was blocked (HTTP 403) on all target domains including sealines.eu, so schema/structured data findings are inferred from search results, Trustpilot title tags, and known competitor features. Direct page source inspection was not possible.",
+
+  "competitors": {
+    "traghetti.com": {
+      "schemas_present": [
+        "Unable to directly inspect (403 blocked). Based on search evidence: traghetti.com is the oldest Italian ferry portal (since 1998) and likely implements at minimum Organization and WebSite schemas given its maturity and SEO investment."
+      ],
+      "schemas_sealines_lacks": [
+        "Cannot definitively confirm without page source access. Gap analysis for schemas is limited by 403 blocks on all sites."
+      ],
+      "estimated_indexed_pages": "Thousands+ (established since 1998, has dedicated pages per route e.g. /traghetti-sicilia, /traghetti-grecia, /traghetti-sardegna, /traghetti-croazia, /traghetti-albania, /traghetti-tunisia, /traghetti-marocco, /traghetti-spagna, plus a blog and news section)",
+      "trustpilot": {
+        "present": true,
+        "rating": "1.9/5 (rated 'Poor')",
+        "review_count": "~39 reviews",
+        "url": "https://it.trustpilot.com/review/traghetti.com"
+      },
+      "tripadvisor": {
+        "present": false,
+        "notes": "No dedicated TripAdvisor listing for traghetti.com as a booking service. Only general ferry reviews found."
+      },
+      "social_profiles": {
+        "facebook": {
+          "present": true,
+          "url": "https://www.facebook.com/traghetticom/",
+          "likes": "~25,569"
+        },
+        "instagram": {
+          "present": true,
+          "url": "https://www.instagram.com/traghetticom/",
+          "followers": "~742",
+          "posts": "~356"
+        },
+        "twitter_x": {
+          "present": false,
+          "notes": "No dedicated Twitter/X account found in search results"
+        },
+        "tiktok": {
+          "present": false,
+          "notes": "No TikTok presence found"
+        },
+        "youtube": {
+          "present": false,
+          "notes": "No dedicated YouTube channel found"
+        },
+        "linkedin": {
+          "present": false,
+          "notes": "Not found in search"
+        }
+      },
+      "mobile_app": {
+        "present": true,
+        "platforms": ["Android (Google Play)"],
+        "notes": "Traghetti app available on Google Play for comparing ferry rates and booking tickets"
+      },
+      "blog_content_hub": {
+        "present": true,
+        "blog_url": "https://www.traghetti.com/blog/",
+        "news_url": "https://www.traghetti.com/news",
+        "content_types": ["Travel guides", "Ship reviews/photo galleries", "Promotional articles", "Affiliate marketing guides", "Price comparison articles"]
+      },
+      "llms_txt": "Unable to verify (403 blocked)",
+      "chatgpt_ai_integration": false,
+      "mcp_server": false,
+      "live_ship_tracking": false,
+      "keywords_where_they_rank_sealines_doesnt": [
+        "traghetti grecia prezzi",
+        "traghetti sardegna offerte",
+        "traghetti sicilia orari",
+        "traghetti croazia spalato",
+        "traghetti albania",
+        "traghetti tunisia",
+        "traghetti spagna",
+        "traghetti marocco",
+        "prenotazione traghetti online",
+        "confronto prezzi traghetti"
+      ]
+    },
+
+    "directferries.it": {
+      "schemas_present": [
+        "Unable to directly inspect (403 blocked). Direct Ferries is a major international player with domain-level SEO across 30+ country TLDs, suggesting robust schema implementation."
+      ],
+      "schemas_sealines_lacks": [
+        "Cannot definitively confirm without page source access."
+      ],
+      "estimated_indexed_pages": "Massive - 237 countries, 4,113+ routes, dedicated pages per route, country, and operator. Blog with travel guides. Likely tens of thousands of indexed pages on directferries.it alone.",
+      "trustpilot": {
+        "present": true,
+        "rating": "4.3/5 (rated 'Excellent')",
+        "review_count": "~11,000 reviews on .it domain; ~83,000 on .co.uk domain",
+        "url": "https://www.trustpilot.com/review/www.directferries.it"
+      },
+      "tripadvisor": {
+        "present": true,
+        "notes": "Discussed in multiple TripAdvisor forum threads (Athens, Lipari, etc.) as a known booking platform. Not a dedicated attraction listing but significant forum presence."
+      },
+      "social_profiles": {
+        "facebook": {
+          "present": true,
+          "url": "https://www.facebook.com/directferries/",
+          "likes": "~25,048"
+        },
+        "instagram": {
+          "present": true,
+          "url": "https://www.instagram.com/directferries_com/",
+          "followers": "~715",
+          "posts": "~55"
+        },
+        "twitter_x": {
+          "present": true,
+          "url": "https://twitter.com/directferriesit",
+          "notes": "Dedicated Italian Twitter account"
+        },
+        "tiktok": {
+          "present": false,
+          "notes": "No verified TikTok account found"
+        },
+        "youtube": {
+          "present": true,
+          "url": "https://www.youtube.com/channel/UCPdd7BttkM7gcRHl4oVoQ0A",
+          "notes": "YouTube channel with travel content and ferry crossing videos"
+        },
+        "linkedin": {
+          "present": true,
+          "notes": "Major company with LinkedIn presence"
+        }
+      },
+      "mobile_app": {
+        "present": true,
+        "platforms": ["iOS (App Store)", "Android (Google Play)"],
+        "features": ["Price comparison", "Live ferry tracking", "Customer support via messenger", "Manage bookings", "Book up to 12 months in advance or 2 hours before departure"]
+      },
+      "blog_content_hub": {
+        "present": true,
+        "travel_guides_url": "https://www.directferries.com/blog/categories/travel-guide",
+        "content_types": ["Travel guides", "Route information", "Ferry tracking articles", "News"]
+      },
+      "llms_txt": "Unable to verify (403 blocked)",
+      "chatgpt_ai_integration": {
+        "present": true,
+        "details": "Direct Ferries launched a full ChatGPT integration in 2026, built on OpenAI enterprise infrastructure with their own MCP server. Users can search 4,000+ routes from 300+ operators through conversational AI prompts, then click through to complete booking. Available globally on free ChatGPT."
+      },
+      "mcp_server": {
+        "present": true,
+        "details": "Built on OpenAI enterprise infrastructure for ChatGPT integration"
+      },
+      "live_ship_tracking": {
+        "present": true,
+        "details": "Free live ferry tracker on any route. Available 1 hour before departure and during crossing. Shows real-time location, route updates, and latest ETA on an interactive map."
+      },
+      "multi_domain_international_seo": {
+        "present": true,
+        "details": "Operates separate country-code domains: directferries.it, directferries.co.uk, directferries.de, directferries.fr, directferries.es, directferries.nl, etc."
+      },
+      "freight_services": {
+        "present": true,
+        "url": "https://www.directferries.it/merci.htm",
+        "notes": "Dedicated freight/cargo ferry booking section"
+      },
+      "travel_agency_program": {
+        "present": true,
+        "url": "https://www.directferries.it/agenzie_viaggio.htm",
+        "notes": "Dedicated portal for travel agencies"
+      },
+      "keywords_where_they_rank_sealines_doesnt": [
+        "traghetti grecia prezzi",
+        "traghetti sardegna offerte",
+        "traghetti sicilia orari",
+        "traghetti albania",
+        "traghetti corsica",
+        "traghetti tunisi",
+        "traghetti spagna",
+        "prenotazione traghetti online"
+      ]
+    },
+
+    "ferryhopper.com": {
+      "schemas_present": [
+        "Unable to directly inspect (403 blocked). As a modern tech-forward startup with significant investment in SEO and AI, likely implements Organization, WebSite, BreadcrumbList, and potentially FAQPage schemas."
+      ],
+      "schemas_sealines_lacks": [
+        "Cannot definitively confirm without page source access."
+      ],
+      "estimated_indexed_pages": "Very large - 500+ destinations, 3,000+ routes across 33 countries. Blog with 86+ pages of articles. Dedicated destination pages, FAQ pages, and route pages.",
+      "trustpilot": {
+        "present": true,
+        "rating": "4.0/5 (rated 'Great')",
+        "review_count": "~9,570 reviews",
+        "url": "https://www.trustpilot.com/review/ferryhopper.com"
+      },
+      "tripadvisor": {
+        "present": true,
+        "notes": "Ferryhopper has dedicated TripAdvisor attraction listings in multiple cities: Athens, Sorrento, Santorini, Jersey, Sardinia, Lavrio, Buenos Aires. Also has an official TripAdvisor profile (@ferryhopper) and active forum discussions.",
+        "urls": [
+          "https://www.tripadvisor.com/Attraction_Review-g189400-d33242717-Reviews-Ferryhopper_Athens-Athens_Attica.html",
+          "https://www.tripadvisor.com/Attraction_Review-g187782-d33277218-Reviews-Ferryhopper_Sorrento-Sorrento_Province_of_Naples_Campania.html",
+          "https://www.tripadvisor.com/Profile/ferryhopper"
+        ]
+      },
+      "social_profiles": {
+        "facebook": {
+          "present": true,
+          "url": "https://www.facebook.com/ferryhopper/",
+          "likes": "~24,002",
+          "talking_about": "~244"
+        },
+        "instagram": {
+          "present": true,
+          "url": "https://www.instagram.com/ferryhopper_com/",
+          "followers": "~51,000",
+          "posts": "~834"
+        },
+        "twitter_x": {
+          "present": true,
+          "url": "https://twitter.com/ferryhopper"
+        },
+        "tiktok": {
+          "present": true,
+          "url": "https://www.tiktok.com/@ferryhopper",
+          "followers": "~9,605",
+          "likes": "~366,400",
+          "content_strategy": "Travel tips, humorous ferry content, destination guides, relatable memes"
+        },
+        "youtube": {
+          "present": true,
+          "notes": "YouTube is a traffic source according to SimilarWeb data"
+        },
+        "linkedin": {
+          "present": true,
+          "url": "https://www.linkedin.com/company/ferryhopper/"
+        }
+      },
+      "mobile_app": {
+        "present": true,
+        "platforms": ["iOS (App Store)", "Android (Google Play)"],
+        "features": ["Book trips in a few taps", "Live ferry tracking", "All booking details and tickets in one place", "500+ destinations", "160+ ferry companies", "33 countries", "Free to download"]
+      },
+      "blog_content_hub": {
+        "present": true,
+        "blog_url": "https://www.ferryhopper.com/en/blog",
+        "pages_of_articles": "86+",
+        "content_types": ["Travel tips and guides", "Island-hopping guides", "Ferry news", "Special offers", "Destination guides", "Booking advice"],
+        "notes": "Massive content library spanning 86+ pages of blog articles"
+      },
+      "llms_txt": "Unable to verify (403 blocked). However, Ferryhopper has MCP server which is a more advanced AI integration.",
+      "chatgpt_ai_integration": {
+        "present": true,
+        "details": "Ferryhopper was the first Greek company to launch a ChatGPT app/plugin. Users can search ferries, get timetables and prices via conversational AI.",
+        "url": "https://gptstore.ai/plugins/openai-ferryhopper-com"
+      },
+      "mcp_server": {
+        "present": true,
+        "details": "AI-ready MCP server covering ferry routes across 33 countries and 190+ operators. Free to use, no API key required. Open source on GitHub. Enables AI agents to access live ferry data, schedules, and booking redirects.",
+        "url": "https://partners.ferryhopper.com/mcp",
+        "github": "https://ferryhopper.github.io/fh-mcp/"
+      },
+      "widgets_for_partners": {
+        "present": true,
+        "details": "Offers embeddable Ferries Widget and Trips Widget for travel blogs and partner websites to pull live ferry data.",
+        "urls": ["https://d2g2seziapvg4p.cloudfront.net/", "https://widgets.ferryhopper.com/"]
+      },
+      "multilingual": {
+        "languages": 15,
+        "list": ["English", "Greek", "Spanish", "Italian", "French", "German", "Portuguese", "Polish", "Bulgarian", "Dutch", "Croatian", "Turkish", "Swedish", "Danish", "Albanian"],
+        "notes": "Dedicated Localisation Team with quality translation and cultural adaptation"
+      },
+      "transfer_service": {
+        "present": true,
+        "url": "https://transfers.ferryhopper.com/en/",
+        "notes": "Port and airport transfer booking integrated into the platform"
+      },
+      "keywords_where_they_rank_sealines_doesnt": [
+        "traghetti marocco",
+        "traghetti spagna",
+        "prenotazione traghetti online"
+      ]
+    },
+
+    "traghettilines.it": {
+      "schemas_present": [
+        "Unable to directly inspect (403 blocked). Traghettilines is the leading Italian ferry booking site with 38,000+ Trustpilot reviews, on-site review integration, and sophisticated SEO. The /it/recensioni.aspx page displaying customer reviews strongly suggests AggregateRating schema implementation."
+      ],
+      "schemas_sealines_lacks": [
+        "Cannot definitively confirm without page source access. Likely: AggregateRating (given their on-site review system), Organization, BreadcrumbList."
+      ],
+      "estimated_indexed_pages": "Very large - 2,000+ routes, 90+ shipping companies. Dedicated pages per destination (/traghetti-grecia, /traghetti-sardegna, etc.), per company (/compagnia/traghetti-finnlines), per port, plus Osservatorio Traghetti content hub, FAQ section, and reviews page.",
+      "trustpilot": {
+        "present": true,
+        "rating": "4.6/5 (rated 'Excellent')",
+        "review_count": "~38,462 reviews",
+        "url": "https://www.trustpilot.com/review/www.traghettilines.it"
+      },
+      "tripadvisor": {
+        "present": true,
+        "notes": "Discussed in TripAdvisor forums (Sardinia forum, General Discussion forum). Recognized as a legitimate booking platform."
+      },
+      "on_site_reviews": {
+        "present": true,
+        "url": "https://www.traghettilines.it/it/recensioni.aspx",
+        "notes": "Dedicated on-site reviews page displaying customer testimonials. Claims 98% recommend to friends."
+      },
+      "social_profiles": {
+        "facebook": {
+          "present": true,
+          "url": "https://www.facebook.com/Traghettilines.it/",
+          "likes": "~41,946",
+          "talking_about": "~507",
+          "rating": "88% recommend (978 reviews)",
+          "category": "Travel Agency"
+        },
+        "instagram": {
+          "present": true,
+          "url": "https://www.instagram.com/traghettilines/",
+          "followers": "~3,713",
+          "posts": "~211"
+        },
+        "twitter_x": {
+          "present": true,
+          "url": "https://x.com/traghettilines",
+          "posts": "~880"
+        },
+        "tiktok": {
+          "present": false,
+          "notes": "No TikTok presence found"
+        },
+        "youtube": {
+          "present": false,
+          "notes": "No dedicated YouTube channel found"
+        },
+        "linkedin": {
+          "present": false,
+          "notes": "Not found in search"
+        }
+      },
+      "mobile_app": {
+        "present": true,
+        "platforms": ["iOS (App Store)", "Android (Google Play)"],
+        "features": ["Real-time schedules", "35+ shipping companies", "1,000+ marine lines", "4-step booking process", "Ticket via SMS and email"]
+      },
+      "blog_content_hub": {
+        "present": true,
+        "osservatorio_url": "https://www.traghettilines.it/osservatorio-traghetti/",
+        "content_types": ["Ferry industry analysis", "Price monitoring (short-range routes like Elba, Ischia, Capri)", "Multimedia transport content", "Travel tips and insights", "Voucher and refund guides"],
+        "notes": "The 'Osservatorio Traghetti' functions as a content hub providing market data, passenger information, and industry analysis - a unique content differentiation."
+      },
+      "faq_section": {
+        "present": true,
+        "url": "https://www.traghettilines.it/it/domande-frequenti.aspx"
+      },
+      "customer_service": {
+        "channels": ["Phone", "Email", "WhatsApp"],
+        "availability": "7 days/week",
+        "languages": 5
+      },
+      "llms_txt": "Unable to verify (403 blocked)",
+      "chatgpt_ai_integration": false,
+      "mcp_server": false,
+      "freight_services": {
+        "present": true,
+        "trustpilot_url": "https://it.trustpilot.com/review/merci.traghettilines.it",
+        "notes": "Dedicated freight/cargo service with separate Trustpilot profile (merci.traghettilines.it)"
+      },
+      "keywords_where_they_rank_sealines_doesnt": [
+        "traghetti grecia prezzi",
+        "traghetti sardegna offerte",
+        "traghetti sicilia orari",
+        "traghetti croazia spalato",
+        "traghetti albania",
+        "traghetti corsica",
+        "traghetti tunisi",
+        "traghetti spagna",
+        "traghetti marocco",
+        "prenotazione traghetti online",
+        "confronto prezzi traghetti"
+      ]
+    }
+  },
+
+  "sealines_current_state": {
+    "trustpilot": {
+      "present": false,
+      "evidence": "No Trustpilot profile found for sealines.eu. Search returned unrelated results (sealions.com, sealit.shop). No dedicated Trustpilot page exists."
+    },
+    "tripadvisor": {
+      "present": false,
+      "evidence": "No TripAdvisor listing found for sealines.eu. Search returned unrelated results (Sealines Nautical Shop in Oregon, Sealine Hotel in Turkey)."
+    },
+    "social_profiles": {
+      "facebook": {
+        "present": true,
+        "url": "https://www.facebook.com/sealines.it/",
+        "notes": "Page exists in Bari. 96% recommendation rating with ~40 reviews. Very small compared to competitors.",
+        "category": "Cruise Line page"
+      },
+      "instagram": {
+        "present": true,
+        "url": "https://www.instagram.com/traghetti.sealines/",
+        "followers": "~1,204",
+        "posts": "~493"
+      },
+      "twitter_x": {
+        "present": false,
+        "notes": "No Twitter/X account found"
+      },
+      "tiktok": {
+        "present": false,
+        "notes": "No TikTok presence found"
+      },
+      "youtube": {
+        "present": false,
+        "notes": "No YouTube channel found"
+      },
+      "linkedin": {
+        "present": false,
+        "notes": "No clear LinkedIn company page found for sealines.eu. Search returned unrelated companies (Sealines International, Sea Lines, etc.)"
+      }
+    },
+    "mobile_app": {
+      "present": true,
+      "notes": "Mentioned on About Us page as available for iOS and Android, but no verified App Store or Google Play listings found in search results"
+    },
+    "blog": {
+      "present": false,
+      "notes": "No dedicated blog section found. Only a 'News and Promotions' section exists."
+    },
+    "chatgpt_ai_integration": false,
+    "mcp_server": false,
+    "live_ship_tracking": false,
+    "estimated_indexed_pages": "Small. site:sealines.eu returns limited results covering destinations, companies, and basic pages. Significantly fewer than all competitors.",
+    "languages": {
+      "count": 2,
+      "list": ["Italian", "English"],
+      "notes": "Only Italian and English versions found in search results"
+    }
+  },
+
+  "sealines_missing_destinations_in_keyword_results": {
+    "notes": "For ALL 11 target keyword searches, sealines.eu did NOT appear in any of the top 10 results. The following destinations are covered by multiple competitors but sealines.eu has no ranking visibility:",
+    "destinations": [
+      "grecia (Greece) - traghetti.com, directferries.it, traghettilines.it rank",
+      "sardegna (Sardinia) - traghettilines.it, traghetti.com rank; dominated by niche sites",
+      "sicilia (Sicily) - traghetti.com, directferries.it, traghettilines.it rank",
+      "croazia/spalato (Croatia/Split) - traghetti.com, traghettilines.it rank",
+      "albania - traghettilines.it, traghetti.com, directferries.it rank",
+      "corsica - dominated by Corsica Ferries and niche sites; directferries.it absent too",
+      "tunisia - traghetti.com, directferries.it, traghettilines.it rank",
+      "spagna (Spain) - traghettilines.it, traghetti.com, ferryhopper.com, directferries.it rank",
+      "marocco (Morocco) - traghettilines.it, traghetti.com, ferryhopper.com rank"
+    ],
+    "generic_keywords_missing": [
+      "prenotazione traghetti online - traghetti.com, ferryhopper.com, traghettilines.it, directferries.com rank",
+      "confronto prezzi traghetti - traghetti.com, traghettilines.it rank; sealines.eu absent"
+    ]
+  },
+
+  "sealines_review_presence": {
+    "trustpilot": "NOT PRESENT - No profile exists",
+    "tripadvisor": "NOT PRESENT - No listing exists",
+    "google_reviews": "Unknown - not searchable via web search",
+    "facebook_reviews": "Present but minimal - ~40 reviews with 96% recommendation",
+    "on_site_reviews": "Unknown - could not access site (403)"
+  },
+
+  "overall_gaps": [
+    {
+      "gap": "NO TRUSTPILOT PRESENCE",
+      "severity": "critical",
+      "evidence": "All 4 competitors have Trustpilot profiles. Traghettilines has 38,462 reviews (4.6/5), Direct Ferries has 11,000+ reviews (4.3/5), Ferryhopper has 9,570 reviews (4.0/5), and even traghetti.com has a profile (1.9/5 with 39 reviews). Sealines has NO Trustpilot profile at all."
+    },
+    {
+      "gap": "NO TRIPADVISOR PRESENCE",
+      "severity": "critical",
+      "evidence": "Ferryhopper has multiple dedicated TripAdvisor attraction listings across cities (Athens, Sorrento, Santorini, etc.) and an official profile. Traghettilines and Direct Ferries are discussed in TripAdvisor forums. Sealines has zero TripAdvisor presence."
+    },
+    {
+      "gap": "ZERO VISIBILITY ON ALL TARGET KEYWORDS",
+      "severity": "critical",
+      "evidence": "Sealines.eu does not appear in top 10 results for ANY of the 11 tested Italian ferry keywords. All 4 competitors appear for multiple keywords. Traghettilines.it ranks for all 11, traghetti.com for 10, directferries.it for 8."
+    },
+    {
+      "gap": "NO CHATGPT / AI INTEGRATION",
+      "severity": "high",
+      "evidence": "Both Ferryhopper and Direct Ferries have launched ChatGPT integrations and MCP servers. Ferryhopper was first Greek company with ChatGPT app; Direct Ferries built full integration on OpenAI enterprise infrastructure in 2026. Sealines has neither."
+    },
+    {
+      "gap": "NO MCP (MODEL CONTEXT PROTOCOL) SERVER",
+      "severity": "high",
+      "evidence": "Ferryhopper offers free, open-source MCP server (33 countries, 190+ operators, no API key). Direct Ferries also has an MCP server for ChatGPT. Sealines has no AI/LLM discoverability mechanism."
+    },
+    {
+      "gap": "NO BLOG OR CONTENT HUB",
+      "severity": "high",
+      "evidence": "Ferryhopper has 86+ pages of blog content. Traghetti.com has both a blog and news section. Traghettilines has the unique 'Osservatorio Traghetti' content hub with industry analysis and price monitoring. Direct Ferries has travel guides. Sealines has only a 'News and Promotions' page with no substantive content marketing."
+    },
+    {
+      "gap": "DRASTICALLY FEWER INDEXED PAGES",
+      "severity": "high",
+      "evidence": "site:sealines.eu returns very limited results compared to competitors who have thousands of indexed pages with dedicated route pages, destination pages, blog articles, and FAQ content."
+    },
+    {
+      "gap": "NO LIVE FERRY TRACKING FEATURE",
+      "severity": "medium",
+      "evidence": "Direct Ferries offers free live ferry tracking (interactive map, real-time position, ETA updates). Ferryhopper app includes live vessel tracking. Sealines offers no tracking feature."
+    },
+    {
+      "gap": "MINIMAL SOCIAL MEDIA PRESENCE",
+      "severity": "medium",
+      "evidence": "Sealines has ~1,204 Instagram followers vs Ferryhopper's 51,000. Sealines Facebook page is categorized as 'Cruise Line' with ~40 reviews vs Traghettilines' 41,946 likes and 978 reviews. Sealines has no Twitter/X, no TikTok, no YouTube, no LinkedIn. Ferryhopper has all six platforms including TikTok (9,605 followers, 366K likes)."
+    },
+    {
+      "gap": "ONLY 2 LANGUAGES vs COMPETITORS' 15+",
+      "severity": "medium",
+      "evidence": "Sealines appears to support only Italian and English. Ferryhopper supports 15 languages with a dedicated Localisation Team. Direct Ferries operates separate country-code domains in 10+ languages."
+    },
+    {
+      "gap": "NO MOBILE APP VISIBILITY IN APP STORES",
+      "severity": "medium",
+      "evidence": "Ferryhopper, Direct Ferries, Traghettilines, and Traghetti.com all have verified apps on both iOS App Store and Google Play Store appearing in search results. Sealines mentions an app on their About page but no verifiable App Store or Google Play listings were found in search."
+    },
+    {
+      "gap": "NO DEDICATED FAQ PAGE (SEARCHABLE)",
+      "severity": "medium",
+      "evidence": "Traghettilines has a dedicated FAQ page (/it/domande-frequenti.aspx). Ferryhopper has a comprehensive FAQ section (/en/faq). No FAQ page found for sealines.eu in search results."
+    },
+    {
+      "gap": "NO FREIGHT/CARGO SERVICES",
+      "severity": "low",
+      "evidence": "Direct Ferries has a dedicated freight section (directferries.it/merci.htm). Traghettilines has a separate freight domain (merci.traghettilines.it) with its own Trustpilot profile. No freight services found for sealines."
+    },
+    {
+      "gap": "NO TRAVEL AGENCY PARTNER PROGRAM",
+      "severity": "low",
+      "evidence": "Direct Ferries has a dedicated travel agency portal (directferries.it/agenzie_viaggio.htm). Sealines does have a tour operator subdomain (touroperator.sealines.eu) but it's not visible in search results."
+    },
+    {
+      "gap": "NO PARTNER WIDGETS/EMBEDS",
+      "severity": "low",
+      "evidence": "Ferryhopper offers embeddable Ferries Widget and Trips Widget for partner websites and travel blogs. Sealines offers no such integration tools."
+    },
+    {
+      "gap": "NO TRANSFER/ANCILLARY SERVICES",
+      "severity": "low",
+      "evidence": "Ferryhopper offers integrated port and airport transfer booking (transfers.ferryhopper.com). Sealines does not offer ancillary travel services beyond ferry tickets."
+    },
+    {
+      "gap": "NO ON-SITE CUSTOMER REVIEW SYSTEM",
+      "severity": "low",
+      "evidence": "Traghettilines has a dedicated on-site reviews page displaying customer testimonials (/it/recensioni.aspx). Sealines has no visible on-site review aggregation."
+    }
+  ]
+}

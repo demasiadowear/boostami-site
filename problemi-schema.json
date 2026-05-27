@@ -1,0 +1,166 @@
+{
+  "audit_date": "2026-05-27",
+  "analysis_method": "SERP-based inference. Direct HTML/JSON-LD extraction was impossible due to HTTP 403 blocking on all page fetches. Schema analysis below is based on: (1) what Google surfaces in rich results, (2) absence of expected rich features in SERPs, (3) known WordPress/Yoast/RankMath default behaviors, and (4) data from Google search snippets. Items marked UNMEASURABLE require direct HTML inspection to confirm.",
+  "pages_analyzed": 14,
+  "schema_problems": [
+    {
+      "id": "SCHEMA-01",
+      "severity": "CRITICAL",
+      "page": "ALL PAGES",
+      "type": "JSON-LD content",
+      "problem": "UNMEASURABLE - Cannot inspect JSON-LD blocks",
+      "detail": "All 14 pages returned HTTP 403 to automated fetchers. The exact JSON-LD structured data content, including WebSite schema 'name' field, Organization schema, and all other markup, cannot be directly inspected. Every schema-specific finding below is inferred from SERP behavior and external signals."
+    },
+    {
+      "id": "SCHEMA-02",
+      "severity": "HIGH",
+      "page": "https://www.sealines.eu (homepage)",
+      "type": "WebSite schema - name field",
+      "problem": "SUSPECTED: WebSite schema 'name' may contain WordPress default value",
+      "detail": "Prior audit data file (problemi-content.json) notes the homepage title shown in Google is 'Ferries: booking and purchasing tickets - Traghetti Sealines'. If the site uses WordPress (suggested by index.php URL patterns), the WebSite schema 'name' field may contain default values like 'Sito web di WordPress' or similar. However, a direct search for this string returned no results, so it may have been customized. REQUIRES DIRECT HTML INSPECTION TO CONFIRM."
+    },
+    {
+      "id": "SCHEMA-03",
+      "severity": "HIGH",
+      "page": "https://www.sealines.eu (homepage)",
+      "type": "AggregateRating schema",
+      "problem": "NO AggregateRating rich results observed in SERPs",
+      "detail": "The homepage reportedly mentions 119 reviews at 4.9 stars, but Google search results for 'sealines.eu' show NO star rating rich snippets. This strongly suggests either: (a) AggregateRating schema is absent, (b) it is present but contains errors preventing rich result display, or (c) Google has chosen not to display it. If the reviews and rating are displayed on the page, AggregateRating markup should be present."
+    },
+    {
+      "id": "SCHEMA-04",
+      "severity": "HIGH",
+      "page": "ALL PAGES",
+      "type": "TravelAgency schema",
+      "problem": "NO TravelAgency rich results observed in SERPs",
+      "detail": "Sealines describes itself as a travel agency (agenzia di viaggio) with a physical office at Via Quintino Sella, 58, Bari. Google shows no special business/agency rich results. TravelAgency schema is likely absent. This is a missed opportunity for entity recognition."
+    },
+    {
+      "id": "SCHEMA-05",
+      "severity": "HIGH",
+      "page": "Destination pages (traghetti-grecia, traghetti-sardegna, traghetti-sicilia, traghetti-croazia)",
+      "type": "FAQPage schema",
+      "problem": "NO FAQ rich results observed in SERPs",
+      "detail": "No FAQ-style rich results appear for any sealines.eu page in Google. If destination pages contain FAQ sections (common for ferry booking sites), FAQPage schema is either absent or broken. Competitors like directferries.it and ferryhopper.com display FAQ rich results."
+    },
+    {
+      "id": "SCHEMA-06",
+      "severity": "MEDIUM",
+      "page": "ALL internal pages",
+      "type": "BreadcrumbList schema",
+      "problem": "NO breadcrumb rich results observed in SERPs",
+      "detail": "Google search results for sealines.eu pages show plain URL paths, not breadcrumb-style navigation trails. BreadcrumbList schema is likely absent. This affects SERP appearance and user understanding of site hierarchy. Example: '/en/destinations/direct/ferries-greece/' could show as 'Sealines > Destinations > Greece' but does not."
+    },
+    {
+      "id": "SCHEMA-07",
+      "severity": "MEDIUM",
+      "page": "https://www.sealines.eu (homepage / site-wide)",
+      "type": "Organization schema - sameAs URLs",
+      "problem": "Social media profile links likely incorrect or incomplete",
+      "detail": "Social media presence identified: Facebook (facebook.com/sealines.it), Instagram (@traghetti.sealines, 1,204 followers). No verified Twitter/X account found. LinkedIn 'Sea Lines' appears to be a different company. If sameAs URLs in Organization schema include a Twitter URL, it is likely dead or wrong. If they include the LinkedIn URL for 'Sea Lines', it points to the wrong company."
+    },
+    {
+      "id": "SCHEMA-08",
+      "severity": "MEDIUM",
+      "page": "https://www.sealines.eu (homepage / site-wide)",
+      "type": "Organization schema - description",
+      "problem": "UNMEASURABLE - Organization description quality unknown",
+      "detail": "Cannot inspect whether Organization schema 'description' is empty, contains generic text, or is properly filled. REQUIRES DIRECT HTML INSPECTION."
+    },
+    {
+      "id": "SCHEMA-09",
+      "severity": "HIGH",
+      "page": "https://www.sealines.eu (homepage / site-wide)",
+      "type": "ContactPoint schema",
+      "problem": "NO contact-related rich results observed",
+      "detail": "The site has clear contact information: phone +39 0809260042, +39 344 1743399, email booking@sealines.eu, hours Mon-Fri 9-19, Sat 9-13, address Via Quintino Sella 58, Bari. None of this appears in Google's Knowledge Panel or rich results. ContactPoint schema is likely absent or incomplete."
+    },
+    {
+      "id": "SCHEMA-10",
+      "severity": "HIGH",
+      "page": "https://www.sealines.eu (homepage / site-wide)",
+      "type": "LocalBusiness schema",
+      "problem": "NO LocalBusiness rich results observed",
+      "detail": "Sealines has a physical travel agency in Bari (Via Quintino Sella, 58). No Google Knowledge Panel or local business information appears in SERPs. LocalBusiness or TravelAgency schema is likely absent, preventing Google from recognizing the physical business entity."
+    },
+    {
+      "id": "SCHEMA-11",
+      "severity": "MEDIUM",
+      "page": "Company pages (grimaldi-lines, grandi-navi-veloci, jadrolinija)",
+      "type": "Organization schema for partner companies",
+      "problem": "No structured data connecting ferry companies to the booking platform",
+      "detail": "Company pages describe third-party ferry operators but likely lack Organization schema for those companies, or proper schema connecting Sealines as an authorized reseller/agent. This represents a missed opportunity for rich results and entity clarity."
+    },
+    {
+      "id": "SCHEMA-12",
+      "severity": "LOW",
+      "page": "ALL PAGES",
+      "type": "Hreflang implementation",
+      "problem": "UNMEASURABLE but SUSPECTED BROKEN based on indexing patterns",
+      "detail": "French (/fr/) and German (/de/) versions are barely indexed (1-2 pages each). Italian pages show outdated content vs English equivalents. Some German-path pages have Italian titles. This pattern strongly suggests hreflang implementation is either absent, incomplete, or contains errors (missing self-referencing, missing x-default, incorrect language codes). REQUIRES DIRECT HTML INSPECTION to confirm specific errors."
+    },
+    {
+      "id": "SCHEMA-13",
+      "severity": "LOW",
+      "page": "ALL PAGES",
+      "type": "Meta generator / CMS version exposure",
+      "problem": "UNMEASURABLE",
+      "detail": "Cannot determine if meta generator tag exposes WordPress version or other CMS information. index.php URL patterns suggest the site may use a PHP-based CMS (possibly WordPress or custom). REQUIRES DIRECT HTML INSPECTION."
+    },
+    {
+      "id": "SCHEMA-14",
+      "severity": "LOW",
+      "page": "ALL PAGES",
+      "type": "EditURI / wlwmanifest links",
+      "problem": "UNMEASURABLE",
+      "detail": "Cannot determine if EditURI or wlwmanifest link tags are present in the HTML head. If the site uses WordPress, these legacy tags may be exposing CMS information. REQUIRES DIRECT HTML INSPECTION."
+    },
+    {
+      "id": "SCHEMA-15",
+      "severity": "MEDIUM",
+      "page": "ALL destination pages",
+      "type": "Product/Offer/Service schema for ferry routes",
+      "problem": "NO price/offer rich results observed in SERPs",
+      "detail": "Ferry booking pages display prices (e.g., 'from 39 euros per passenger') but no price-related rich results appear in Google. Product, Offer, or Service schema for ferry routes is likely absent."
+    },
+    {
+      "id": "SCHEMA-16",
+      "severity": "HIGH",
+      "page": "ALL PAGES with /fr/ and /de/ paths",
+      "type": "Hreflang x-default",
+      "problem": "SUSPECTED MISSING based on SERP behavior",
+      "detail": "Google does not consistently show the correct language version for different markets. The Italian homepage appears to be overridden by the English version. French and German versions are barely indexed. This pattern is consistent with missing x-default hreflang tag and/or missing self-referencing hreflang tags."
+    },
+    {
+      "id": "SCHEMA-17",
+      "severity": "MEDIUM",
+      "page": "https://www.sealines.eu/contatti",
+      "type": "ContactPage schema",
+      "problem": "No ContactPage rich results observed",
+      "detail": "The contacts page contains structured contact information (phone, email, hours, address) but likely lacks ContactPage or ContactPoint schema markup."
+    }
+  ],
+  "summary_of_confirmed_vs_suspected": {
+    "confirmed_problems": [
+      "No AggregateRating rich results despite claimed 119 reviews at 4.9 stars",
+      "No FAQ rich results on any page",
+      "No BreadcrumbList rich results on any page",
+      "No LocalBusiness/TravelAgency rich results despite physical office",
+      "No ContactPoint rich results despite published contact info",
+      "No price/offer rich results despite published prices",
+      "Social media profile fragmentation (Facebook .it vs .eu domain, no Twitter, wrong LinkedIn)",
+      "French/German hreflang likely broken based on near-zero indexing of /fr/ and /de/ paths",
+      "German /de/ page serving Italian-language content (title entirely in Italian)"
+    ],
+    "suspected_problems_requiring_html_inspection": [
+      "WebSite schema 'name' field may contain WordPress default",
+      "Organization schema 'description' may be empty/generic",
+      "sameAs URLs may contain dead/wrong social media links",
+      "hreflang tags may be missing x-default and self-referencing",
+      "hreflang may use 'it' vs 'it-IT' inconsistently",
+      "meta generator may expose CMS version",
+      "EditURI/wlwmanifest may be present in head",
+      "JSON-LD blocks may contain other errors not observable from SERPs"
+    ]
+  }
+}
