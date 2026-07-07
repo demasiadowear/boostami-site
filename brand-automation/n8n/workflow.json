@@ -1,0 +1,302 @@
+{
+  "name": "Brand → Social Graphics Auto-Generator",
+  "nodes": [
+
+    {
+      "id": "node_webhook",
+      "name": "Webhook - Ricevi URL",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "brand-social-webhook",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "generate-social",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+
+    {
+      "id": "node_scraper",
+      "name": "Brand Scraper",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [480, 300],
+      "parameters": {
+        "jsCode": "// ── Config ────────────────────────────────────────────────────────────────\nconst TIMEOUT_MS = 10000;\nconst CHROME_HDRS = {\n  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',\n  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',\n  'Accept-Language': 'it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7',\n  'Connection': 'keep-alive',\n  'Upgrade-Insecure-Requests': '1',\n  'Cache-Control': 'max-age=0',\n  'DNT': '1',\n};\nconst FALLBACK_UAS = [\n  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',\n  'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0',\n];\n\n// ── Helpers ────────────────────────────────────────────────────────────────\nfunction rgbToHex(r, g, b) {\n  return '#' + [r, g, b].map(v => (+v).toString(16).padStart(2, '0').toUpperCase()).join('');\n}\nfunction isMeaningful(hex) {\n  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);\n  return !( (r+g+b)/3 > 238 || (r+g+b)/3 < 15 || Math.max(r,g,b)-Math.min(r,g,b) < 18 );\n}\nfunction extractColors(text) {\n  const s = new Set();\n  for (const m of [...text.matchAll(/#([0-9A-Fa-f]{6})\\b/g)]) s.add('#'+m[1].toUpperCase());\n  for (const m of [...text.matchAll(/rgba?\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)/g)]) s.add(rgbToHex(m[1],m[2],m[3]));\n  return [...s].filter(isMeaningful);\n}\nfunction extractFonts(css) {\n  const s = new Set();\n  const SKIP = ['serif','sans-serif','monospace','cursive','fantasy','inherit','initial','unset','var'];\n  for (const m of [...css.matchAll(/font-family\\s*:\\s*([^;}\\n]+)/gi)])\n    for (const p of m[1].split(',')) { const f=p.trim().replace(/['\"]/g,''); if(f&&!SKIP.includes(f.toLowerCase())) s.add(f); }\n  return [...s].slice(0,5);\n}\nfunction getMeta(html, ...props) {\n  for (const p of props) {\n    for (const pat of [\n      `<meta[^>]+(?:property|name)=['\"]${p}['\"][^>]+content=['\"]([^'\"<>]+)['\"]`,\n      `<meta[^>]+content=['\"]([^'\"<>]+)['\"][^>]+(?:property|name)=['\"]${p}['\"]`,\n    ]) {\n      const m = html.match(new RegExp(pat, 'i'));\n      if (m?.[1]?.trim()) return m[1].trim();\n    }\n  }\n  return '';\n}\nfunction getTitle(html) {\n  const m = html.match(/<title[^>]*>([^<]+)<\\/title>/i);\n  return m ? m[1].replace(/&amp;/g,'&').replace(/&#039;/g,\"'\").trim() : '';\n}\nfunction getFavicon(html, base) {\n  const pats = [\n    /<link[^>]+rel=['\""][^'\"]*apple-touch-icon[^'\"]*['\"][^>]+href=['\""]([^'\"]+)['\"][^>]*>/i,\n    /<link[^>]+href=['\""]([^'\"]+)['\"][^>]+rel=['\""][^'\"]*apple-touch-icon[^'\"]*['\"]/i,\n    /<link[^>]+rel=['\""]shortcut icon['\"][^>]+href=['\""]([^'\"]+)['\"][^>]*>/i,\n    /<link[^>]+href=['\""]([^'\"]+)['\"][^>]+rel=['\""]shortcut icon['\"]/i,\n    /<link[^>]+rel=['\""]icon['\"][^>]+href=['\""]([^'\"]+)['\"][^>]*>/i,\n    /<link[^>]+href=['\""]([^'\"]+)['\"][^>]+rel=['\""]icon['\"]/i,\n  ];\n  for (const re of pats) {\n    const m = html.match(re);\n    if (m?.[1]) { const h=m[1]; return h.startsWith('http')?h : h.startsWith('//')?'https:'+h : base+(h.startsWith('/')?h:'/'+h); }\n  }\n  return base+'/favicon.ico';\n}\nfunction getCssLinks(html, base) {\n  return [...html.matchAll(/<link[^>]+rel=['\""]stylesheet['\"][^>]+href=['\""]([^'\"]+)['\"][^>]*>/gi)]\n    .map(m=>{ const h=m[1]; return h.startsWith('http')?h : h.startsWith('//')?'https:'+h : base+(h.startsWith('/')?h:'/'+h); })\n    .slice(0,3);\n}\nfunction detectBrand(text) {\n  const t = text.toLowerCase();\n  const TONES = {professional:['solutions','enterprise','b2b','consulting','strategy'],creative:['design','studio','creative','art','agency'],tech:['software','saas','platform','api','developer','cloud'],luxury:['premium','exclusive','luxury','elegant','bespoke'],friendly:['easy','simple','fun','community','together','love'],bold:['powerful','leading','best','revolutionary','transform']};\n  const INDS  = {technology:['software','app','tech','digital','cloud','ai','data'],finance:['bank','invest','fintech','payment','finance','money'],health:['health','medical','wellness','care','clinic','therapy'],fashion:['fashion','style','clothing','wear','boutique'],food:['food','restaurant','chef','eat','menu','recipe'],education:['learn','course','education','school','training'],'real estate':['property','real estate','home','house','realty']};\n  const tones = Object.entries(TONES).filter(([,kws])=>kws.some(k=>t.includes(k))).map(([n])=>n).slice(0,3);\n  const ind   = (Object.entries(INDS).find(([,kws])=>kws.some(k=>t.includes(k)))||['business'])[0];\n  return { tones: tones.length?tones:['modern'], industry: ind };\n}\nasync function safeGet(url, headers) {\n  try {\n    return await $helpers.httpRequest({\n      method: 'GET', url, headers,\n      timeout: TIMEOUT_MS,\n      returnFullResponse: true,\n      ignoreHttpStatusErrors: true,\n    });\n  } catch(e) {\n    const timedOut = /timeout|ECONNABORTED|ETIMEDOUT/i.test(e.message||'');\n    return { statusCode: timedOut?408:0, body:'', headers:{}, _timedOut: timedOut };\n  }\n}\n\n// ── Main ───────────────────────────────────────────────────────────────────\nlet url = ($input.item.json.body?.url || $input.item.json.url || '').trim();\nif (!url.startsWith('http')) url = 'https://' + url;\nconst parsed  = new URL(url);\nconst baseUrl = parsed.origin;\nconst domain  = parsed.hostname;\n\nconst fallback = () => ({\n  company_name: domain.replace('www.','').split('.')[0].replace(/^\\w/,c=>c.toUpperCase()),\n  tagline:'', description:'',\n  primary_colors:['#1A1A2E','#16213E','#0F3460'],\n  accent_colors:['#E94560'],\n  fonts:[],\n  logo_url:`https://www.google.com/s2/favicons?domain=${domain}&sz=128`,\n  favicon_url:`https://www.google.com/s2/favicons?domain=${domain}&sz=128`,\n  og_image_url:'', tone_keywords:['modern'], industry_hint:'business',\n  scrape_method:'favicon_fallback',\n});\n\n// 3 tentativi con UA diversi; timeout secco → fallback immediato\nlet html = null;\nfor (const ua of [null, FALLBACK_UAS[0], FALLBACK_UAS[1]]) {\n  const hdrs = ua ? {...CHROME_HDRS,'User-Agent':ua} : CHROME_HDRS;\n  const resp  = await safeGet(url, hdrs);\n  if (resp._timedOut) return fallback();\n  if (resp.statusCode>=200 && resp.statusCode<400 && typeof resp.body==='string' && resp.body.includes('<')) {\n    html = resp.body; break;\n  }\n}\nif (!html) return fallback();\n\n// ── Parse meta ────────────────────────────────────────────────────────────\nconst company_name = getMeta(html,'og:site_name') || getTitle(html) || domain;\nconst tagline      = getMeta(html,'og:title') || company_name;\nconst description  = getMeta(html,'og:description','description') || '';\nconst themeColor   = getMeta(html,'theme-color');\nlet og_image_url   = getMeta(html,'og:image');\nif (og_image_url && !og_image_url.startsWith('http'))\n  og_image_url = baseUrl + (og_image_url.startsWith('/')?og_image_url:'/'+og_image_url);\nconst favicon_url = getFavicon(html, baseUrl);\n\n// ── CSS ───────────────────────────────────────────────────────────────────\nlet allCss = [...html.matchAll(/<style[^>]*>([\\s\\S]*?)<\\/style>/gi)].map(m=>m[1]).join('\\n');\nallCss    += ' ' + [...html.matchAll(/style=['\"]([^'\"]+)['\"]/gi)].map(m=>m[1]).join(' ');\nfor (const cssUrl of getCssLinks(html, baseUrl)) {\n  const r = await safeGet(cssUrl, CHROME_HDRS);\n  if (!r._timedOut && r.statusCode===200 && typeof r.body==='string') allCss += '\\n' + r.body;\n}\n\nconst cssColors = extractColors(allCss);\nif (themeColor?.startsWith('#')) cssColors.unshift(themeColor.toUpperCase());\nconst fonts = extractFonts(allCss);\n\nconst freq = {};\nfor (const c of cssColors) freq[c] = (freq[c]||0)+1;\nconst ranked = Object.entries(freq).sort((a,b)=>b[1]-a[1]).map(([c])=>c);\nconst primary_colors = ranked.slice(0,3).length ? ranked.slice(0,3) : ['#1A1A2E','#16213E','#0F3460'];\nconst accent_colors  = ranked.slice(3,6).length ? ranked.slice(3,6) : ['#E94560'];\n\n// ── Tone / Industry ───────────────────────────────────────────────────────\nconst pageText = html.replace(/<[^>]+>/g,' ').replace(/\\s+/g,' ').slice(0,3000);\nconst {tones, industry} = detectBrand(pageText);\n\nreturn {\n  company_name: company_name.slice(0,80),\n  tagline:      tagline.slice(0,120),\n  description:  description.slice(0,300),\n  primary_colors, accent_colors, fonts,\n  logo_url:     favicon_url,\n  favicon_url,\n  og_image_url: og_image_url||'',\n  tone_keywords: tones,\n  industry_hint: industry,\n  scrape_method: cssColors.length ? 'full' : 'css_only',\n};\n"
+      }
+    },
+
+    {
+      "id": "node_prep_ollama",
+      "name": "Prepara Prompt Ollama",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 300],
+      "parameters": {
+        "jsCode": "const b = $input.item.json;\n\nconst colors = (b.primary_colors || []).join(', ') || 'not specified';\nconst accents = (b.accent_colors || []).join(', ') || 'not specified';\nconst tones  = (b.tone_keywords  || []).join(', ') || 'modern';\nconst fonts  = (b.fonts || []).join(', ') || 'not specified';\n\nconst prompt = `You are an expert creative director specializing in brand identity and social media design.\n\nCLIENT BRAND DATA:\n- Company: ${b.company_name}\n- Tagline: ${b.tagline}\n- Description: ${b.description}\n- Industry: ${b.industry_hint}\n- Tone/Style: ${tones}\n- Primary colors: ${colors}\n- Accent colors: ${accents}\n- Fonts: ${fonts}\n- Data source: ${b.scrape_method}\n\nTASK: Generate a Stable Diffusion prompt for a professional 1:1 Instagram post that:\n1. Visually represents this brand's identity using the EXACT color palette above\n2. Is striking and on-brand with clean composition\n3. Leaves ~30% of the image as a clean background area for text overlay\n4. Describes ONLY visual elements (no text, logos, or faces)\n5. Uses cinematic lighting and professional photography style\n\nRespond with ONLY a valid JSON object, no other text:\n{\n  \"positive_prompt\": \"...\",\n  \"negative_prompt\": \"...\",\n  \"style_hint\": \"...\",\n  \"background_color_suggestion\": \"#HEXCODE\"\n}`;\n\nreturn {\n  ollama_body: {\n    model: 'llama3',\n    stream: false,\n    prompt: prompt\n  },\n  brand_data: b\n};\n"
+      }
+    },
+
+    {
+      "id": "node_ollama",
+      "name": "Ollama - Genera Prompt",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1000, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.ollama_body) }}",
+        "options": { "timeout": 90000 }
+      }
+    },
+
+    {
+      "id": "node_parse_ollama",
+      "name": "Parse Risposta Ollama",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1260, 300],
+      "parameters": {
+        "jsCode": "const ollamaResp = $input.item.json;\nconst brandData  = $('Prepara Prompt Ollama').item.json.brand_data;\n\nconst raw = ollamaResp.response || ollamaResp.message?.content || '';\n\nlet promptData = null;\ntry {\n  const match = raw.match(/\\{[\\s\\S]*\\}/);\n  if (match) promptData = JSON.parse(match[0]);\n} catch(e) { promptData = null; }\n\nif (!promptData || !promptData.positive_prompt) {\n  const colorList = (brandData.primary_colors || []).map(c => `hex color ${c}`).join(', ');\n  const tones     = (brandData.tone_keywords   || ['modern']).join(', ');\n  promptData = {\n    positive_prompt: `professional ${tones} brand visual for ${brandData.industry_hint || 'business'}, ${colorList}, abstract geometric shapes, clean minimal background, luxury aesthetic, product photography`,\n    negative_prompt: 'text, letters, words, watermark, logo, blurry, ugly, deformed, nsfw, low quality, pixelated, oversaturated',\n    style_hint: `${tones} ${brandData.industry_hint || 'professional'}`,\n    background_color_suggestion: brandData.primary_colors?.[0] || '#1A1A2E'\n  };\n}\n\nconst colorDesc = (brandData.primary_colors || []).map(c => `hex ${c}`).join(', ');\nconst toneDesc  = (brandData.tone_keywords   || ['modern']).join(', ');\n\nconst positiveEnhanced = [\n  promptData.positive_prompt,\n  colorDesc,\n  `${toneDesc} aesthetic`,\n  'professional photography, cinematic lighting, high quality, sharp focus, 8k uhd'\n].filter(Boolean).join(', ');\n\nreturn {\n  positive_prompt: positiveEnhanced,\n  negative_prompt: promptData.negative_prompt || 'text, watermark, blurry, deformed, ugly, low quality',\n  style_hint: promptData.style_hint,\n  bg_color: promptData.background_color_suggestion || brandData.primary_colors?.[0] || '#1A1A2E',\n  brand_data: brandData\n};\n"
+      }
+    },
+
+    {
+      "id": "node_build_comfyui",
+      "name": "Costruisci Payload ComfyUI",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1520, 300],
+      "parameters": {
+        "jsCode": "const data  = $input.item.json;\nconst brand = data.brand_data;\n\nconst slug = (brand.company_name || 'brand')\n  .replace(/[^a-zA-Z0-9]/g, '_')\n  .substring(0, 20);\nconst ts = Date.now();\nconst filenamePrefix = `brand_${slug}_${ts}`;\n\n// ── CAMBIA QUESTO con il modello che hai in ComfyUI/models/checkpoints/ ──\nconst MODEL = 'dreamshaperXL_v21TurboDPMSDE.safetensors';\n// Opzioni comuni:\n//   'sd_xl_base_1.0.safetensors'       (SDXL, migliore qualità, 8GB+ VRAM)\n//   'v1-5-pruned-emaonly.ckpt'         (SD 1.5, veloce, 4GB VRAM)\n//   'dreamshaper_8.safetensors'        (SD 1.5 fine-tuned, ottimo per social)\n\nconst workflow = {\n  '1': {\n    class_type: 'CheckpointLoaderSimple',\n    inputs: { ckpt_name: MODEL }\n  },\n  '2': {\n    class_type: 'CLIPTextEncode',\n    inputs: { text: data.positive_prompt, clip: ['1', 1] }\n  },\n  '3': {\n    class_type: 'CLIPTextEncode',\n    inputs: { text: data.negative_prompt, clip: ['1', 1] }\n  },\n  '4': {\n    class_type: 'EmptyLatentImage',\n    inputs: { width: 1024, height: 1024, batch_size: 1 }\n  },\n  '5': {\n    class_type: 'KSampler',\n    inputs: {\n      seed: Math.floor(Math.random() * 999999999),\n      steps: 25,\n      cfg: 7.5,\n      sampler_name: 'euler_ancestral',\n      scheduler: 'karras',\n      denoise: 1.0,\n      model:        ['1', 0],\n      positive:     ['2', 0],\n      negative:     ['3', 0],\n      latent_image: ['4', 0]\n    }\n  },\n  '6': {\n    class_type: 'VAEDecode',\n    inputs: { samples: ['5', 0], vae: ['1', 2] }\n  },\n  '7': {\n    class_type: 'SaveImage',\n    inputs: { images: ['6', 0], filename_prefix: filenamePrefix }\n  }\n};\n\nreturn {\n  comfyui_payload: JSON.stringify({ prompt: workflow }),\n  filename_prefix: filenamePrefix,\n  positive_prompt: data.positive_prompt,\n  negative_prompt: data.negative_prompt,\n  brand_data: brand,\n  style_hint: data.style_hint,\n  bg_color: data.bg_color,\n  timestamp: ts\n};\n"
+      }
+    },
+
+    {
+      "id": "node_comfyui_submit",
+      "name": "ComfyUI - Invia Job",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8188/prompt",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.comfyui_payload }}",
+        "options": { "timeout": 15000 }
+      }
+    },
+
+    {
+      "id": "node_wait1",
+      "name": "Attendi 15s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [2020, 300],
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": 15,
+        "unit": "seconds"
+      }
+    },
+
+    {
+      "id": "node_poll1",
+      "name": "ComfyUI - Poll #1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2260, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ `http://host.docker.internal:8188/history/${$('ComfyUI - Invia Job').item.json.prompt_id}` }}",
+        "options": { "timeout": 10000 }
+      }
+    },
+
+    {
+      "id": "node_job_done",
+      "name": "Job Completato?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2500, 300],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "check-history-nonempty",
+              "leftValue": "={{ Object.keys($json).length }}",
+              "rightValue": 0,
+              "operator": { "type": "number", "operation": "gt" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+
+    {
+      "id": "node_wait2",
+      "name": "Attendi 20s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [2740, 480],
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": 20,
+        "unit": "seconds"
+      }
+    },
+
+    {
+      "id": "node_poll2",
+      "name": "ComfyUI - Poll #2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2980, 480],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ `http://host.docker.internal:8188/history/${$('ComfyUI - Invia Job').item.json.prompt_id}` }}",
+        "options": { "timeout": 10000 }
+      }
+    },
+
+    {
+      "id": "node_merge",
+      "name": "Merge Risultati",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [3220, 370],
+      "parameters": {
+        "mode": "passThrough",
+        "output": "first"
+      }
+    },
+
+    {
+      "id": "node_extract",
+      "name": "Estrai Immagine Generata",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3460, 370],
+      "parameters": {
+        "jsCode": "const promptId    = $('ComfyUI - Invia Job').item.json.prompt_id;\nconst historyData = $input.item.json;\n\nconst jobData = historyData[promptId];\nif (!jobData) {\n  throw new Error(\n    `Timeout: job ${promptId} non completato in 35s. ` +\n    'Aumenta i tempi di attesa o controlla ComfyUI.'\n  );\n}\n\nlet imageInfo = null;\nfor (const nodeId of Object.keys(jobData.outputs || {})) {\n  const imgs = jobData.outputs[nodeId]?.images;\n  if (imgs && imgs.length > 0) { imageInfo = imgs[0]; break; }\n}\nif (!imageInfo) throw new Error('Nessuna immagine trovata negli output ComfyUI');\n\nconst { filename, subfolder = '' } = imageInfo;\nconst imageUrl  = `http://host.docker.internal:8188/view?filename=${encodeURIComponent(filename)}&subfolder=${subfolder}&type=output`;\nconst localPath = `/data/brand-output/${filename}`;\n\nconst brand          = $('Prepara Prompt Ollama').item.json.brand_data;\nconst positivePrompt = $('Parse Risposta Ollama').item.json.positive_prompt;\nconst buildData      = $('Costruisci Payload ComfyUI').item.json;\n\nreturn {\n  image_filename: filename,\n  image_subfolder: subfolder,\n  image_url: imageUrl,\n  local_path: localPath,\n  prompt_id: promptId,\n  response_payload: {\n    success: true,\n    company: brand.company_name,\n    industry: brand.industry_hint,\n    scrape_method: brand.scrape_method,\n    primary_colors: brand.primary_colors,\n    accent_colors: brand.accent_colors,\n    image_url: imageUrl,\n    image_filename: filename,\n    saved_to: localPath,\n    prompt_used: positivePrompt.substring(0, 300),\n    style_hint: buildData.style_hint,\n    bg_color: buildData.bg_color,\n    prompt_id: promptId,\n    generated_at: new Date().toISOString()\n  }\n};\n"
+      }
+    },
+
+    {
+      "id": "node_download",
+      "name": "Scarica Immagine",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3700, 370],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.image_url }}",
+        "responseFormat": "file",
+        "options": { "timeout": 30000 }
+      }
+    },
+
+    {
+      "id": "node_save",
+      "name": "Salva su Disco",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [3940, 370],
+      "parameters": {
+        "fileName": "={{ $('Estrai Immagine Generata').item.json.local_path }}",
+        "dataPropertyName": "data",
+        "options": {}
+      }
+    },
+
+    {
+      "id": "node_respond",
+      "name": "Rispondi con Risultato",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [4180, 370],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($('Estrai Immagine Generata').item.json.response_payload) }}",
+        "options": { "responseCode": 200 }
+      }
+    }
+
+  ],
+
+  "connections": {
+    "Webhook - Ricevi URL": {
+      "main": [[ { "node": "Brand Scraper", "type": "main", "index": 0 } ]]
+    },
+    "Brand Scraper": {
+      "main": [[ { "node": "Prepara Prompt Ollama", "type": "main", "index": 0 } ]]
+    },
+    "Prepara Prompt Ollama": {
+      "main": [[ { "node": "Ollama - Genera Prompt", "type": "main", "index": 0 } ]]
+    },
+    "Ollama - Genera Prompt": {
+      "main": [[ { "node": "Parse Risposta Ollama", "type": "main", "index": 0 } ]]
+    },
+    "Parse Risposta Ollama": {
+      "main": [[ { "node": "Costruisci Payload ComfyUI", "type": "main", "index": 0 } ]]
+    },
+    "Costruisci Payload ComfyUI": {
+      "main": [[ { "node": "ComfyUI - Invia Job", "type": "main", "index": 0 } ]]
+    },
+    "ComfyUI - Invia Job": {
+      "main": [[ { "node": "Attendi 15s", "type": "main", "index": 0 } ]]
+    },
+    "Attendi 15s": {
+      "main": [[ { "node": "ComfyUI - Poll #1", "type": "main", "index": 0 } ]]
+    },
+    "ComfyUI - Poll #1": {
+      "main": [[ { "node": "Job Completato?", "type": "main", "index": 0 } ]]
+    },
+    "Job Completato?": {
+      "main": [
+        [ { "node": "Merge Risultati", "type": "main", "index": 0 } ],
+        [ { "node": "Attendi 20s",     "type": "main", "index": 0 } ]
+      ]
+    },
+    "Attendi 20s": {
+      "main": [[ { "node": "ComfyUI - Poll #2", "type": "main", "index": 0 } ]]
+    },
+    "ComfyUI - Poll #2": {
+      "main": [[ { "node": "Merge Risultati", "type": "main", "index": 1 } ]]
+    },
+    "Merge Risultati": {
+      "main": [[ { "node": "Estrai Immagine Generata", "type": "main", "index": 0 } ]]
+    },
+    "Estrai Immagine Generata": {
+      "main": [[ { "node": "Scarica Immagine", "type": "main", "index": 0 } ]]
+    },
+    "Scarica Immagine": {
+      "main": [[ { "node": "Salva su Disco", "type": "main", "index": 0 } ]]
+    },
+    "Salva su Disco": {
+      "main": [[ { "node": "Rispondi con Risultato", "type": "main", "index": 0 } ]]
+    }
+  },
+
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "tags": ["brand", "social", "comfyui", "ollama", "automation"],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-12T00:00:00.000Z",
+  "versionId": "3"
+}
